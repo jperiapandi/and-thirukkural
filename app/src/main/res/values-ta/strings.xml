@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">திருக்குறள்</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">அமைப்பு</string>
+    <string name="section_1">அறத்துப்பால்</string>
+    <string name="section_2">பொருட்பால்</string>
+    <string name="section_3">காமத்துப்பால்</string>
+    <string name="app_desc">பொய்யாமொழி</string>
+    <string name="customise">தனிப்பயனாக்கு</string>
+</resources>
