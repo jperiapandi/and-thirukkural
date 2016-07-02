@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/about_thirukkural"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/about_thirukkural" />
+        <item
+            android:id="@+id/book_index"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/book_index" />
+        <item
+            android:id="@+id/fav_couplets"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/fav_couplets" />
+        <item
+            android:id="@+id/language"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/english" />
+        <item
+            android:id="@+id/about_app_creator"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/about_app_creator" />
+    </group>
+
+</menu>

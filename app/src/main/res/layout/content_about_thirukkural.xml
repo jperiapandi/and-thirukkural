@@ -9,11 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.jpp.and_thirukkural.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context="com.jpp.and_thirukkural.AboutThirukkuralActivity"
+    tools:showIn="@layout/activity_about_thirukkural">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/about_thirukkural_content"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
