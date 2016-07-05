@@ -2,9 +2,12 @@ package com.jpp.and_thirukkural;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.UserDictionary;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
+import com.jpp.and_thirukkural.db.CoupletTable;
 
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
@@ -35,6 +41,30 @@ public class ChapterActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        ContentResolver cr = getContentResolver();
+        //Load data from couplet table
+        String chapterId = "1";
+        String[] mProjection = {CoupletTable.COL_ID, CoupletTable.COL_CHAPTER_ID, CoupletTable.COL_COUPLET};
+        String mSelectionClause = CoupletTable.COL_CHAPTER_ID+"=?";
+        String[] mSelectionArgs = {chapterId};
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, null);
+        Log.i("Loaded couplets: ", cursor.getCount()+"");
+
+        if(cursor == null){
+            //Error while retrieving data
+        }else if(cursor.getCount()==0){
+            //No data found
+        }else{
+            cursor.moveToFirst();
+            do{
+                Log.i(" >>> ", cursor.getString(cursor.getColumnIndex(CoupletTable.COL_COUPLET)));
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
     }
 
     @Override
@@ -58,6 +88,7 @@ public class ChapterActivity extends AppCompatActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
 
         searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
