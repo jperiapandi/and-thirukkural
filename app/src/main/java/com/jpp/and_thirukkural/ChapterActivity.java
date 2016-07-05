@@ -19,8 +19,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jpp.and_thirukkural.db.DataLoadHelper;
+import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
 import com.jpp.and_thirukkural.db.CoupletTable;
+
+import java.util.ArrayList;
 
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
@@ -42,29 +46,14 @@ public class ChapterActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        DataLoadHelper ct = new DataLoadHelper(getApplicationContext());
+        ArrayList<Couplet> r = ct.getCoupletsByChapter(1);
 
-        ContentResolver cr = getContentResolver();
-        //Load data from couplet table
-        String chapterId = "1";
-        String[] mProjection = {CoupletTable.COL_ID, CoupletTable.COL_CHAPTER_ID, CoupletTable.COL_COUPLET};
-        String mSelectionClause = CoupletTable.COL_CHAPTER_ID+"=?";
-        String[] mSelectionArgs = {chapterId};
+        Log.i("Loaded couplets ", r.size()+"");
 
-        Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, null);
-        Log.i("Loaded couplets: ", cursor.getCount()+"");
+        Couplet couplet = ct.getCoupletById(341);
 
-        if(cursor == null){
-            //Error while retrieving data
-        }else if(cursor.getCount()==0){
-            //No data found
-        }else{
-            cursor.moveToFirst();
-            do{
-                Log.i(" >>> ", cursor.getString(cursor.getColumnIndex(CoupletTable.COL_COUPLET)));
-            }while(cursor.moveToNext());
-
-            cursor.close();
-        }
+        Log.i("Loaded couplet ", couplet.get_id()+"");
     }
 
     @Override

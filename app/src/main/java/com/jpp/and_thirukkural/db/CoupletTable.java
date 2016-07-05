@@ -1,7 +1,5 @@
 package com.jpp.and_thirukkural.db;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -16,7 +14,7 @@ public class CoupletTable {
     public static final String COL_COUPLET = "couplet";
 
     public static void checkColumns(String[] projection) {
-        String[] available = { CoupletTable.COL_ID,
+        String[] available = {CoupletTable.COL_ID,
                 CoupletTable.COL_CHAPTER_ID, CoupletTable.COL_COUPLET
         };
         if (projection != null) {
@@ -31,4 +29,6 @@ public class CoupletTable {
             }
         }
     }
+
+
 }
