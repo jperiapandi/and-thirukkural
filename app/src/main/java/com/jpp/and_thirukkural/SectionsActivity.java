@@ -19,8 +19,13 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class SectionsActivity extends AppCompatActivity {
+import com.jpp.and_thirukkural.db.DataLoadHelper;
+import com.jpp.and_thirukkural.model.Section;
 
+import java.util.ArrayList;
+
+public class SectionsActivity extends AppCompatActivity {
+    private ArrayList<Section> sections;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -43,6 +48,12 @@ public class SectionsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Load Data
+        DataLoadHelper ct = new DataLoadHelper(getApplicationContext());
+        sections = ct.getAllSections();
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -133,21 +144,12 @@ public class SectionsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return sections.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return sections.get(position).getTitle();
         }
     }
 }

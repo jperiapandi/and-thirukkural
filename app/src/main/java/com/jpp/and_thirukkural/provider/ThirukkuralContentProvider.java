@@ -10,14 +10,16 @@ import android.net.Uri;
 
 import com.jpp.and_thirukkural.db.CoupletTable;
 import com.jpp.and_thirukkural.db.DBHelper;
+import com.jpp.and_thirukkural.db.SectionsTable;
+import com.jpp.and_thirukkural.db.URITypes;
 
 import java.io.IOException;
 
 public class ThirukkuralContentProvider extends ContentProvider {
 
     public static String AUTHORITY = "com.jpp.and_thirukkural";
-
     public static final Uri COUPLETS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+CoupletTable.TBL_NAME);
+    public static final Uri SECTIONS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ SectionsTable.TBL_NAME);
 
     private DBHelper dbHelper;
     public static UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -25,10 +27,14 @@ public class ThirukkuralContentProvider extends ContentProvider {
     static {
 
         //Get multiple couplets
-        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME, 1);
-
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME, URITypes.COUPLETS);
         //Get couplet based on couplet id
-        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME+"/#", 2);
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME+"/#", URITypes.COUPLET_BY_ID);
+
+        //Get multiple sections
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, SectionsTable.TBL_NAME, URITypes.SECTIONS);
+        //Get sections based on section id
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, SectionsTable.TBL_NAME+"/#", URITypes.SECTION_BY_ID);
     }
 
     public ThirukkuralContentProvider() {
@@ -72,23 +78,43 @@ public class ThirukkuralContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-
-        CoupletTable.checkColumns(projection);
-        queryBuilder.setTables(CoupletTable.TBL_NAME);
-
         int uriType = sURIMatcher.match(uri);
 
         switch (uriType){
-            case 1:
-                break;
-            case 2:
-                queryBuilder.appendWhere(CoupletTable.COL_ID+" = "+uri.getLastPathSegment());
-                break;
+            case URITypes.COUPLETS:
+            case URITypes.COUPLET_BY_ID:
+                return queryCouplets(uri, projection, selection, selectionArgs, sortOrder);
+            case URITypes.SECTIONS:
+            case URITypes.SECTION_BY_ID:
+                return querySections(uri, projection, selection, selectionArgs, sortOrder);
         }
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        return null;
+    }
+
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection,
+                      String[] selectionArgs) {
+        // TODO: Implement this to handle requests to update one or more rows.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+
+    //Private methods
+    private Cursor queryCouplets(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
         try{
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+            queryBuilder.setTables(CoupletTable.TBL_NAME);
+            CoupletTable.checkColumns(projection);
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType){
+                case URITypes.COUPLET_BY_ID :
+                    queryBuilder.appendWhere(CoupletTable.COL_ID+" = "+uri.getLastPathSegment());
+                    break;
+            }
+
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
             return cursor;
@@ -101,10 +127,28 @@ public class ThirukkuralContentProvider extends ContentProvider {
         return null;
     }
 
-    @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+    private Cursor querySections(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        try{
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+            queryBuilder.setTables(SectionsTable.TBL_NAME);
+            SectionsTable.checkColumns(projection);
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType){
+                case URITypes.SECTION_BY_ID :
+                    queryBuilder.appendWhere(SectionsTable.COL_ID+" = "+uri.getLastPathSegment());
+                    break;
+            }
+
+            Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            return cursor;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

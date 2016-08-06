@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.jpp.and_thirukkural.model.Couplet;
+import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
 
 import java.util.ArrayList;
@@ -74,6 +75,40 @@ public class DataLoadHelper {
                 Couplet c = new Couplet();
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletTable.COL_ID)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletTable.COL_COUPLET)));
+                result.add(c);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return result;
+    }
+
+    public ArrayList<Section> getAllSections(){
+        ArrayList<Section> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from sections table
+
+        String[] mProjection = {SectionsTable.COL_ID, SectionsTable.COL_TTILE};
+        String mSelectionClause = null;
+        String[] mSelectionArgs = null;
+        String sortOrder = null;
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.SECTIONS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+
+        if(cursor == null){
+            //Error while retrieving data
+
+        }else if(cursor.getCount()==0){
+            //No data found
+
+        }else{
+            cursor.moveToFirst();
+            result = new ArrayList<Section>();
+            do{
+                Section c = new Section();
+                c.set_id(cursor.getInt(cursor.getColumnIndex(SectionsTable.COL_ID)));
+                c.setTitle(cursor.getString(cursor.getColumnIndex(SectionsTable.COL_TTILE)));
                 result.add(c);
             }while(cursor.moveToNext());
 
