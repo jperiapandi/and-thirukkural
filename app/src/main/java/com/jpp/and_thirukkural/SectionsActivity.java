@@ -17,9 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jpp.and_thirukkural.adapters.ChapterAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
+import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class SectionsActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private DataLoadHelper dataLoadHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,8 @@ public class SectionsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Load Data
-        DataLoadHelper ct = new DataLoadHelper(getApplicationContext());
-        sections = ct.getAllSections();
+        dataLoadHelper = new DataLoadHelper(getApplicationContext());
+        sections = dataLoadHelper.getAllSections();
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -116,11 +120,17 @@ public class SectionsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            //Load chapters in a section and display in a list
+            DataLoadHelper dlh = new DataLoadHelper(getContext());
+            ArrayList<Chapter> chapters = dlh.getChaptersBySectionId(sectionNumber);
+            ListView chaptersListView = (ListView) rootView.findViewById(R.id.chaptersListView);
+            Chapter[] values = chapters.toArray(new Chapter[chapters.size()]);
+            ChapterAdapter adapter = new ChapterAdapter(getContext(), values);
+            chaptersListView.setAdapter(adapter);
             return rootView;
         }
     }

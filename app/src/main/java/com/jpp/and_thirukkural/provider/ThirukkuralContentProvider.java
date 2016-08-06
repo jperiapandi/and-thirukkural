@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import com.jpp.and_thirukkural.db.ChaptersTable;
 import com.jpp.and_thirukkural.db.CoupletTable;
 import com.jpp.and_thirukkural.db.DBHelper;
 import com.jpp.and_thirukkural.db.SectionsTable;
@@ -17,24 +18,31 @@ import java.io.IOException;
 
 public class ThirukkuralContentProvider extends ContentProvider {
 
+
     public static String AUTHORITY = "com.jpp.and_thirukkural";
     public static final Uri COUPLETS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+CoupletTable.TBL_NAME);
     public static final Uri SECTIONS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ SectionsTable.TBL_NAME);
+    public static final Uri CHAPTERS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ ChaptersTable.TBL_NAME);
 
     private DBHelper dbHelper;
     public static UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
 
-        //Get multiple couplets
+        //Get all couplets
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME, URITypes.COUPLETS);
-        //Get couplet based on couplet id
+        //Get couplets based on couplet id
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, CoupletTable.TBL_NAME+"/#", URITypes.COUPLET_BY_ID);
 
-        //Get multiple sections
+        //Get all sections
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, SectionsTable.TBL_NAME, URITypes.SECTIONS);
         //Get sections based on section id
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, SectionsTable.TBL_NAME+"/#", URITypes.SECTION_BY_ID);
+
+        //Get all chapters
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, ChaptersTable.TBL_NAME, URITypes.CHAPTERS);
+        //Get chapter based on id
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, ChaptersTable.TBL_NAME+"/#", URITypes.CHAPTER_BY_ID);
     }
 
     public ThirukkuralContentProvider() {
@@ -87,6 +95,9 @@ public class ThirukkuralContentProvider extends ContentProvider {
             case URITypes.SECTIONS:
             case URITypes.SECTION_BY_ID:
                 return querySections(uri, projection, selection, selectionArgs, sortOrder);
+            case URITypes.CHAPTERS:
+            case URITypes.CHAPTER_BY_ID:
+                return queryChapters(uri, projection, selection, selectionArgs, sortOrder);
         }
 
         return null;
@@ -137,6 +148,30 @@ public class ThirukkuralContentProvider extends ContentProvider {
             switch (uriType){
                 case URITypes.SECTION_BY_ID :
                     queryBuilder.appendWhere(SectionsTable.COL_ID+" = "+uri.getLastPathSegment());
+                    break;
+            }
+
+            Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            return cursor;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    private Cursor queryChapters(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        try{
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+            queryBuilder.setTables(ChaptersTable.TBL_NAME);
+            ChaptersTable.checkColumns(projection);
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType){
+                case URITypes.CHAPTER_BY_ID :
+                    queryBuilder.appendWhere(ChaptersTable.COL_ID+" = "+uri.getLastPathSegment());
                     break;
             }
 

@@ -6,8 +6,8 @@ package com.jpp.and_thirukkural.model;
 public class Chapter {
     private int _id;
     private String title;
-    private Part part;
-    private Section section;
+    private int partId;
+    private  int sectionId;
 
     public int get_id() {
         return _id;
@@ -25,19 +25,23 @@ public class Chapter {
         this.title = title;
     }
 
-    public Part getPart() {
-        return part;
+    public int getPartId() {
+        return partId;
     }
 
-    public void setPart(Part part) {
-        this.part = part;
+    public void setPartId(int partId) {
+        this.partId = partId;
     }
 
-    public Section getSection() {
-        return section;
+    public int getSectionId() {
+        return sectionId;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public CharSequence getSerial() {
+        return (((this._id-1)*10)+1)+" - "+(this._id*10);
     }
 }

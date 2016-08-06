@@ -8,4 +8,6 @@ public class URITypes {
     public static final int COUPLET_BY_ID = 2;
     public static final int SECTIONS = 3;
     public static final int SECTION_BY_ID = 4;
+    public static final int CHAPTERS = 5;
+    public static final int CHAPTER_BY_ID = 6;
 }

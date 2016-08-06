@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
@@ -114,6 +115,70 @@ public class DataLoadHelper {
 
             cursor.close();
         }
+
+        return result;
+    }
+
+    public ArrayList<Chapter> getAllChapters(){
+        ArrayList<Chapter> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from chapters table
+
+        String[] mProjection = {ChaptersTable.COL_ID, ChaptersTable.COL_PART_ID, ChaptersTable.COL_SECTION_ID, ChaptersTable.COL_TITLE};
+        String mSelectionClause = null;
+        String[] mSelectionArgs = null;
+        String sortOrder = null;
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.CHAPTERS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+
+        if(cursor == null){
+            //Error while retrieving data
+
+        }else if(cursor.getCount()==0){
+            //No data found
+
+        }else{
+            cursor.moveToFirst();
+            result = new ArrayList<Chapter>();
+            do{
+                Chapter c = new Chapter();
+                c.set_id(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_ID)));
+                c.setTitle(cursor.getString(cursor.getColumnIndex(ChaptersTable.COL_TITLE)));
+                c.setPartId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_PART_ID)));
+                c.setSectionId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_SECTION_ID)));
+                result.add(c);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return result;
+    }
+    public ArrayList<Chapter> getChaptersBySectionId(int sectionId){
+        ArrayList<Chapter> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from chapters table
+
+        String[] mProjection = {ChaptersTable.COL_ID, ChaptersTable.COL_PART_ID, ChaptersTable.COL_SECTION_ID, ChaptersTable.COL_TITLE};
+        String mSelectionClause = ChaptersTable.COL_SECTION_ID+"=?";
+        String[] mSelectionArgs = { sectionId+"" };
+        String sortOrder = null;
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.CHAPTERS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+        if (cursor != null ) {
+            if  (cursor.moveToFirst()) {
+                result = new ArrayList<Chapter>();
+                do {
+                    Chapter c = new Chapter();
+                    c.set_id(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_ID)));
+                    c.setTitle(cursor.getString(cursor.getColumnIndex(ChaptersTable.COL_TITLE)));
+                    c.setPartId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_PART_ID)));
+                    c.setSectionId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_SECTION_ID)));
+                    result.add(c);
+                }while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
 
         return result;
     }
