@@ -58,7 +58,7 @@
             android:name=".provider.ThirukkuralContentProvider"
             android:authorities="com.jpp.and_thirukkural"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
 
     </application>
 
