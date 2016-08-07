@@ -10,4 +10,6 @@ public class URITypes {
     public static final int SECTION_BY_ID = 4;
     public static final int CHAPTERS = 5;
     public static final int CHAPTER_BY_ID = 6;
+    public static final int PARTS = 7;
+    public static final int PART_BY_ID = 8;
 }

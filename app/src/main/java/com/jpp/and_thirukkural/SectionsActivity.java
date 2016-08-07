@@ -52,6 +52,7 @@ public class SectionsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Load Data
         dataLoadHelper = new DataLoadHelper(getApplicationContext());
@@ -63,10 +64,10 @@ public class SectionsActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.sectionsPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sectionTabs);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
@@ -75,7 +76,7 @@ public class SectionsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sections, menu);
+//        getMenuInflater().inflate(R.menu.menu_sections, menu);
         return true;
     }
 

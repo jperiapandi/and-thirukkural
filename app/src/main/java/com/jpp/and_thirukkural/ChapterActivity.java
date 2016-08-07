@@ -2,32 +2,49 @@ package com.jpp.and_thirukkural;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.UserDictionary;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.jpp.and_thirukkural.adapters.ChapterAdapter;
+import com.jpp.and_thirukkural.adapters.CoupletListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
+import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
-import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
-import com.jpp.and_thirukkural.db.CoupletTable;
+import com.jpp.and_thirukkural.model.Part;
+import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+
+    private static ArrayList<Chapter> allChapters;
+    static DataLoadHelper dlh;
+
+    private ChapterPagerAdapter mChapterPagerAdapter;
+    private ViewPager mChapterPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +63,38 @@ public class ChapterActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DataLoadHelper ct = new DataLoadHelper(getApplicationContext());
-        ArrayList<Couplet> r = ct.getCoupletsByChapter(1);
+        dlh = new DataLoadHelper(getApplicationContext());
+        allChapters = dlh.getAllChapters();
 
-        Log.i("Loaded couplets ", r.size()+"");
 
-        Couplet couplet = ct.getCoupletById(341);
+        // Create the adapter that will return a fragment for each of the chapters
+        mChapterPagerAdapter = new ChapterPagerAdapter(getSupportFragmentManager());
 
-        Log.i("Loaded couplet ", couplet.get_id()+"");
+        // Set up the ViewPager with the sections adapter.
+        mChapterPager = (ViewPager) findViewById(R.id.chapterPager);
+        mChapterPager.setAdapter(mChapterPagerAdapter);
+        mChapterPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                /*
+                Chapter c = allChapters.get(position);
+                String chapterName = c.get_id()+" "+c.getTitle();
+                getSupportActionBar().setTitle(chapterName);
+                */
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.chapterTabs);
+        tabLayout.setupWithViewPager(mChapterPager);
     }
 
     @Override
@@ -131,5 +172,81 @@ public class ChapterActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    /*Create Framgment for Chapter Pager*/
+    public static class ChapterPageFragment extends Fragment{
+        public static final String CHAPTER_NUMBER="chapterNumber";
+
+        public ChapterPageFragment(){
+
+        }
+
+        public static ChapterPageFragment newInstance(int position){
+            ChapterPageFragment fragment = new ChapterPageFragment();
+            Bundle args = new Bundle();
+            args.putInt(CHAPTER_NUMBER, position);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View chapterPageFragmentView = inflater.inflate(R.layout.fragment_chapterpage, container, false);
+            int position = getArguments().getInt(CHAPTER_NUMBER);
+            Chapter chapter = allChapters.get(position);
+            Section section = dlh.getSectionById(chapter.getSectionId());
+            Part part = dlh.getPartById(chapter.getPartId());
+
+            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
+            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
+            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
+            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
+            TextView chapterSerial = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_serial);
+
+            chapterId.setText(chapter.get_id()+".");
+            chapterName.setText(chapter.getTitle());
+            sectionName.setText(section.getTitle());
+            partName.setText(part.getTitle());
+            chapterSerial.setText(chapter.getSerial());
+
+
+            //Load couplets in a chapter and display in a list
+            ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id());
+            ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
+            Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
+            CoupletListItemAdapter adapter = new CoupletListItemAdapter(getContext(), values);
+            coupletsListView.setAdapter(adapter);
+
+
+            return chapterPageFragmentView;
+        }
+    }
+
+    /*Create Fragment Adapter for ChapterPager*/
+    public class ChapterPagerAdapter extends FragmentPagerAdapter {
+
+        public ChapterPagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            return ChapterPageFragment.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return allChapters.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return allChapters.get(position).get_id()+"";
+        }
+
     }
 }

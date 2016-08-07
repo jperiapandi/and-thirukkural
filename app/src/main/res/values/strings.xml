@@ -107,4 +107,8 @@
     <string name="search_hint">Type a word or number</string>
     <string name="title_activity_search_results">Search Results Activity</string>
     <string name="chapter_title">couplets chapter1 - Pandian</string>
+    <string name="section">Section</string>
+    <string name="part">Part</string>
+    <string name="serial">Serial</string>
+    <string name="title_activity_mathi">MathiActivity</string>
 </resources>

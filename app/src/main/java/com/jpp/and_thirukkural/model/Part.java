@@ -6,7 +6,7 @@ package com.jpp.and_thirukkural.model;
 public class Part {
     private int _id;
     private String title;
-    private Section section;
+    private int sectionId;
 
     public int get_id() {
         return _id;
@@ -24,11 +24,11 @@ public class Part {
         this.title = title;
     }
 
-    public Section getSection() {
-        return section;
+    public int getSectionId() {
+        return sectionId;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
     }
 }

@@ -30,7 +30,12 @@
         <activity
             android:name=".SectionsActivity"
             android:label="@string/title_activity_sections"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".ChapterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ChapterActivity" />
+        </activity>
         <activity
             android:name=".SearchResultsActivity"
             android:label="@string/title_activity_search_results"
@@ -53,8 +58,8 @@
             android:name=".provider.ThirukkuralContentProvider"
             android:authorities="com.jpp.and_thirukkural"
             android:enabled="true"
-            android:exported="true">
-        </provider>
+            android:exported="true"></provider>
+
     </application>
 
 </manifest>
