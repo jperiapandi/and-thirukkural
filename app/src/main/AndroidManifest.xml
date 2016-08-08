@@ -31,8 +31,7 @@
             android:name=".SectionsActivity"
             android:label="@string/book_index"
             android:parentActivityName=".ChapterActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ChapterActivity" />
@@ -61,6 +60,25 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="@string/fav_couplets"
+            android:parentActivityName=".ChapterActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpp.and_thirukkural.ChapterActivity" />
+        </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName=".ChapterActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpp.and_thirukkural.ChapterActivity" />
+        </activity>
     </application>
 
 </manifest>

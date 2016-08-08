@@ -94,6 +94,15 @@ public class ChapterActivity extends AppCompatActivity
         });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.chapterTabs);
         tabLayout.setupWithViewPager(mChapterPager);
+
+        //Set selected tab based on extras received in the intent
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            int chapterID = extras.getInt(Chapter.CHAPTER_ID, 1);
+            TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID-1);
+            targetTab.select();
+        }
     }
 
     @Override
@@ -150,11 +159,14 @@ public class ChapterActivity extends AppCompatActivity
             Intent i = new Intent(this, SectionsActivity.class);
             startActivity(i);
         } else if (id == R.id.fav_couplets) {
-
-        } else if (id == R.id.language) {
-
-        } else if (id == R.id.about_app_creator) {
-
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+        } /*else if (id == R.id.about_app_creator) {
+            Intent intent = new Intent(this, AboutDeveloperActivity.class);
+            startActivity(intent);
+        } */else if (id == R.id.settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

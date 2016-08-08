@@ -1,5 +1,7 @@
 package com.jpp.and_thirukkural;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,12 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.ListItem;
+import com.jpp.and_thirukkural.model.ListItemType;
 import com.jpp.and_thirukkural.model.Part;
 import com.jpp.and_thirukkural.model.Section;
 
@@ -149,6 +153,24 @@ public class SectionsActivity extends AppCompatActivity {
             ListItem[] values = items.toArray(new ListItem[items.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             partsAndChaptersList.setAdapter(adapter);
+
+            partsAndChaptersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ListItem clickedItem = (ListItem) parent.getItemAtPosition(position);
+                    if(clickedItem!=null && clickedItem.getListItemType() == ListItemType.CHAPTER)
+                    {
+                        //Open the clicked chapter in Main Activity
+                        Chapter chapter = (Chapter) clickedItem;
+                        Intent intent = new Intent((Activity) view.getContext(), ChapterActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
+                        intent.putExtras(extras);
+                        intent.setAction(Intent.ACTION_MAIN);
+                        startActivity(intent);
+                    }
+                }
+            });
 
             return rootView;
         }

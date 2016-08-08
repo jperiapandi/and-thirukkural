@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/about_thirukkural"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_book_black_24dp"
             android:title="@string/about_thirukkural" />
         <item
             android:id="@+id/book_index"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_description_black_24dp"
             android:title="@string/book_index" />
         <item
             android:id="@+id/fav_couplets"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_favorite_black_24dp"
             android:title="@string/fav_couplets" />
+
         <item
-            android:id="@+id/language"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/english" />
-        <item
-            android:id="@+id/about_app_creator"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/about_app_creator" />
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
+
     </group>
 
 </menu>

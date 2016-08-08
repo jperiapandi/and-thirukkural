@@ -9,8 +9,9 @@
     android:paddingRight="10dp"
     android:clickable="true">
 
-    <include
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/partName"
-        layout="@android:layout/preference_category"/>
+        android:textColor="@color/colorSubHeader" />
 
 </LinearLayout>

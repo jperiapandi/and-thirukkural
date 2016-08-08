@@ -4,6 +4,8 @@ package com.jpp.and_thirukkural.model;
  * Created by jperiapandi on 05-07-2016.
  */
 public class Chapter implements ListItem {
+    public static final String CHAPTER_ID = "chapterID";
+
     private int _id;
     private String title;
     private int partId;
