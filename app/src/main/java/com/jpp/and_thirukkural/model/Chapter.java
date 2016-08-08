@@ -3,7 +3,7 @@ package com.jpp.and_thirukkural.model;
 /**
  * Created by jperiapandi on 05-07-2016.
  */
-public class Chapter {
+public class Chapter implements ListItem {
     private int _id;
     private String title;
     private int partId;
@@ -43,5 +43,10 @@ public class Chapter {
 
     public CharSequence getSerial() {
         return (((this._id-1)*10)+1)+" - "+(this._id*10);
+    }
+
+    @Override
+    public ListItemType getListItemType() {
+        return ListItemType.CHAPTER;
     }
 }

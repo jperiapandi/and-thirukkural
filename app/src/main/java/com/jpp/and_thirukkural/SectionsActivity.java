@@ -1,8 +1,6 @@
 package com.jpp.and_thirukkural;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,14 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.jpp.and_thirukkural.adapters.ChapterAdapter;
+import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
+import com.jpp.and_thirukkural.model.ListItem;
+import com.jpp.and_thirukkural.model.Part;
 import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SectionsActivity extends AppCompatActivity {
     private ArrayList<Section> sections;
@@ -124,14 +124,32 @@ public class SectionsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
-            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            //Load chapters in a section and display in a list
+            int sectionID = getArguments().getInt(ARG_SECTION_NUMBER);
+
             DataLoadHelper dlh = new DataLoadHelper(getContext());
-            ArrayList<Chapter> chapters = dlh.getChaptersBySectionId(sectionNumber);
-            ListView chaptersListView = (ListView) rootView.findViewById(R.id.chaptersListView);
-            Chapter[] values = chapters.toArray(new Chapter[chapters.size()]);
-            ChapterAdapter adapter = new ChapterAdapter(getContext(), values);
-            chaptersListView.setAdapter(adapter);
+            ArrayList<Part> parts = dlh.getPartsBySectionId(sectionID);
+
+            ArrayList<ListItem> items = new ArrayList<ListItem>();
+
+            Iterator<Part> partsListIterator = parts.iterator();
+            while (partsListIterator.hasNext()){
+                Part part = partsListIterator.next();
+                items.add((ListItem) part);
+
+                ArrayList<Chapter> chapters = dlh.getChaptersByPartId(part.get_id());
+                Iterator<Chapter> chapterIterator = chapters.iterator();
+                while (chapterIterator.hasNext()){
+                    Chapter chapter = chapterIterator.next();
+                    items.add((ListItem) chapter);
+                }
+            }
+
+
+            ListView partsAndChaptersList = (ListView) rootView.findViewById(R.id.partsAndChaptersList);
+            ListItem[] values = items.toArray(new ListItem[items.size()]);
+            ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
+            partsAndChaptersList.setAdapter(adapter);
+
             return rootView;
         }
     }

@@ -7,8 +7,10 @@ android:layout_height="match_parent"
 
 <ListView
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/chaptersListView">
+    android:layout_height="wrap_content"
+    android:id="@+id/partsAndChaptersList"
+    android:dividerHeight="0dp"
+    android:divider="@android:color/white">
 </ListView>
 
 </RelativeLayout>

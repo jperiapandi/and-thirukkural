@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jpp.and_thirukkural.adapters.ChapterAdapter;
 import com.jpp.and_thirukkural.adapters.CoupletListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;

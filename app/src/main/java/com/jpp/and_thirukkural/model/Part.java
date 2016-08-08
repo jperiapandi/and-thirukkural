@@ -3,7 +3,8 @@ package com.jpp.and_thirukkural.model;
 /**
  * Created by jperiapandi on 05-07-2016.
  */
-public class Part {
+public class Part implements ListItem {
+
     private int _id;
     private String title;
     private int sectionId;
@@ -30,5 +31,10 @@ public class Part {
 
     public void setSectionId(int sectionId) {
         this.sectionId = sectionId;
+    }
+
+    @Override
+    public ListItemType getListItemType() {
+        return ListItemType.PART;
     }
 }
