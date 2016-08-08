@@ -1,5 +1,6 @@
 package com.jpp.and_thirukkural;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -230,7 +232,17 @@ public class ChapterActivity extends AppCompatActivity
             CoupletListItemAdapter adapter = new CoupletListItemAdapter(getContext(), values);
             coupletsListView.setAdapter(adapter);
 
-
+            coupletsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Couplet couplet = (Couplet) parent.getItemAtPosition(position);
+                    Intent intent = new Intent((Activity) view.getContext(), CoupletActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
+                    intent.putExtras(extras);
+                    startActivity(intent);
+                }
+            });
             return chapterPageFragmentView;
         }
     }

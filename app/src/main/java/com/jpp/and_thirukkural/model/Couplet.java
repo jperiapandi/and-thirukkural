@@ -5,9 +5,10 @@ package com.jpp.and_thirukkural.model;
  */
 public class Couplet {
 
+    public static final String COUPLET_ID = "coupletID";
     private int _id;
     private String couplet;
-    private Chapter chapter;
+    private int chapterId;
 
     public int get_id() {
         return _id;
@@ -25,11 +26,11 @@ public class Couplet {
         this.couplet = couplet;
     }
 
-    public Chapter getChapter() {
-        return chapter;
+    public int getChapterId() {
+        return chapterId;
     }
 
-    public void setChapter(Chapter chapter) {
-        this.chapter = chapter;
+    public void setChapterId(int chapterID) {
+        this.chapterId = chapterID;
     }
 }

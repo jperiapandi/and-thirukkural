@@ -108,6 +108,7 @@
     <string name="section">Section</string>
     <string name="part">Part</string>
     <string name="serial">Serial</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="couplet_detail">Couplet Detail</string>
+    <string name="chapter">Chapter</string>
 
 </resources>

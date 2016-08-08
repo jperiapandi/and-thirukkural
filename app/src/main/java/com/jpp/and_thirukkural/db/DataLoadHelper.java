@@ -44,6 +44,7 @@ public class DataLoadHelper {
             couplet = new Couplet();
             couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
             couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+            couplet.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
 
             cursor.close();
         }
@@ -75,6 +76,7 @@ public class DataLoadHelper {
                 Couplet c = new Couplet();
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+                c.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
                 result.add(c);
             }while(cursor.moveToNext());
 
@@ -178,6 +180,32 @@ public class DataLoadHelper {
 
         return result;
     }
+
+    public Chapter getChapterById(int chapterID){
+        Chapter result = null;
+
+        String[] mProjection = {ChaptersTable.COL_ID, ChaptersTable.COL_TITLE, ChaptersTable.COL_SECTION_ID, ChaptersTable.COL_PART_ID};
+        Cursor cursor = cr.query(ContentUris.withAppendedId(ThirukkuralContentProvider.CHAPTERS_URI, chapterID), mProjection, null, null, null);
+        if(cursor == null){
+            //Error while retrieving data
+
+        }else if(cursor.getCount()==0){
+            //No data found
+
+        }else{
+            cursor.moveToFirst();
+            result = new Chapter();
+            result.set_id(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_ID)));
+            result.setTitle(cursor.getString(cursor.getColumnIndex(ChaptersTable.COL_TITLE)));
+            result.setPartId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_PART_ID)));
+            result.setSectionId(cursor.getInt(cursor.getColumnIndex(ChaptersTable.COL_SECTION_ID)));
+
+        }
+        cursor.close();
+
+        return result;
+    }
+
     public ArrayList<Chapter> getChaptersBySectionId(int sectionId){
         ArrayList<Chapter> result =null;
         ContentResolver cr = context.getContentResolver();
