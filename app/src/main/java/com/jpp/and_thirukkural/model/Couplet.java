@@ -8,7 +8,6 @@ public class Couplet {
     public static final String COUPLET_ID = "coupletID";
     private int _id;
     private String couplet;
-    private int chapterId;
 
     public int get_id() {
         return _id;
@@ -27,10 +26,7 @@ public class Couplet {
     }
 
     public int getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(int chapterID) {
-        this.chapterId = chapterID;
+        Double chapterID = Math.floor((this._id-1)/10)+1;
+        return chapterID.intValue();
     }
 }

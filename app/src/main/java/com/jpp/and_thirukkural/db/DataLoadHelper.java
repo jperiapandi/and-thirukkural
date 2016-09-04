@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -29,7 +30,7 @@ public class DataLoadHelper {
     public Couplet getCoupletById(int coupletID){
         Couplet couplet = null;
 
-        String[] mProjection = {CoupletsTable.COL_ID, CoupletsTable.COL_CHAPTER_ID, CoupletsTable.COL_COUPLET};
+        String[] mProjection = CoupletsTable.ALL_COLUMNS;
         Cursor cursor = cr.query(ContentUris.withAppendedId(ThirukkuralContentProvider.COUPLETS_URI, coupletID), mProjection, null, null, null);
 
         if(cursor == null){
@@ -44,8 +45,6 @@ public class DataLoadHelper {
             couplet = new Couplet();
             couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
             couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-            couplet.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
-
             cursor.close();
         }
 
@@ -56,11 +55,19 @@ public class DataLoadHelper {
 
         ContentResolver cr = context.getContentResolver();
         //Load data from couplet table
+        ArrayList<String> coupletIds = new ArrayList<String>();
+        String[] mSelectionArgs = new String[10];
+        int i =0;
+        int ei = chapterID * 10;
+        for(int si = ((chapterID-1)*10)+1; si<=ei; si++){
+            coupletIds.add(si+"");
+            mSelectionArgs[i] = si+"";
+            i++;
+        };
+        String idsToMatch = "(" + TextUtils.join(",", coupletIds) + ")";
 
-        String[] mProjection = {CoupletsTable.COL_ID, CoupletsTable.COL_CHAPTER_ID, CoupletsTable.COL_COUPLET};
-        String mSelectionClause = CoupletsTable.COL_CHAPTER_ID+"=?";
-        String[] mSelectionArgs = { chapterID+"" };
-
+        String[] mProjection = CoupletsTable.ALL_COLUMNS;
+        String mSelectionClause = CoupletsTable.COL_ID+" in (?,?,?,?,?,?,?,?,?,?)";
         Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, null);
 
         if(cursor == null){
@@ -76,7 +83,6 @@ public class DataLoadHelper {
                 Couplet c = new Couplet();
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-                c.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
                 result.add(c);
             }while(cursor.moveToNext());
 
