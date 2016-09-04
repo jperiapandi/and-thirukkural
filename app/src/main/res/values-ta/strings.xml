@@ -22,4 +22,11 @@
     <string name="sections">பால் வகைப்பாடு</string>
     <string name="chapters">அதிகாரங்கள்</string>
     <string name="parts">இயல்கள்</string>
+    <string name="commentaryByManakudavar">மணக்குடவர் உரை</string>
+    <string name="commentaryByMuKarunanidhi">மு. கருணாநிதி உரை</string>
+    <string name="commentaryByMuVaradarajan">மு.வரதராசன் உரை</string>
+    <string name="commentaryBySolomonPappaiah">சாலமன் பாப்பையா உரை</string>
+    <string name="english">ஆங்கிலம்</string>
+    <string name="englishCommentary">ஆங்கில உரை</string>
+    <string name="couplet">குறள்</string>
 </resources>

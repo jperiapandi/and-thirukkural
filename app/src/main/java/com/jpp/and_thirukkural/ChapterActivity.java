@@ -170,9 +170,10 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
             chapterId.setText(chapter.get_id()+".");
             chapterName.setText(chapter.getTitle());
-            sectionName.setText(section.getTitle());
-            partName.setText(part.getTitle());
-            chapterSerial.setText(chapter.getSerial());
+
+            sectionName.setText(section.get_id()+". "+section.getTitle());
+            partName.setText(part.get_id()+". "+part.getTitle());
+            chapterSerial.setText(getResources().getString(R.string.serial)+": "+chapter.getSerial());
 
 
             //Load couplets in a chapter and display in a list

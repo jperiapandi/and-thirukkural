@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jpp.and_thirukkural.CoupletActivity"
     tools:showIn="@layout/activity_couplet">
@@ -14,7 +13,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_grey_100"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Section name"
+                android:id="@+id/section_title"
+                android:layout_column="1"
+                android:layout_below="@+id/textView4"
+                android:layout_toRightOf="@+id/textView8"
+                android:layout_toEndOf="@+id/textView8"
+                style="@style/badge1"
+                android:layout_marginRight="@dimen/badge_hspace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Part name"
+                android:id="@+id/part_title"
+                android:layout_column="1"
+                android:layout_below="@+id/textView8"
+                android:layout_toRightOf="@+id/textView10"
+                android:layout_toEndOf="@+id/textView10"
+                style="@style/badge2"
+                android:layout_marginRight="@dimen/badge_hspace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Chapter name"
+                android:id="@+id/chapter_title"
+                android:layout_column="1"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/textView4"
+                android:layout_toEndOf="@+id/textView4"
+                style="@style/badge3" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -30,7 +74,8 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -72,81 +117,123 @@
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/chapter"
-                android:id="@+id/textView4"
-                android:layout_column="0"
-                android:layout_marginRight="5dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Chapter name"
-                android:id="@+id/chapter_title"
-                android:layout_column="1"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/textView4"
-                android:layout_toEndOf="@+id/textView4" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/section"
-                android:id="@+id/textView8"
-                android:layout_column="0"
-                android:layout_below="@+id/textView4"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="5dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Section name"
-                android:id="@+id/section_title"
-                android:layout_column="1"
-                android:layout_below="@+id/textView4"
-                android:layout_toRightOf="@+id/textView8"
-                android:layout_toEndOf="@+id/textView8" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/part"
-                android:id="@+id/textView10"
-                android:layout_column="0"
-                android:layout_below="@+id/textView8"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="5dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Part name"
-                android:id="@+id/part_title"
-                android:layout_column="1"
-                android:layout_below="@+id/textView8"
-                android:layout_toRightOf="@+id/textView10"
-                android:layout_toEndOf="@+id/textView10" />
-        </RelativeLayout>
-
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/linearLayout"
+        android:paddingLeft="8dp"
+        android:paddingRight="4dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/commentaryByMuVaradarajan"
+                android:id="@+id/textView6"
+                style="@style/commentaryByTextStyle"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="commentary 1 goes here"
+                android:id="@+id/commentary1"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/commentaryBySolomonPappaiah"
+                android:id="@+id/textView11"
+                style="@style/commentaryByTextStyle"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="commentary 2 goes here"
+                android:id="@+id/commentary2"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/commentaryByManakudavar"
+                android:id="@+id/textView13"
+                style="@style/commentaryByTextStyle"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="commentary 3 goes here"
+                android:id="@+id/commentary3"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/commentaryByMuKarunanidhi"
+                android:id="@+id/textView15"
+                style="@style/commentaryByTextStyle"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="commentary 4 goes here"
+                android:id="@+id/commentary4"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/english"
+                android:id="@+id/textView16"
+                style="@style/commentaryByTextStyle"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Couplet in English"
+                android:id="@+id/couplet_text_en"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/englishCommentary"
+                android:id="@+id/textView17"
+                style="@style/commentaryByTextStyle"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="commentery 5 goes here"
+                android:id="@+id/commentary5"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

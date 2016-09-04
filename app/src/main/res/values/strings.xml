@@ -113,5 +113,11 @@
     <string name="sections">Sections</string>
     <string name="chapters">Chapters</string>
     <string name="parts">Parts</string>
+    <string name="englishCommentary">English commentary</string>
+    <string name="commentaryByMuVaradarajan">Commentary by Mu. Varadarajan</string>
+    <string name="commentaryBySolomonPappaiah">Commentary by Solomon Pappaiah</string>
+    <string name="commentaryByManakudavar">Commentary by Manakudavar</string>
+    <string name="commentaryByMuKarunanidhi">Commentary by Mu. Karunanidhi</string>
+    <string name="couplet">Couplet</string>
 
 </resources>

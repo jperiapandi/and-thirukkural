@@ -51,6 +51,16 @@ public class DataLoadHelper {
             couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
             couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
             couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+
+            if(includeExplanation){
+                couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+                couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+                couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+                couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+                couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+                couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+            }
+
             cursor.close();
         }
 
@@ -96,6 +106,16 @@ public class DataLoadHelper {
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
                 c.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+
+                if(includeExplanation){
+                    c.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+                    c.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+                    c.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+                    c.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+                    c.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+                    c.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+                }
+
                 result.add(c);
             }while(cursor.moveToNext());
 

@@ -45,15 +45,30 @@ public class CoupletActivity extends AppCompatActivity {
             //Bind data to view
             TextView coupletIdView = (TextView) findViewById(R.id.couplet_id);
             TextView coupletTextView = (TextView) findViewById(R.id.couplet_text);
+            TextView coupletTextViewEn = (TextView) findViewById(R.id.couplet_text_en);
             TextView chapterTitleView = (TextView) findViewById(R.id.chapter_title);
             TextView sectionTitleView = (TextView) findViewById(R.id.section_title);
             TextView partTitleView = (TextView) findViewById(R.id.part_title);
 
-            coupletIdView.setText(couplet.get_id()+"");
+            TextView commentary1View = (TextView) findViewById(R.id.commentary1);
+            TextView commentary2View = (TextView) findViewById(R.id.commentary2);
+            TextView commentary3View = (TextView) findViewById(R.id.commentary3);
+            TextView commentary4View = (TextView) findViewById(R.id.commentary4);
+            TextView commentary5View = (TextView) findViewById(R.id.commentary5);
+
+            coupletIdView.setText(getResources().getString(R.string.couplet)+"  "+couplet.get_id()+"");
             coupletTextView.setText(couplet.getCouplet());
-            chapterTitleView.setText(chapter.getTitle());
-            sectionTitleView.setText(section.getTitle());
-            partTitleView.setText(part.getTitle());
+            coupletTextViewEn.setText(couplet.getCouplet_en());
+
+            chapterTitleView.setText(chapter.get_id()+". "+chapter.getTitle());
+            sectionTitleView.setText(section.get_id()+". "+section.getTitle());
+            partTitleView.setText(part.get_id()+". "+part.getTitle());
+
+            commentary1View.setText(couplet.getExpln_muva());
+            commentary2View.setText(couplet.getExpln_pappaiah());
+            commentary3View.setText(couplet.getExpln_manakudavar());
+            commentary4View.setText(couplet.getExpln_karunanidhi());
+            commentary5View.setText(couplet.getExpln_en());
         }
     }
 

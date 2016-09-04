@@ -22,12 +22,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="43"
+        style="@style/badge3"
         android:id="@+id/chaptersCount"
-        android:background="@drawable/rounded_corner"
         android:layout_margin="10dp"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/background_floating_material_light"
-        android:backgroundTint="@color/badge_color3"
-        android:textSize="@dimen/badge_fontSize" />
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>
