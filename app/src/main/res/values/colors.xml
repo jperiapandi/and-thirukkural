@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#ff4081</color>
     <color name="colorSubHeader">#90a4ae</color>
+
+    <color name="badge_color1">#fd0061</color>
+    <color name="badge_color2">#001880</color>
+    <color name="badge_color3">#00ba06</color>
+    <color name="badge_color4">#df8d00</color>
 </resources>

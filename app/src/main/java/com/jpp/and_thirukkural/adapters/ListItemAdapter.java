@@ -59,9 +59,15 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
 
     private void renderPart(View rowView, Part part){
         TextView partName = (TextView) rowView.findViewById(R.id.partName);
+        TextView chaptersCount = (TextView) rowView.findViewById(R.id.chaptersCount);
 
         String partNameStr = part.get_id()+"  "+part.getTitle()+"";
+        String chaptersCountStr = part.getNumOfChapters()+" "+getContext().getResources().getString(R.string.chapters);
+        if(part.getNumOfChapters() == 1){
+            chaptersCountStr = part.getNumOfChapters()+" "+getContext().getResources().getString(R.string.chapter);
+        }
         partName.setText(partNameStr);
+        chaptersCount.setText(chaptersCountStr);
     }
     private void renderChapter(View rowView, Chapter chapter){
 

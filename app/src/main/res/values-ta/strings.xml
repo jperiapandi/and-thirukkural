@@ -19,4 +19,7 @@
     <string name="settings">அமைப்புகள்</string>
     <string name="couplet_detail">குறள் விளக்கம்</string>
     <string name="chapter">அதிகாரம்</string>
+    <string name="sections">பால் வகைப்பாடு</string>
+    <string name="chapters">அதிகாரங்கள்</string>
+    <string name="parts">இயல்கள்</string>
 </resources>

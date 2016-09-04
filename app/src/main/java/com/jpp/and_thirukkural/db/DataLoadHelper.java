@@ -27,10 +27,15 @@ public class DataLoadHelper {
         this.cr = context.getContentResolver();
     }
 
-    public Couplet getCoupletById(int coupletID){
+    public Couplet getCoupletById(int coupletID, boolean includeExplanation){
         Couplet couplet = null;
 
-        String[] mProjection = CoupletsTable.ALL_COLUMNS;
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
         Cursor cursor = cr.query(ContentUris.withAppendedId(ThirukkuralContentProvider.COUPLETS_URI, coupletID), mProjection, null, null, null);
 
         if(cursor == null){
@@ -44,13 +49,14 @@ public class DataLoadHelper {
 
             couplet = new Couplet();
             couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+            couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
             couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
             cursor.close();
         }
 
         return couplet;
     }
-    public ArrayList<Couplet> getCoupletsByChapter(int chapterID){
+    public ArrayList<Couplet> getCoupletsByChapter(int chapterID, boolean includeExplanation){
         ArrayList<Couplet> result = null;
 
         ContentResolver cr = context.getContentResolver();
@@ -66,7 +72,13 @@ public class DataLoadHelper {
         };
         String idsToMatch = "(" + TextUtils.join(",", coupletIds) + ")";
 
-        String[] mProjection = CoupletsTable.ALL_COLUMNS;
+
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
         String mSelectionClause = CoupletsTable.COL_ID+" in (?,?,?,?,?,?,?,?,?,?)";
         Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, null);
 
@@ -82,6 +94,7 @@ public class DataLoadHelper {
             do{
                 Couplet c = new Couplet();
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+                c.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
                 result.add(c);
             }while(cursor.moveToNext());

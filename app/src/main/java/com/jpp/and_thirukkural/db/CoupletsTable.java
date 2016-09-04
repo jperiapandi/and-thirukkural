@@ -20,6 +20,10 @@ public class CoupletsTable {
     public static final String COL_EXPLN_KARUNANIDHI = "expln_karunanidhi";
     public static final String COL_EXPLN_EN = "expln_en";
 
+    public static final String[] BASIC_COLUMNS = {
+            CoupletsTable.COL_ID, CoupletsTable.COL_FAV, CoupletsTable.COL_COUPLET
+            };
+
     public static final String[] ALL_COLUMNS = {
             CoupletsTable.COL_ID, CoupletsTable.COL_FAV, CoupletsTable.COL_COUPLET, CoupletsTable.COL_COUPLET_EN,
             CoupletsTable.COL_EXPLN_MUVA, CoupletsTable.COL_EXPLN_PAPPAIAH, CoupletsTable.COL_EXPLN_MANAKUDAVAR,

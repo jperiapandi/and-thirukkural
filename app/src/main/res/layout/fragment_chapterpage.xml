@@ -116,18 +116,30 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton"
+                android:id="@+id/pdfChapterButton"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:src="@drawable/ic_pdf_file_black_24dp"
+                style="@android:style/Widget.Material.Button.Borderless.Small"
+                android:layout_gravity="center_vertical" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shareChapterButton"
                 android:layout_row="0"
                 android:layout_column="2"
                 android:src="@drawable/ic_share_black_24dp"
-                style="?android:attr/borderlessButtonStyle" />
+                style="@android:style/Widget.Material.Button.Borderless.Small"
+                android:layout_gravity="center_vertical" />
+
         </LinearLayout>
     </LinearLayout>
 

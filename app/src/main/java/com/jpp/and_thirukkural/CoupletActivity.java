@@ -37,7 +37,7 @@ public class CoupletActivity extends AppCompatActivity {
         {
             int coupletID = extras.getInt(Couplet.COUPLET_ID, 1);
 
-            Couplet couplet = dlh.getCoupletById(coupletID);
+            Couplet couplet = dlh.getCoupletById(coupletID, true);
             Chapter chapter = dlh.getChapterById(couplet.getChapterId());
             Section section = dlh.getSectionById(chapter.getSectionId());
             Part part = dlh.getPartById(chapter.getPartId());

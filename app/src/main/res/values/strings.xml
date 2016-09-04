@@ -110,5 +110,8 @@
     <string name="serial">Serial</string>
     <string name="couplet_detail">Couplet Detail</string>
     <string name="chapter">Chapter</string>
+    <string name="sections">Sections</string>
+    <string name="chapters">Chapters</string>
+    <string name="parts">Parts</string>
 
 </resources>

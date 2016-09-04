@@ -16,9 +16,10 @@
         android:background="@color/material_grey_100"
         android:padding="8dp">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,28 +29,37 @@
                 android:id="@+id/couplet_id"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_vertical" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton2"
-                android:src="@drawable/ic_favorite_black_24dp"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/imageButton3"
-                android:layout_toStartOf="@+id/imageButton3"
-                style="@android:style/Widget.Material.Button.Borderless.Small" />
+                android:gravity="end">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageButton3"
-                android:src="@drawable/ic_share_black_24dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                style="@android:style/Widget.Material.Button.Borderless.Small" />
-        </RelativeLayout>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/favButton"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pdfCoupletButton"
+                    android:src="@drawable/ic_pdf_file_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shareCoupletButton"
+                    android:src="@drawable/ic_share_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="fill_parent"

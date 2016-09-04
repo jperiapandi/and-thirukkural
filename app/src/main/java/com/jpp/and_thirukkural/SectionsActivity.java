@@ -138,20 +138,17 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.about_thirukkural) {
+        if (id == R.id.about_menuItem) {
             // Handle the camera action
             Intent i = new Intent(this, AboutThirukkuralActivity.class);
             startActivity(i);
-        } else if (id == R.id.book_index) {
-            Intent i = new Intent(this, SectionsActivity.class);
-            startActivity(i);
-        } else if (id == R.id.fav_couplets) {
+        }else if (id == R.id.favs_menuItem) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
         } /*else if (id == R.id.about_app_creator) {
             Intent intent = new Intent(this, AboutDeveloperActivity.class);
             startActivity(intent);
-        } */else if (id == R.id.settings) {
+        } */else if (id == R.id.settings_menuItem) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
@@ -214,6 +211,8 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
                 items.add((ListItem) part);
 
                 ArrayList<Chapter> chapters = dlh.getChaptersByPartId(part.get_id());
+                part.setNumOfChapters(chapters.size());
+
                 Iterator<Chapter> chapterIterator = chapters.iterator();
                 while (chapterIterator.hasNext()){
                     Chapter chapter = chapterIterator.next();

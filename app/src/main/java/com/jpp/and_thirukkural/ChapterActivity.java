@@ -176,7 +176,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
 
             //Load couplets in a chapter and display in a list
-            ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id());
+            ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
             ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
             Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
             CoupletListItemAdapter adapter = new CoupletListItemAdapter(getContext(), values);

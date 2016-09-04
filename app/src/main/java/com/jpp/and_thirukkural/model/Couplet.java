@@ -9,6 +9,8 @@ public class Couplet {
     private int _id;
     private String couplet;
 
+    private int fav;
+
     public int get_id() {
         return _id;
     }
@@ -23,6 +25,15 @@ public class Couplet {
 
     public void setCouplet(String couplet) {
         this.couplet = couplet;
+    }
+
+
+    public int getFav() {
+        return fav;
+    }
+
+    public void setFav(int fav) {
+        this.fav = fav;
     }
 
     public int getChapterId() {
