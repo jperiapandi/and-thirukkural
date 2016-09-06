@@ -3,20 +3,24 @@
 
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/about_thirukkural"
+            android:id="@+id/about_menuItem"
             android:icon="@drawable/ic_book_black_24dp"
             android:title="@string/about_thirukkural" />
         <item
-            android:id="@+id/book_index"
+            android:id="@+id/chapters_menuItem"
             android:icon="@drawable/ic_description_black_24dp"
-            android:title="@string/book_index" />
+            android:title="@string/chapters" />
         <item
-            android:id="@+id/fav_couplets"
+            android:id="@+id/parts_menuItem"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="@string/parts" />
+        <item
+            android:id="@+id/favs_menuItem"
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="@string/fav_couplets" />
 
         <item
-            android:id="@+id/settings"
+            android:id="@+id/settings_menuItem"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/settings" />
 

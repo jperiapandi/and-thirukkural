@@ -13,14 +13,17 @@ public class PartsTable {
     public static final String COL_TITLE = "title";
     public static final String COL_SECTION_ID = "section_id";
 
+    public static final String[] ALL_COLUMNS = {
+            PartsTable.COL_ID, PartsTable.COL_TITLE, PartsTable.COL_SECTION_ID
+    };
+
     public static void checkColumns(String[] projection) {
-        String[] available = {PartsTable.COL_ID, PartsTable.COL_SECTION_ID,PartsTable.COL_TITLE};
 
         if (projection != null) {
             HashSet<String> requestedColumns = new HashSet<String>(
                     Arrays.asList(projection));
             HashSet<String> availableColumns = new HashSet<String>(
-                    Arrays.asList(available));
+                    Arrays.asList(PartsTable.ALL_COLUMNS));
             // check if all columns which are requested are available
             if (!availableColumns.containsAll(requestedColumns)) {
                 throw new IllegalArgumentException(

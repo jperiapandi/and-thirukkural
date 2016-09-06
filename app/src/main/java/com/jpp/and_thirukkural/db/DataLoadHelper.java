@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -26,10 +27,15 @@ public class DataLoadHelper {
         this.cr = context.getContentResolver();
     }
 
-    public Couplet getCoupletById(int coupletID){
+    public Couplet getCoupletById(int coupletID, boolean includeExplanation){
         Couplet couplet = null;
 
-        String[] mProjection = {CoupletsTable.COL_ID, CoupletsTable.COL_CHAPTER_ID, CoupletsTable.COL_COUPLET};
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
         Cursor cursor = cr.query(ContentUris.withAppendedId(ThirukkuralContentProvider.COUPLETS_URI, coupletID), mProjection, null, null, null);
 
         if(cursor == null){
@@ -43,24 +49,47 @@ public class DataLoadHelper {
 
             couplet = new Couplet();
             couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+            couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
             couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-            couplet.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
+
+            if(includeExplanation){
+                couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+                couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+                couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+                couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+                couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+                couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+            }
 
             cursor.close();
         }
 
         return couplet;
     }
-    public ArrayList<Couplet> getCoupletsByChapter(int chapterID){
+    public ArrayList<Couplet> getCoupletsByChapter(int chapterID, boolean includeExplanation){
         ArrayList<Couplet> result = null;
 
         ContentResolver cr = context.getContentResolver();
         //Load data from couplet table
+        ArrayList<String> coupletIds = new ArrayList<String>();
+        String[] mSelectionArgs = new String[10];
+        int i =0;
+        int ei = chapterID * 10;
+        for(int si = ((chapterID-1)*10)+1; si<=ei; si++){
+            coupletIds.add(si+"");
+            mSelectionArgs[i] = si+"";
+            i++;
+        };
+        String idsToMatch = "(" + TextUtils.join(",", coupletIds) + ")";
 
-        String[] mProjection = {CoupletsTable.COL_ID, CoupletsTable.COL_CHAPTER_ID, CoupletsTable.COL_COUPLET};
-        String mSelectionClause = CoupletsTable.COL_CHAPTER_ID+"=?";
-        String[] mSelectionArgs = { chapterID+"" };
 
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
+        String mSelectionClause = CoupletsTable.COL_ID+" in (?,?,?,?,?,?,?,?,?,?)";
         Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, null);
 
         if(cursor == null){
@@ -75,8 +104,18 @@ public class DataLoadHelper {
             do{
                 Couplet c = new Couplet();
                 c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+                c.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
                 c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-                c.setChapterId(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_CHAPTER_ID)));
+
+                if(includeExplanation){
+                    c.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+                    c.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+                    c.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+                    c.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+                    c.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+                    c.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+                }
+
                 result.add(c);
             }while(cursor.moveToNext());
 

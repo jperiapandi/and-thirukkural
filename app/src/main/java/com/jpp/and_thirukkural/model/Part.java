@@ -9,6 +9,9 @@ public class Part implements ListItem {
     private String title;
     private int sectionId;
 
+
+    private int numOfChapters = 0;
+
     public int get_id() {
         return _id;
     }
@@ -31,6 +34,15 @@ public class Part implements ListItem {
 
     public void setSectionId(int sectionId) {
         this.sectionId = sectionId;
+    }
+
+
+    public int getNumOfChapters() {
+        return numOfChapters;
+    }
+
+    public void setNumOfChapters(int numOfChapters) {
+        this.numOfChapters = numOfChapters;
     }
 
     @Override

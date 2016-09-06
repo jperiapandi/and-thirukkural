@@ -4,135 +4,110 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1"
         android:padding="8dp"
-        android:background="@color/material_grey_300">
+        android:background="@color/material_grey_100">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.83">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Section name"
+                android:id="@+id/section_name"
+                style="@style/badge1"
+                android:layout_marginRight="@dimen/badge_hspace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="133"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:id="@+id/chapter_id"
-                    android:layout_marginRight="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Partname"
+                android:id="@+id/part_name"
+                style="@style/badge2"
+                android:layout_marginRight="@dimen/badge_hspace" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Chapter Name"
-                    android:id="@+id/chapter_name"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/chapter_id"
-                    android:layout_toEndOf="@+id/chapter_id" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/section"
-                    android:textStyle="bold"
-                    android:id="@+id/textView2"
-                    android:layout_marginRight="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Section name"
-                    android:id="@+id/section_name" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/part"
-                    android:textStyle="bold"
-                    android:id="@+id/textView5"
-                    android:layout_marginRight="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Partname"
-                    android:id="@+id/part_name" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/serial"
-                    android:textStyle="bold"
-                    android:id="@+id/textView7"
-                    android:layout_marginRight="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="121 - 130"
-                    android:id="@+id/chapter_serial" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="121 - 130"
+                android:id="@+id/chapter_serial"
+                style="@style/badge4" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_vertical">
 
-            <ImageButton
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:src="@drawable/ic_share_black_24dp"
-                style="?android:attr/borderlessButtonStyle" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="133"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:id="@+id/chapter_id"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Chapter Name"
+                android:id="@+id/chapter_name"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/chapter_id"
+                android:layout_toEndOf="@+id/chapter_id"
+                android:layout_gravity="center_vertical" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pdfChapterButton"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:src="@drawable/ic_pdf_file_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/shareChapterButton"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:src="@drawable/ic_share_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/chapterCoupletsListView" />
+
 </LinearLayout>
