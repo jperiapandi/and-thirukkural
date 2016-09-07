@@ -119,5 +119,7 @@
     <string name="commentaryByManakudavar">Commentary by Manakudavar</string>
     <string name="commentaryByMuKarunanidhi">Commentary by Mu. Karunanidhi</string>
     <string name="couplet">Couplet</string>
+    <string name="title_activity_couplet_swipe">Couplet Swipe Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

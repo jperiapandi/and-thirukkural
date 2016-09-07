@@ -46,26 +46,13 @@ public class DataLoadHelper {
 
         }else{
             cursor.moveToFirst();
-
-            couplet = new Couplet();
-            couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
-            couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
-            couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-
-            if(includeExplanation){
-                couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
-                couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
-                couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
-                couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
-                couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
-                couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
-            }
-
+            couplet = getCoupletFromCursor(cursor, includeExplanation);
             cursor.close();
         }
 
         return couplet;
     }
+
     public ArrayList<Couplet> getCoupletsByChapter(int chapterID, boolean includeExplanation){
         ArrayList<Couplet> result = null;
 
@@ -102,27 +89,68 @@ public class DataLoadHelper {
             cursor.moveToFirst();
             result = new ArrayList<Couplet>();
             do{
-                Couplet c = new Couplet();
-                c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
-                c.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
-                c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-
-                if(includeExplanation){
-                    c.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
-                    c.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
-                    c.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
-                    c.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
-                    c.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
-                    c.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
-                }
-
-                result.add(c);
+                Couplet couplet = getCoupletFromCursor(cursor, includeExplanation);
+                result.add(couplet);
             }while(cursor.moveToNext());
 
             cursor.close();
         }
 
         return result;
+    }
+
+    public ArrayList<Couplet> getAllCouplets(boolean includeExplanation){
+        ArrayList<Couplet> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from couplets table
+
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
+        String mSelectionClause = null;
+        String[] mSelectionArgs = null;
+        String sortOrder = null;
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+
+        if(cursor == null){
+            //Error while retrieving data
+
+        }else if(cursor.getCount()==0){
+            //No data found
+
+        }else{
+            cursor.moveToFirst();
+            result = new ArrayList<Couplet>();
+            do{
+                Couplet couplet =getCoupletFromCursor(cursor, includeExplanation);
+                result.add(couplet);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return result;
+    }
+
+    private Couplet getCoupletFromCursor(Cursor cursor, boolean includeExplanation){
+        Couplet couplet = new Couplet();
+        couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+        couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
+        couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+
+        if(includeExplanation){
+            couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+            couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+            couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+            couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+            couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+            couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+        }
+        return couplet;
     }
 
     public ArrayList<Section> getAllSections(){

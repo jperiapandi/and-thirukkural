@@ -187,7 +187,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    Intent intent = new Intent((Activity) view.getContext(), CoupletActivity.class);
+                    Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);
