@@ -68,7 +68,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:text="1330"
                 android:id="@+id/couplet_id"
                 android:layout_centerVertical="true"
@@ -145,7 +145,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="commentary 1 goes here"
                 android:id="@+id/commentary1"
                 android:paddingBottom="16dp" />
@@ -162,7 +162,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="commentary 2 goes here"
                 android:id="@+id/commentary2"
                 android:paddingBottom="16dp" />
@@ -179,7 +179,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="commentary 3 goes here"
                 android:id="@+id/commentary3"
                 android:paddingBottom="16dp" />
@@ -196,7 +196,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="commentary 4 goes here"
                 android:id="@+id/commentary4"
                 android:paddingBottom="16dp" />
@@ -213,7 +213,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="Couplet in English"
                 android:id="@+id/couplet_text_en"
                 android:paddingBottom="16dp" />
@@ -230,7 +230,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="commentery 5 goes here"
                 android:id="@+id/commentary5"
                 android:paddingBottom="16dp" />
