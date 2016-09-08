@@ -2,6 +2,7 @@ package com.jpp.and_thirukkural;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -72,6 +73,13 @@ public class CoupletSwipeActivity extends AppCompatActivity {
         mCoupletPager = (ViewPager) findViewById(R.id.container);
         mCoupletPager.setAdapter(mCoupletsPagerAdapter);
 
+        //Set selected tab based on extras received in the intent
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            int coupletID = extras.getInt(Couplet.COUPLET_ID, 1);
+            mCoupletPager.setCurrentItem(coupletID-1);
+        }
     }
 
 
