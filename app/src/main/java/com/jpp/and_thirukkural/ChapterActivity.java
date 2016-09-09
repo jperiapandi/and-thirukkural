@@ -34,7 +34,7 @@ import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 
-public class ChapterActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
     static DataLoadHelper dlh;
@@ -83,6 +83,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
             }
         });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.chapterTabs);
         tabLayout.setupWithViewPager(mChapterPager);
 
@@ -98,16 +99,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chapter, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_menu_item).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
-
-        searchView.setOnQueryTextListener(this);
-
+        configureSearchMenu(menu, R.menu.menu_chapter);
         return true;
     }
 
@@ -116,25 +108,8 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.i("Search submit" , query);
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
     }
 
     /*Create Framgment for Chapter Pager*/

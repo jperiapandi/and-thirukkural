@@ -72,15 +72,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
-        <activity
-            android:name=".CoupletActivity"
-            android:label="@string/couplet_detail"
-            android:parentActivityName=".ChapterActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.ChapterActivity" />
-        </activity>
 
         <provider
             android:name=".provider.ThirukkuralContentProvider"
@@ -97,6 +88,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.ChapterActivity" />
         </activity>
+        <activity android:name=".ThirukkuralBaseActivity"></activity>
     </application>
 
 </manifest>
