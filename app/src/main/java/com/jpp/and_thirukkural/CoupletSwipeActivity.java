@@ -20,8 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
+import com.jpp.and_thirukkural.model.Commentary;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.Part;
 import com.jpp.and_thirukkural.model.Section;
@@ -69,7 +71,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         mCoupletsPagerAdapter = new CoupletsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mCoupletPager = (ViewPager) findViewById(R.id.container);
+        mCoupletPager = (ViewPager) findViewById(R.id.coupletPager);
         mCoupletPager.setAdapter(mCoupletsPagerAdapter);
 
         //Set selected tab based on extras received in the intent
@@ -136,30 +138,55 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             //Bind data to view
             TextView coupletIdView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_id);
             TextView coupletTextView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_text);
-            TextView coupletTextViewEn = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_text_en);
             TextView chapterTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.chapter_title);
             TextView sectionTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.section_title);
             TextView partTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.part_title);
 
-            TextView commentary1View = (TextView) coupletPageFragmentView.findViewById(R.id.commentary1);
-            TextView commentary2View = (TextView) coupletPageFragmentView.findViewById(R.id.commentary2);
-            TextView commentary3View = (TextView) coupletPageFragmentView.findViewById(R.id.commentary3);
-            TextView commentary4View = (TextView) coupletPageFragmentView.findViewById(R.id.commentary4);
-            TextView commentary5View = (TextView) coupletPageFragmentView.findViewById(R.id.commentary5);
+            ListView commentaryList = (ListView) coupletPageFragmentView.findViewById(R.id.commentaryList);
+            ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
+
+            Commentary c1 = new Commentary();
+            c1.setCommentaryBy(getResources().getString(R.string.commentaryBySolomonPappaiah));
+            c1.setCommentary(couplet.getExpln_pappaiah());
+            commentaries.add(c1);
+
+            Commentary c2 = new Commentary();
+            c2.setCommentaryBy(getResources().getString(R.string.commentaryByMuVaradarajan));
+            c2.setCommentary(couplet.getExpln_muva());
+            commentaries.add(c2);
+
+            Commentary c3 = new Commentary();
+            c3.setCommentaryBy(getResources().getString(R.string.commentaryByMuKarunanidhi));
+            c3.setCommentary(couplet.getExpln_karunanidhi());
+            commentaries.add(c3);
+
+            Commentary c4 = new Commentary();
+            c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
+            c4.setCommentary(couplet.getExpln_manakudavar());
+            commentaries.add(c4);
+
+
+            Commentary c5 = new Commentary();
+            c5.setCommentaryBy(getResources().getString(R.string.english));
+            c5.setCommentary(couplet.getCouplet_en());
+            commentaries.add(c5);
+
+
+            Commentary c6 = new Commentary();
+            c6.setCommentaryBy(getResources().getString(R.string.englishCommentary));
+            c6.setCommentary(couplet.getExpln_en());
+            commentaries.add(c6);
 
             coupletIdView.setText(getResources().getString(R.string.couplet)+"  "+couplet.get_id()+"");
             coupletTextView.setText(couplet.getCouplet());
-            coupletTextViewEn.setText(couplet.getCouplet_en());
 
             chapterTitleView.setText(chapter.get_id()+". "+chapter.getTitle());
             sectionTitleView.setText(section.get_id()+". "+section.getTitle());
             partTitleView.setText(part.get_id()+". "+part.getTitle());
 
-            commentary1View.setText(couplet.getExpln_muva());
-            commentary2View.setText(couplet.getExpln_pappaiah());
-            commentary3View.setText(couplet.getExpln_manakudavar());
-            commentary4View.setText(couplet.getExpln_karunanidhi());
-            commentary5View.setText(couplet.getExpln_en());
+            Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
+            ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
+            commentaryList.setAdapter(adapter);
 
             return coupletPageFragmentView;
         }

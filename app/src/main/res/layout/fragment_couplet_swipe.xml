@@ -1,15 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.jpp.and_thirukkural.CoupletSwipeActivity$PlaceholderFragment">
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/material_grey_100"
+        android:weightSum="1"
         android:padding="8dp"
-        android:id="@+id/linearLayout">
+        android:background="@color/material_grey_100">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -22,10 +23,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Section name"
                 android:id="@+id/section_title"
-                android:layout_column="1"
-                android:layout_below="@+id/textView4"
-                android:layout_toRightOf="@+id/textView8"
-                android:layout_toEndOf="@+id/textView8"
                 style="@style/badge1"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
@@ -35,10 +32,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Part name"
                 android:id="@+id/part_title"
-                android:layout_column="1"
-                android:layout_below="@+id/textView8"
-                android:layout_toRightOf="@+id/textView10"
-                android:layout_toEndOf="@+id/textView10"
                 style="@style/badge2"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
@@ -48,10 +41,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Chapter name"
                 android:id="@+id/chapter_title"
-                android:layout_column="1"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/textView4"
-                android:layout_toEndOf="@+id/textView4"
                 style="@style/badge3" />
         </LinearLayout>
 
@@ -66,9 +55,6 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:text="1330"
                 android:id="@+id/couplet_id"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
@@ -114,122 +100,12 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/linearLayout"
-        android:paddingLeft="8dp"
-        android:paddingRight="4dp">
+        android:layout_height="wrap_content"
+        android:id="@+id/commentaryList"
+        android:divider="@null"
+        android:clickable="false"
+        android:contextClickable="false" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/commentaryByMuVaradarajan"
-                android:id="@+id/textView6"
-                style="@style/commentaryByTextStyle"
-                android:paddingTop="16dp"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="commentary 1 goes here"
-                android:id="@+id/commentary1"
-                android:paddingBottom="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/commentaryBySolomonPappaiah"
-                android:id="@+id/textView11"
-                style="@style/commentaryByTextStyle"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="commentary 2 goes here"
-                android:id="@+id/commentary2"
-                android:paddingBottom="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/commentaryByManakudavar"
-                android:id="@+id/textView13"
-                style="@style/commentaryByTextStyle"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="commentary 3 goes here"
-                android:id="@+id/commentary3"
-                android:paddingBottom="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/commentaryByMuKarunanidhi"
-                android:id="@+id/textView15"
-                style="@style/commentaryByTextStyle"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="commentary 4 goes here"
-                android:id="@+id/commentary4"
-                android:paddingBottom="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/english"
-                android:id="@+id/textView16"
-                style="@style/commentaryByTextStyle"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="Couplet in English"
-                android:id="@+id/couplet_text_en"
-                android:paddingBottom="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/englishCommentary"
-                android:id="@+id/textView17"
-                style="@style/commentaryByTextStyle"
-                android:paddingBottom="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="commentery 5 goes here"
-                android:id="@+id/commentary5"
-                android:paddingBottom="16dp" />
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.jpp.and_thirukkural.R;
 import com.jpp.and_thirukkural.model.Chapter;
+import com.jpp.and_thirukkural.model.Commentary;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.ListItem;
 import com.jpp.and_thirukkural.model.Part;
@@ -62,6 +63,9 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
             case SECTION:
                 rowView = renderSection((Section) item, position,convertView,parent);
                 break;
+
+            case COMMENTARY:
+                rowView = renderCommentary((Commentary) item, position,convertView,parent);
         }
 
         return rowView;
@@ -124,6 +128,18 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
 
         TextView titleText = (TextView) rowView.findViewById(R.id.section_title);
         titleText.setText(data.getTitle());
+        return rowView;
+    }
+
+    protected View renderCommentary(Commentary data, int position, View convertView, ViewGroup parent){
+        View rowView = inflater.inflate(R.layout.row_commentary, parent, false);
+
+        TextView commentaryBy = (TextView) rowView.findViewById(R.id.commentary_by);
+        TextView commentary = (TextView) rowView.findViewById(R.id.commentary);
+
+        commentaryBy.setText(data.getCommentaryBy());
+        commentary.setText(data.getCommentary());
+
         return rowView;
     }
 
