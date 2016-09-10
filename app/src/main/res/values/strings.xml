@@ -1,125 +1,41 @@
 <resources>
-    <string name="app_name">Thirukkural</string>
+    <string name="app_name">திருக்குறள்</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="app_desc">Statements Devoid of Untruth</string>
-    <string name="about_thirukkural">About Thirukkural</string>
-    <string name="book_index">Book Index</string>
-    <string name="fav_couplets">My Favorites</string>
-    <string name="about_app_creator">About Developer</string>
-    <string name="english">English</string>
-    <string name="settings">Settings</string>
-    <string name="about_thirukkural_content">
-        "Material is the metaphor.\n\n"
-
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
-
-        "Bold, graphic, intentional.\n\n"
-
-        "The foundational elements of print based design typography, grids, space, scale, color, "
-        "and use of imagery guide visual treatments. These elements do far more than please the "
-        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
-        "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
-
-        "Motion provides meaning.\n\n"
-
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
-        "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
-        "breaking the continuity of experience even as they transform and reorganize.\n"
-        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
-
-        "3D world.\n\n"
-
-        "The material environment is a 3D space, which means all objects have x, y, and z "
-        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
-        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
-        "position along the z-axis and has a standard 1dp thickness.\n"
-        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
-        "emulated by manipulating the y-axis.\n\n"
-
-        "Light and shadow.\n\n"
-
-        "Within the material environment, virtual lights illuminate the scene. Key lights create "
-        "directional shadows, while ambient light creates soft shadows from all angles.\n"
-        "Shadows in the material environment are cast by these two light sources. In Android "
-        "development, shadows occur when light sources are blocked by sheets of material at "
-        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
-        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
-
-        "Resting elevation.\n\n"
-
-        "All material objects, regardless of size, have a resting elevation, or default elevation "
-        "that does not change. If an object changes elevation, it should return to its resting "
-        "elevation as soon as possible.\n\n"
-
-        "Component elevations.\n\n"
-
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
-
-        "Responsive elevation and dynamic elevation offsets.\n\n"
-
-        "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
-        "changes are consistently implemented using dynamic elevation offsets.\n"
-        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
-        "across actions and component types. For example, all components that lift on press have "
-        "the same elevation change relative to their resting elevation.\n"
-        "Once the input event is completed or cancelled, the component will return to its resting "
-        "elevation.\n\n"
-
-        "Avoiding elevation interference.\n\n"
-
-        "Components with responsive elevations may encounter other components as they move between "
-        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
-        "through other material, components avoid interfering with one another any number of ways, "
-        "whether on a per component basis or using the entire app layout.\n"
-        "On a component level, components can move or be removed before they cause interference. "
-        "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
-        "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
-    </string>
-    <string name="action_settings">Settings</string>
-    <string name="search">Search</string>
-    <string name="search_hint">Type a word or number</string>
-    <string name="search_results">Search Results</string>
-
-    <string name="section">Section</string>
-    <string name="part">Part</string>
-    <string name="serial">Serial</string>
-    <string name="couplet_detail">Couplet Detail</string>
-    <string name="chapter">Chapter</string>
-    <string name="sections">Sections</string>
-    <string name="chapters">Chapters</string>
-    <string name="parts">Parts</string>
-    <string name="englishCommentary">English commentary</string>
-    <string name="commentaryByMuVaradarajan">Commentary by Mu. Varadarajan</string>
-    <string name="commentaryBySolomonPappaiah">Commentary by Solomon Pappaiah</string>
-    <string name="commentaryByManakudavar">Commentary by Manakudavar</string>
-    <string name="commentaryByMuKarunanidhi">Commentary by Mu. Karunanidhi</string>
-    <string name="couplet">Couplet</string>
-    <string name="title_activity_couplet_swipe">Couplet Swipe Activity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
+    <string name="app_desc">பொய்யாமொழி</string>
+    <string name="about_thirukkural">நூல் வரலாறு</string>
+    <string name="book_index">நூற்பிரிவு அட்டவணை</string>
+    <string name="fav_couplets">பிடித்தமான குறள்கள்</string>
+    <string name="about_thirukkural_content">திருக்குறள் எனக் குறிப்பிடப்படுவது புகழ்பெற்ற தமிழ் மொழி இலக்கியமாகும். உலகபொதுமறை, பொய்யாமொழி, வாயுறைவாழ்த்து, முப்பால், உத்தரவேதம், தெய்வநூல் எனப் பல பெயர்களாலும் திருக்குறள் அழைக்கப்படுகிறது.[1] இதனை இயற்றியவர் கி.மு. 2ம் நூற்றாண்டுக்கும் கி.பி 5ம் நூற்றாண்டுக்கும் இடையில் வாழ்ந்தவராக இன்றைய ஆய்வாளர்களால் கருதப்படும் திருவள்ளுவர் என்று அறியப்படுபவர் ஆவார்.[2] திருக்குறள் சங்க இலக்கிய வகைப்பாட்டில் பதினெண்கீழ்க்கணக்கு எனப்படும் பதினெட்டு நூல்களின் திரட்டில் இருக்கிறது. இது அடிப்படையில் ஒரு வாழ்வியல் நூல். மாந்தர்கள் தம் அகவாழ்விலும் சுமுகமாக கூடி வாழவும், புற வாழ்விலும் இன்பமுடனும், இசைவுடனும், நலமுடனும் வாழவும் தேவையான அடிப்படைப் பண்புகளை விளக்குகிறது. எதுவிதத்திலும், திருக்குறளை இயற்றியவர் பற்றியும், அது என்ன நூல் என்பது பற்றியும், ஔவையாரால் இயற்றப்பட்டதாகக் கூறப்படும் நல்வழி என்பதன் இறுதிப்பாட்டுப் பின்வருமாறு கூறுகிறது: தேவர் குறளும் திரு நான்மறை முடிவும் மூவர் தமிழும் முனிமொழியும் - கோவை திருவாசகமும் திருமூலர் சொல்லும் ஒருவாசகம் என்றுணர் இதில் ‘தேவர் குறள்‘ எனக் கூறப்பட்டிருப்பது பற்றியும், குறள், திரு நான்மறை, ஏனையவைகளும் ‘ஒரு வாசகம்‘ எனக் கூறப்பட்டிருப்பது பற்றியும், தமிழ் வித்தகர்கள் தெளிவான விளக்கத்தைக் கொடுக்காத நிலை தொடர்கிறது. திருக்குறள் நூலானது வடமொழியில் எழுதப்பட்டவைகளின் அடிப்படையில் இயற்றப்பட்டது என ஒரு சாராரராலும்,அது திருவள்ளுவனின் சுய சிந்தனை அடிப்படையில் தமிழ் மொழியில் இயற்றப்பட்டது என மற்றொரு சாராராலும் கருதப்படுகிறது. மேலும், திருக்குறளில் கூறப்பட்டிருப்பவைகள் உலகின் பல்வேறு சமயங்கள் வலியுறுத்துபவையுடன் ஒப்பிடப்பட்டு, அது பல்வேறு சமயங்களுடனும் பொருந்துவதாகப் பல்வேறு சமயத்தாராலும் கருதப்பட்டு வருகிறது.</string>
+    <string name="search">தேடு</string>
+    <string name="search_hint">வார்த்தை அல்லது எண்  </string>
+    <string name="section">பால் வகை</string>
+    <string name="serial">குறள் வரிசை</string>
+    <string name="part">இயல்</string>
+    <string name="search_results">தேடல் முடிவுகள்</string>
+    <string name="about_app_creator">செயலியை உருவாக்கியவர்</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="couplet_detail">குறள் விளக்கம்</string>
+    <string name="chapter">அதிகாரம்</string>
+    <string name="sections">பால்வகைப்பாடுகள்</string>
+    <string name="chapters">அதிகாரங்கள்</string>
+    <string name="parts">இயல்கள்</string>
+    <string name="commentaryByManakudavar">மணக்குடவர் உரை</string>
+    <string name="commentaryByMuKarunanidhi">மு. கருணாநிதி உரை</string>
+    <string name="commentaryByMuVaradarajan">மு.வரதராசன் உரை</string>
+    <string name="commentaryBySolomonPappaiah">சாலமன் பாப்பையா உரை</string>
+    <string name="english">ஆங்கிலம்</string>
+    <string name="englishCommentary">ஆங்கில உரை</string>
+    <string name="couplet">குறள்</string>
+    <string name="action_settings">அமைப்புகள்</string>
+    <string name="suggestion1">நீங்கள் தேடும் வார்த்தை எழுத்துப்பிழை ஏதுமின்றி இருக்க வேண்டும்.</string>
+    <string name="suggestion2">வேறு சில வார்த்தைகளை பயன்படுத்தி பார்க்கவும்.</string>
+    <string name="suggestion3">திருக்குறள் சம்பந்தப்பட்ட வார்த்தைகள், குறள் வரிசை எண், அதிகார எண் போன்றவற்றை பயன்படுத்தி பார்க்கவும்.</string>
+    <string name="suggestions">ஆலோசனைகள்:</string>
+    <string name="searchFailureInfo"><![CDATA[நீங்கள் தேடிய <b>- %1$s -</b> எந்தவொரு குறளுடனோ, அதிகாரத்துடனோ, இயலுடனோ அல்லது பால்வகைப்பாடுடனோ பொருந்தவில்லை. ]]></string>
+    <string name="searched_word">தேடப்பட்டது</string>
+    <string name="couplets">குறள்கள்</string>
+    <string name="none">ஏதுமில்லை</string>
 </resources>

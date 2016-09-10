@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/search_result_layout"
     tools:context="com.jpp.and_thirukkural.SearchResultsActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,6 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_search_results" />
-
+    <!--
+        <include layout="@layout/content_search_success" />
+    -->
 </android.support.design.widget.CoordinatorLayout>
