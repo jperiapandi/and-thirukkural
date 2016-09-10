@@ -20,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jpp.and_thirukkural.adapters.CoupletListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -191,15 +190,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return position+"";
         }
     }
 }

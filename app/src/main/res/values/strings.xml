@@ -38,4 +38,5 @@
     <string name="searched_word">தேடப்பட்டது</string>
     <string name="couplets">குறள்கள்</string>
     <string name="none">ஏதுமில்லை</string>
+    <string name="chapter_info"><![CDATA[அதிகாரம் <b>%1$d</b>     குறள்கள் <b>%2$s</b>]]></string>
 </resources>

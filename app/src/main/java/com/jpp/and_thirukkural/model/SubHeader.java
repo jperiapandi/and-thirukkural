@@ -1,19 +1,10 @@
 package com.jpp.and_thirukkural.model;
 
 /**
- * Created by jperiapandi on 05-07-2016.
+ * Created by jperiapandi on 11-09-2016.
  */
-public class Section implements ListItem {
-    private int _id;
+public class SubHeader implements ListItem {
     private String title;
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
 
     public String getTitle() {
         return title;
@@ -25,6 +16,6 @@ public class Section implements ListItem {
 
     @Override
     public ListItemType getListItemType() {
-        return ListItemType.SECTION;
+        return ListItemType.SUB_HEADER;
     }
 }

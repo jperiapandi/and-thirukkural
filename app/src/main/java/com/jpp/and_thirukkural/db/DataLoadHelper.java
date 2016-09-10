@@ -437,17 +437,31 @@ public class DataLoadHelper {
         if(qID != -1){
             //Search by ID
 
-            sections = new ArrayList<Section>();
-            sections.add(getSectionById(qID));
+            Section section = getSectionById(qID);
+            Part part = getPartById(qID);
+            Chapter chapter = getChapterById(qID);
+            Couplet couplet = getCoupletById(qID, false);
 
-            parts = new ArrayList<Part>();
-            parts.add(getPartById(qID));
+            if(section!=null){
+                sections = new ArrayList<Section>();
+                sections.add(section);
+            }
 
-            chapters = new ArrayList<Chapter>();
-            chapters.add(getChapterById(qID));
+            if(part!=null){
+                parts = new ArrayList<Part>();
+                parts.add(part);
+            }
 
-            couplets = new ArrayList<Couplet>();
-            couplets.add(getCoupletById(qID, false));
+            if(chapter != null){
+                chapters = new ArrayList<Chapter>();
+                chapters.add(chapter);
+            }
+
+            if(couplet != null){
+                couplets = new ArrayList<Couplet>();
+                couplets.add(couplet);
+            }
+
         }
         else
         {

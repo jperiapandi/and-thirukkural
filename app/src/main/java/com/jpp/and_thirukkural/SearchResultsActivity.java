@@ -1,5 +1,6 @@
 package com.jpp.and_thirukkural;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +15,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jpp.and_thirukkural.adapters.SearchResultListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
+import com.jpp.and_thirukkural.model.ListItem;
 import com.jpp.and_thirukkural.model.Part;
 import com.jpp.and_thirukkural.model.SearchResult;
 import com.jpp.and_thirukkural.model.Section;
+import com.jpp.and_thirukkural.model.SubHeader;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -63,12 +69,15 @@ public class SearchResultsActivity extends AppCompatActivity {
             {
                 //Display results
                 childView = inflater.inflate(R.layout.content_search_success, (ViewGroup) findViewById(R.id.search_result_layout));
+                ArrayList<ListItem> resultItems = new ArrayList<ListItem>();
 
                 TextView qText = (TextView) childView.findViewById(R.id.qText);
                 TextView numberOfCouplets = (TextView) childView.findViewById(R.id.numberOfCouplets);
                 TextView numberOfChapters = (TextView) childView.findViewById(R.id.numberOfChapters);
                 TextView numberOfParts = (TextView) childView.findViewById(R.id.numberOfParts);
                 TextView numberOfSections = (TextView) childView.findViewById(R.id.numberOfSections);
+
+                ListView searchResultsListView = (ListView) childView.findViewById(R.id.listView);
 
                 ArrayList<Couplet> couplets = searchResult.getCouplets();
                 ArrayList<Chapter> chapters = searchResult.getChapters();
@@ -80,17 +89,43 @@ public class SearchResultsActivity extends AppCompatActivity {
                 String strNumberOfParts = getResources().getString(R.string.none);
                 String strNumberOfSections = getResources().getString(R.string.none);
 
-                if(couplets != null){
-                    strNumberOfCouplets = couplets.size()+"";
-                }
-                if(chapters != null){
-                    strNumberOfChapters = chapters.size()+"";
-                }
-                if(parts != null){
-                    strNumberOfParts = parts.size()+"";
-                }
+
                 if(sections != null){
                     strNumberOfSections = sections.size()+"";
+                    //
+                    SubHeader header = new SubHeader();
+                    header.setTitle(getResources().getString(R.string.sections));
+                    resultItems.add(header);
+                    resultItems.addAll(sections);
+                }
+
+
+                if(parts != null){
+                    strNumberOfParts = parts.size()+"";
+                    //
+                    SubHeader header = new SubHeader();
+                    header.setTitle(getResources().getString(R.string.parts));
+                    resultItems.add(header);
+                    resultItems.addAll(parts);
+                }
+
+
+                if(chapters != null){
+                    strNumberOfChapters = chapters.size()+"";
+                    //
+                    SubHeader header = new SubHeader();
+                    header.setTitle(getResources().getString(R.string.chapters));
+                    resultItems.add(header);
+                    resultItems.addAll(chapters);
+                }
+
+                if(couplets != null){
+                    strNumberOfCouplets = couplets.size()+"";
+                    //
+                    SubHeader header = new SubHeader();
+                    header.setTitle(getResources().getString(R.string.couplets));
+                    resultItems.add(header);
+                    resultItems.addAll(couplets);
                 }
 
                 qText.setText(searchResult.getQ());
@@ -98,6 +133,42 @@ public class SearchResultsActivity extends AppCompatActivity {
                 numberOfChapters.setText(strNumberOfChapters);
                 numberOfParts.setText(strNumberOfParts);
                 numberOfSections.setText(strNumberOfSections);
+
+                //
+                ListItem[] items = resultItems.toArray(new ListItem[resultItems.size()]);
+                SearchResultListItemAdapter adapter = new SearchResultListItemAdapter(getBaseContext(), items);
+                searchResultsListView.setAdapter(adapter);
+
+                searchResultsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ListItem item = (ListItem) parent.getItemAtPosition(position);
+                        Intent intent;
+                        Bundle extras;
+
+                        switch (item.getListItemType()){
+                            case COUPLET:
+                                Couplet couplet = (Couplet) item;
+
+                                intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                                extras = new Bundle();
+                                extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
+                                intent.putExtras(extras);
+                                startActivity(intent);
+
+                                break;
+                            case CHAPTER:
+                                Chapter chapter = (Chapter) item;
+                                intent = new Intent((Activity) view.getContext(), ChapterActivity.class);
+                                extras = new Bundle();
+                                extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
+                                intent.putExtras(extras);
+                                intent.setAction(Intent.ACTION_MAIN);
+                                startActivity(intent);
+                                break;
+                        }
+                    }
+                });
             }
             else
             {

@@ -25,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jpp.and_thirukkural.adapters.CoupletListItemAdapter;
+import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -155,7 +155,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
             ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
             Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
-            CoupletListItemAdapter adapter = new CoupletListItemAdapter(getContext(), values);
+            ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             coupletsListView.setAdapter(adapter);
 
             coupletsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

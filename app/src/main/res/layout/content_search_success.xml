@@ -38,7 +38,8 @@
             android:paddingLeft="8dp"
             android:singleLine="false"
             android:textStyle="bold"
-            android:layout_columnSpan="2" />
+            android:layout_columnSpan="2"
+            android:textColor="@color/colorPrimaryDark" />
 
         <LinearLayout
             android:orientation="horizontal"
