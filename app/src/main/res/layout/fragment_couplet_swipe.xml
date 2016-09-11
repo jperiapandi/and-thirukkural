@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <com.jpp.and_thirukkural.TamilTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -26,7 +26,7 @@
                 style="@style/badge1"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
-            <TextView
+            <com.jpp.and_thirukkural.TamilTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -35,7 +35,7 @@
                 style="@style/badge2"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
-            <TextView
+            <com.jpp.and_thirukkural.TamilTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <com.jpp.and_thirukkural.TamilTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
@@ -87,7 +87,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
+        <com.jpp.and_thirukkural.TamilTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"

@@ -56,6 +56,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(allCouplets==null)

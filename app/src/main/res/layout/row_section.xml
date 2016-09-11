@@ -6,7 +6,7 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
-    <TextView
+    <com.jpp.and_thirukkural.TamilTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"

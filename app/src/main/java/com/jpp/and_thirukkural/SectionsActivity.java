@@ -58,6 +58,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         setContentView(R.layout.activity_sections);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

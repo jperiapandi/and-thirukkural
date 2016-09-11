@@ -6,8 +6,13 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+
+import com.jpp.and_thirukkural.utils.FontCache;
 
 public class ThirukkuralBaseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
@@ -36,5 +41,18 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+
+    public void applyFontForToolbarTitle(Toolbar toolbar){
+
+        for(int i = 0; i < toolbar.getChildCount(); i++){
+            View view = toolbar.getChildAt(i);
+            if(view instanceof TextView){
+                TextView tv = (TextView) view;
+
+                tv.setTypeface(FontCache.getTypeface("fonts/NotoSansTamil-Regular.ttf", getApplicationContext()));
+            }
+        }
     }
 }

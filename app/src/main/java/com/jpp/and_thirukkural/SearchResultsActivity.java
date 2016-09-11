@@ -32,7 +32,7 @@ import com.jpp.and_thirukkural.model.SubHeader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class SearchResultsActivity extends AppCompatActivity {
+public class SearchResultsActivity extends ThirukkuralBaseActivity {
 
     private DataLoadHelper dlh;
 
@@ -45,6 +45,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_results);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         handleIntent(getIntent());
     }

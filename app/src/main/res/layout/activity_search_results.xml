@@ -22,7 +22,4 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--
-        <include layout="@layout/content_search_success" />
-    -->
 </android.support.design.widget.CoordinatorLayout>

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class FavoritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends ThirukkuralBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +15,7 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorites);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

@@ -12,7 +12,7 @@
     tools:context="com.jpp.and_thirukkural.AboutThirukkuralActivity"
     tools:showIn="@layout/activity_about_thirukkural">
 
-    <TextView
+    <com.jpp.and_thirukkural.TamilTextView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:text="@string/about_thirukkural_content"

@@ -7,12 +7,13 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
-    <TextView
+    <com.jpp.and_thirukkural.TamilTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Sub header title"
         android:id="@+id/sub_header_title"
         android:textColor="@color/colorSubHeader"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:typeface="sans" />
 </LinearLayout>
