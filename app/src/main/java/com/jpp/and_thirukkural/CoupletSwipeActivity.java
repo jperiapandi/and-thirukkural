@@ -74,6 +74,23 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         // Set up the ViewPager with the sections adapter.
         mCoupletPager = (ViewPager) findViewById(R.id.coupletPager);
         mCoupletPager.setAdapter(mCoupletsPagerAdapter);
+        mCoupletPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setActivityTitle(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
         //Set selected tab based on extras received in the intent
         Bundle extras = getIntent().getExtras();
@@ -82,6 +99,8 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             int coupletID = extras.getInt(Couplet.COUPLET_ID, 1);
             mCoupletPager.setCurrentItem(coupletID-1);
         }
+
+        setActivityTitle(mCoupletPager.getCurrentItem());
     }
 
 
@@ -98,6 +117,13 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setActivityTitle(int position){
+        Couplet couplet = allCouplets.get(position);
+        String title = getResources().getString(R.string.couplet)+" "+couplet.get_id();
+        getSupportActionBar().setTitle(title);
     }
 
     /**
@@ -137,11 +163,11 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             Part part = dlh.getPartById(chapter.getPartId());
 
             //Bind data to view
-            TextView coupletIdView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_id);
+//            TextView coupletIdView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_id);
             TextView coupletTextView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_text);
             TextView chapterTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.chapter_title);
-            TextView sectionTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.section_title);
-            TextView partTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.part_title);
+//            TextView sectionTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.section_title);
+//            TextView partTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.part_title);
 
             ListView commentaryList = (ListView) coupletPageFragmentView.findViewById(R.id.commentaryList);
             ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
@@ -178,12 +204,12 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             c6.setCommentary(couplet.getExpln_en());
             commentaries.add(c6);
 
-            coupletIdView.setText(getResources().getString(R.string.couplet)+"  "+couplet.get_id()+"");
+//            coupletIdView.setText(getResources().getString(R.string.couplet)+"  "+couplet.get_id()+"");
             coupletTextView.setText(couplet.getCouplet());
 
             chapterTitleView.setText(chapter.get_id()+". "+chapter.getTitle());
-            sectionTitleView.setText(section.get_id()+". "+section.getTitle());
-            partTitleView.setText(part.get_id()+". "+part.getTitle());
+//            sectionTitleView.setText(section.get_id()+". "+section.getTitle());
+//            partTitleView.setText(part.get_id()+". "+part.getTitle());
 
             Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);

@@ -114,7 +114,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
     private void setChapterTitle(int tabPosition){
         Chapter chapter = allChapters.get(tabPosition);
-        String title = getResources().getString(R.string.chapter)+" "+chapter.get_id();
+        String title = chapter.get_id()+". "+chapter.getTitle();
         getSupportActionBar().setTitle(title);
     }
     /*Create Framgment for Chapter Pager*/
@@ -143,15 +143,15 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             Part part = dlh.getPartById(chapter.getPartId());
 
 //            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
-            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
-            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
-            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
+//            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
+//            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
+//            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
 
 //            chapterId.setText(chapter.get_id()+".");
-            chapterName.setText(chapter.getTitle());
+//            chapterName.setText(chapter.getTitle());
 
-            sectionName.setText(section.get_id()+". "+section.getTitle());
-            partName.setText(part.get_id()+". "+part.getTitle());
+//            sectionName.setText(section.get_id()+". "+section.getTitle());
+//            partName.setText(part.get_id()+". "+part.getTitle());
 
             //Load couplets in a chapter and display in a list
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);

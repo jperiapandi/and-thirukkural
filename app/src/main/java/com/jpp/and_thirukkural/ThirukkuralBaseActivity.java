@@ -21,7 +21,6 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//        super.attachBaseContext(newBase);
     }
 
     @Override

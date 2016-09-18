@@ -4,49 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:padding="8dp"
-        android:background="@color/material_grey_100">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Section name"
-                android:id="@+id/section_name"
-                style="@style/badge1"
-                android:layout_marginRight="@dimen/badge_hspace" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Partname"
-                android:id="@+id/part_name"
-                style="@style/badge2"
-                android:layout_marginRight="@dimen/badge_hspace" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Chapter Name"
-            android:id="@+id/chapter_name"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
