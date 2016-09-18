@@ -6,7 +6,7 @@ package com.jpp.and_thirukkural;
 
 import android.app.Application;
 
-import com.jpp.and_thirukkural.utils.LocaleHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * When your application is launched this class is loaded before all of your activities.
@@ -17,8 +17,13 @@ public class ThirukkuralApplication extends Application {
 
     @Override
     public void onCreate() {
-        LocaleHelper.setLocale(this, "ta");
         super.onCreate();
-        LocaleHelper.onCreate(this);
+
+        CalligraphyConfig.initDefault(
+                new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/NotoSansTamil-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 }

@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
@@ -84,6 +86,20 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sectionTabs);
         tabLayout.setupWithViewPager(mViewPager);
+        createCustomTabs(tabLayout);
+    }
+
+    private void createCustomTabs(TabLayout tabLayout){
+        int n = tabLayout.getTabCount();
+
+        for(int i=0; i<n; i++){
+            TextView tabTextView = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_bar_item_layout, null);
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tabTextView.setText(tab.getText());
+            tab.setCustomView(tabTextView);
+        }
+
+
 
     }
 
@@ -242,7 +258,8 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return sections.get(position).getTitle();
+            String title = sections.get(position).getTitle();
+            return title;
         }
     }
 }

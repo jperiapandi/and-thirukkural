@@ -14,7 +14,15 @@ import android.widget.TextView;
 
 import com.jpp.and_thirukkural.utils.FontCache;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ThirukkuralBaseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        super.attachBaseContext(newBase);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,7 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
 
 
     public void applyFontForToolbarTitle(Toolbar toolbar){
-
+/*
         for(int i = 0; i < toolbar.getChildCount(); i++){
             View view = toolbar.getChildAt(i);
             if(view instanceof TextView){
@@ -53,6 +61,6 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
 
                 tv.setTypeface(FontCache.getTypeface("fonts/NotoSansTamil-Regular.ttf", getApplicationContext()));
             }
-        }
+        }*/
     }
 }

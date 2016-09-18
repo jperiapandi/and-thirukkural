@@ -9,7 +9,7 @@
     android:paddingRight="10dp"
     android:clickable="true">
 
-    <com.jpp.and_thirukkural.TamilTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -17,7 +17,7 @@
         android:id="@+id/partName"
         android:layout_gravity="center_vertical" />
 
-    <com.jpp.and_thirukkural.TamilTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"

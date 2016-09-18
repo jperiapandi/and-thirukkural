@@ -28,7 +28,7 @@
             android:paddingBottom="8dp"
             android:layout_gravity="center_horizontal" />
 
-        <com.jpp.and_thirukkural.TamilTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -37,7 +37,7 @@
             android:textColor="#c55050" />
     </LinearLayout>
 
-    <com.jpp.and_thirukkural.TamilTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -63,7 +63,7 @@
             android:src="@drawable/bullet"
             android:layout_gravity="center_vertical" />
 
-        <com.jpp.and_thirukkural.TamilTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -84,7 +84,7 @@
             android:src="@drawable/bullet"
             android:layout_gravity="center_vertical" />
 
-        <com.jpp.and_thirukkural.TamilTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -105,7 +105,7 @@
             android:src="@drawable/bullet"
             android:layout_gravity="center_vertical" />
 
-        <com.jpp.and_thirukkural.TamilTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"

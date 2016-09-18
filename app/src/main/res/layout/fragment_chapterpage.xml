@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.jpp.and_thirukkural.TamilTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -26,7 +26,7 @@
                 style="@style/badge1"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
-            <com.jpp.and_thirukkural.TamilTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -35,7 +35,7 @@
                 style="@style/badge2"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
-            <com.jpp.and_thirukkural.TamilTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp"
             android:layout_gravity="center_vertical">
 
-            <com.jpp.and_thirukkural.TamilTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -63,16 +63,13 @@
                 android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical" />
 
-            <com.jpp.and_thirukkural.TamilTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Chapter Name"
                 android:id="@+id/chapter_name"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/chapter_id"
-                android:layout_toEndOf="@+id/chapter_id"
                 android:layout_gravity="center_vertical" />
 
             <LinearLayout
@@ -85,8 +82,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/pdfChapterButton"
-                    android:layout_row="0"
-                    android:layout_column="2"
                     android:src="@drawable/ic_pdf_file_black_24dp"
                     style="@android:style/Widget.Material.Button.Borderless.Small"
                     android:layout_gravity="center_vertical" />
@@ -95,8 +90,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/shareChapterButton"
-                    android:layout_row="0"
-                    android:layout_column="2"
                     android:src="@drawable/ic_share_black_24dp"
                     style="@android:style/Widget.Material.Button.Borderless.Small"
                     android:layout_gravity="center_vertical" />

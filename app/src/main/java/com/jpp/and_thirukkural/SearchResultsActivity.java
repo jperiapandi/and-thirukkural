@@ -165,7 +165,7 @@ public class SearchResultsActivity extends ThirukkuralBaseActivity {
                                 extras = new Bundle();
                                 extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
                                 intent.putExtras(extras);
-                                intent.setAction(Intent.ACTION_MAIN);
+//                                intent.setAction(Intent.ACTION_MAIN);
                                 startActivity(intent);
                                 break;
                         }
