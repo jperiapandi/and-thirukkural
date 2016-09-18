@@ -6,13 +6,12 @@
     android:paddingLeft="10dp"
     android:paddingTop="24dp"
     android:paddingBottom="10dp"
-    android:paddingRight="10dp"
-    android:clickable="true">
+    android:paddingRight="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/Subheading"
         android:text="Part name"
         android:id="@+id/partName"
         android:layout_gravity="center_vertical" />

@@ -5,10 +5,9 @@
     android:padding="8dp">
 
     <TextView
-        style="@style/commentaryByTextStyle"
+        style="@style/Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/commentaryByMuVaradarajan"
         android:id="@+id/commentary_by"
         android:paddingBottom="16dp" />

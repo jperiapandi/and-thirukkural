@@ -73,11 +73,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
             @Override
             public void onPageSelected(int position) {
-                /*
-                Chapter c = allChapters.get(position);
-                String chapterName = c.get_id()+" "+c.getTitle();
-                getSupportActionBar().setTitle(chapterName);
-                */
+                setChapterTitle(position);
             }
 
             @Override
@@ -97,6 +93,8 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID-1);
             targetTab.select();
         }
+
+        setChapterTitle(tabLayout.getSelectedTabPosition());
     }
 
     @Override
@@ -114,6 +112,11 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         return super.onOptionsItemSelected(item);
     }
 
+    private void setChapterTitle(int tabPosition){
+        Chapter chapter = allChapters.get(tabPosition);
+        String title = getResources().getString(R.string.chapter)+" "+chapter.get_id();
+        getSupportActionBar().setTitle(title);
+    }
     /*Create Framgment for Chapter Pager*/
     public static class ChapterPageFragment extends Fragment{
         public static final String CHAPTER_NUMBER="chapterNumber";
@@ -139,19 +142,16 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             Section section = dlh.getSectionById(chapter.getSectionId());
             Part part = dlh.getPartById(chapter.getPartId());
 
-            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
+//            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
             TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
             TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
             TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
-            TextView chapterSerial = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_serial);
 
-            chapterId.setText(chapter.get_id()+".");
+//            chapterId.setText(chapter.get_id()+".");
             chapterName.setText(chapter.getTitle());
 
             sectionName.setText(section.get_id()+". "+section.getTitle());
             partName.setText(part.get_id()+". "+part.getTitle());
-            chapterSerial.setText(getResources().getString(R.string.serial)+": "+chapter.getSerial());
-
 
             //Load couplets in a chapter and display in a list
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);

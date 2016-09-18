@@ -11,6 +11,6 @@
 
     <corners android:radius="@dimen/badge_radius"></corners>
 
-    <solid android:color="@color/error_box_color"/>
+    <solid android:color="@color/badge_color1"/>
 
 </shape>
