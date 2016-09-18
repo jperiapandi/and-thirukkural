@@ -1,17 +1,12 @@
 package com.jpp.and_thirukkural;
 
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -28,6 +23,7 @@ import android.view.ViewGroup;
 
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
@@ -40,7 +36,7 @@ import com.jpp.and_thirukkural.model.Section;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class SectionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ArrayList<Section> sections;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -64,6 +60,7 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_sections);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,6 +86,20 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sectionTabs);
         tabLayout.setupWithViewPager(mViewPager);
+        createCustomTabs(tabLayout);
+    }
+
+    private void createCustomTabs(TabLayout tabLayout){
+        int n = tabLayout.getTabCount();
+
+        for(int i=0; i<n; i++){
+            TextView tabTextView = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_bar_item_layout, null);
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tabTextView.setText(tab.getText());
+            tab.setCustomView(tabTextView);
+        }
+
+
 
     }
 
@@ -104,15 +115,7 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sections, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_menu_item).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
-
-        searchView.setOnQueryTextListener(this);
+        configureSearchMenu(menu, R.menu.menu_sections);
         return true;
     }
 
@@ -121,12 +124,6 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -156,17 +153,6 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.i("Search submit" , query);
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
     }
 
     /**
@@ -272,7 +258,8 @@ public class SectionsActivity extends AppCompatActivity implements NavigationVie
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return sections.get(position).getTitle();
+            String title = sections.get(position).getTitle();
+            return title;
         }
     }
 }

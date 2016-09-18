@@ -15,14 +15,14 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Section name"
-                android:id="@+id/section_name"
+                android:id="@+id/section_title"
                 style="@style/badge1"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Partname"
-                android:id="@+id/part_name"
+                android:text="Part name"
+                android:id="@+id/part_title"
                 style="@style/badge2"
                 android:layout_marginRight="@dimen/badge_hspace" />
 
@@ -39,69 +39,73 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="121 - 130"
-                android:id="@+id/chapter_serial"
-                style="@style/badge4" />
+                android:text="Chapter name"
+                android:id="@+id/chapter_title"
+                style="@style/badge3" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center_vertical">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="133"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:id="@+id/chapter_id"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Chapter Name"
-                android:id="@+id/chapter_name"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_gravity="center_vertical" />
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:text="1330"
+                android:id="@+id/couplet_id"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/abc_primary_text_disable_only_material_light" />
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
+                android:gravity="end">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/pdfChapterButton"
+                    android:id="@+id/favButton"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pdfCoupletButton"
                     android:src="@drawable/ic_pdf_file_black_24dp"
-                    style="@android:style/Widget.Material.Button.Borderless.Small"
-                    android:layout_gravity="center_vertical" />
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/shareChapterButton"
+                    android:id="@+id/shareCoupletButton"
                     android:src="@drawable/ic_share_black_24dp"
-                    style="@android:style/Widget.Material.Button.Borderless.Small"
-                    android:layout_gravity="center_vertical" />
-
+                    style="@android:style/Widget.Material.Button.Borderless.Small" />
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="Couplet couplet \nCouplet"
+            android:id="@+id/couplet_text"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/chapterCoupletsListView" />
+        android:id="@+id/commentaryList"
+        android:divider="@null"
+        android:clickable="false"
+        android:contextClickable="false" />
 
 </LinearLayout>

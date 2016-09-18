@@ -7,5 +7,7 @@ public enum ListItemType {
     SECTION,
     PART,
     CHAPTER,
-    COUPLET
+    COUPLET,
+    COMMENTARY,
+    SUB_HEADER
 }

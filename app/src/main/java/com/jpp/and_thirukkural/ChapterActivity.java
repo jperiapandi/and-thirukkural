@@ -25,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jpp.and_thirukkural.adapters.CoupletListItemAdapter;
+import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -34,7 +34,7 @@ import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 
-public class ChapterActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
     static DataLoadHelper dlh;
@@ -49,6 +49,8 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
         setContentView(R.layout.activity_chapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        applyFontForToolbarTitle(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
        //Load data
@@ -83,6 +85,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
             }
         });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.chapterTabs);
         tabLayout.setupWithViewPager(mChapterPager);
 
@@ -98,16 +101,7 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chapter, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_menu_item).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
-
-        searchView.setOnQueryTextListener(this);
-
+        configureSearchMenu(menu, R.menu.menu_chapter);
         return true;
     }
 
@@ -116,25 +110,8 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.i("Search submit" , query);
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
     }
 
     /*Create Framgment for Chapter Pager*/
@@ -180,14 +157,14 @@ public class ChapterActivity extends AppCompatActivity implements SearchView.OnQ
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
             ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
             Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
-            CoupletListItemAdapter adapter = new CoupletListItemAdapter(getContext(), values);
+            ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             coupletsListView.setAdapter(adapter);
 
             coupletsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    Intent intent = new Intent((Activity) view.getContext(), CoupletActivity.class);
+                    Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);

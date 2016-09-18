@@ -5,10 +5,12 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.Part;
+import com.jpp.and_thirukkural.model.SearchResult;
 import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
 
@@ -46,26 +48,13 @@ public class DataLoadHelper {
 
         }else{
             cursor.moveToFirst();
-
-            couplet = new Couplet();
-            couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
-            couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
-            couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-
-            if(includeExplanation){
-                couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
-                couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
-                couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
-                couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
-                couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
-                couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
-            }
-
+            couplet = getCoupletFromCursor(cursor, includeExplanation);
             cursor.close();
         }
 
         return couplet;
     }
+
     public ArrayList<Couplet> getCoupletsByChapter(int chapterID, boolean includeExplanation){
         ArrayList<Couplet> result = null;
 
@@ -102,21 +91,8 @@ public class DataLoadHelper {
             cursor.moveToFirst();
             result = new ArrayList<Couplet>();
             do{
-                Couplet c = new Couplet();
-                c.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
-                c.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
-                c.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
-
-                if(includeExplanation){
-                    c.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
-                    c.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
-                    c.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
-                    c.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
-                    c.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
-                    c.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
-                }
-
-                result.add(c);
+                Couplet couplet = getCoupletFromCursor(cursor, includeExplanation);
+                result.add(couplet);
             }while(cursor.moveToNext());
 
             cursor.close();
@@ -125,14 +101,66 @@ public class DataLoadHelper {
         return result;
     }
 
-    public ArrayList<Section> getAllSections(){
+    public ArrayList<Couplet> getAllCouplets(boolean includeExplanation, String mSelectionClause, String[] mSelectionArgs){
+        ArrayList<Couplet> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from couplets table
+
+        String[] mProjection = CoupletsTable.BASIC_COLUMNS;
+        if(includeExplanation)
+        {
+            mProjection = CoupletsTable.ALL_COLUMNS;
+        }
+
+        String sortOrder = null;
+
+        Cursor cursor = cr.query(ThirukkuralContentProvider.COUPLETS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+
+        if(cursor == null){
+            //Error while retrieving data
+
+        }else if(cursor.getCount()==0){
+            //No data found
+
+        }else{
+            cursor.moveToFirst();
+            result = new ArrayList<Couplet>();
+            do{
+                Couplet couplet =getCoupletFromCursor(cursor, includeExplanation);
+                result.add(couplet);
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return result;
+    }
+
+    public ArrayList<Couplet> getAllCouplets(boolean includeExplanation){ return getAllCouplets(includeExplanation, null, null);};
+
+    private Couplet getCoupletFromCursor(Cursor cursor, boolean includeExplanation){
+        Couplet couplet = new Couplet();
+        couplet.set_id(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_ID)));
+        couplet.setFav(cursor.getInt(cursor.getColumnIndex(CoupletsTable.COL_FAV)));
+        couplet.setCouplet(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET)));
+
+        if(includeExplanation){
+            couplet.setCouplet_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_COUPLET_EN)));
+            couplet.setExpln_en(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_EN)));
+            couplet.setExpln_muva(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MUVA)));
+            couplet.setExpln_pappaiah(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_PAPPAIAH)));
+            couplet.setExpln_manakudavar(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_MANAKUDAVAR)));
+            couplet.setExpln_karunanidhi(cursor.getString(cursor.getColumnIndex(CoupletsTable.COL_EXPLN_KARUNANIDHI)));
+        }
+        return couplet;
+    }
+
+    public ArrayList<Section> getAllSections(String mSelectionClause, String[] mSelectionArgs){
         ArrayList<Section> result =null;
         ContentResolver cr = context.getContentResolver();
         //Load data from sections table
 
         String[] mProjection = {SectionsTable.COL_ID, SectionsTable.COL_TTILE};
-        String mSelectionClause = null;
-        String[] mSelectionArgs = null;
         String sortOrder = null;
 
         Cursor cursor = cr.query(ThirukkuralContentProvider.SECTIONS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
@@ -159,6 +187,8 @@ public class DataLoadHelper {
         return result;
     }
 
+    public ArrayList<Section> getAllSections(){return getAllSections(null, null);}
+
     public Section getSectionById(int sectionID){
         Section result = null;
 
@@ -184,14 +214,12 @@ public class DataLoadHelper {
         return result;
     }
 
-    public ArrayList<Chapter> getAllChapters(){
+    public ArrayList<Chapter> getAllChapters(String mSelectionClause, String[] mSelectionArgs){
         ArrayList<Chapter> result =null;
         ContentResolver cr = context.getContentResolver();
         //Load data from chapters table
 
         String[] mProjection = {ChaptersTable.COL_ID, ChaptersTable.COL_PART_ID, ChaptersTable.COL_SECTION_ID, ChaptersTable.COL_TITLE};
-        String mSelectionClause = null;
-        String[] mSelectionArgs = null;
         String sortOrder = null;
 
         Cursor cursor = cr.query(ThirukkuralContentProvider.CHAPTERS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
@@ -219,6 +247,7 @@ public class DataLoadHelper {
 
         return result;
     }
+    public ArrayList<Chapter> getAllChapters(){return getAllChapters(null, null);}
 
     public Chapter getChapterById(int chapterID){
         Chapter result = null;
@@ -303,14 +332,12 @@ public class DataLoadHelper {
         return result;
     }
 
-    public ArrayList<Part> getAllParts(){
+    public ArrayList<Part> getAllParts(String mSelectionClause, String[] mSelectionArgs){
         ArrayList<Part> result =null;
         ContentResolver cr = context.getContentResolver();
         //Load data from sections table
 
         String[] mProjection = {PartsTable.COL_ID, PartsTable.COL_TITLE, PartsTable.COL_SECTION_ID};
-        String mSelectionClause = null;
-        String[] mSelectionArgs = null;
         String sortOrder = null;
 
         Cursor cursor = cr.query(ThirukkuralContentProvider.PARTS_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
@@ -330,6 +357,8 @@ public class DataLoadHelper {
 
         return result;
     }
+
+    public ArrayList<Part> getAllParts(){ return getAllParts(null, null);}
 
     public ArrayList<Part> getPartsBySectionId(int sectionID){
         ArrayList<Part> result =null;
@@ -382,6 +411,76 @@ public class DataLoadHelper {
 
             cursor.close();
         }
+
+        return result;
+    }
+
+    public SearchResult search(String q){
+
+        Log.i("Search ", q);
+        int qID = -1;
+        try
+        {
+            qID = Integer.parseInt(q);
+        }
+        catch(NumberFormatException e){
+            qID = -1;
+        }
+
+        SearchResult result = new SearchResult();
+        result.setQ(q);
+        ArrayList<Section> sections = null;
+        ArrayList<Part> parts = null;
+        ArrayList<Chapter> chapters = null;
+        ArrayList<Couplet> couplets = null;
+
+        if(qID != -1){
+            //Search by ID
+
+            Section section = getSectionById(qID);
+            Part part = getPartById(qID);
+            Chapter chapter = getChapterById(qID);
+            Couplet couplet = getCoupletById(qID, false);
+
+            if(section!=null){
+                sections = new ArrayList<Section>();
+                sections.add(section);
+            }
+
+            if(part!=null){
+                parts = new ArrayList<Part>();
+                parts.add(part);
+            }
+
+            if(chapter != null){
+                chapters = new ArrayList<Chapter>();
+                chapters.add(chapter);
+            }
+
+            if(couplet != null){
+                couplets = new ArrayList<Couplet>();
+                couplets.add(couplet);
+            }
+
+        }
+        else
+        {
+            //Search by word
+            String mSelectionClause1 = "title like ?";
+            String mSelectionClause2 = "couplet like ?";
+            String[] mSelectionArgs = new String[1];
+            mSelectionArgs[0] = "%"+q+"%";
+
+            sections = getAllSections(mSelectionClause1, mSelectionArgs);
+            parts = getAllParts( mSelectionClause1, mSelectionArgs);
+            chapters = getAllChapters( mSelectionClause1, mSelectionArgs);
+            couplets = getAllCouplets(false, mSelectionClause2, mSelectionArgs);
+        }
+
+        result.setSections(sections);
+        result.setParts(parts);
+        result.setChapters(chapters);
+        result.setCouplets(couplets);
 
         return result;
     }

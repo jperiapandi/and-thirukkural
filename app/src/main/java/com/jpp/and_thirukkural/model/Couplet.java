@@ -3,7 +3,7 @@ package com.jpp.and_thirukkural.model;
 /**
  * Created by jperiapandi on 05-07-2016.
  */
-public class Couplet {
+public class Couplet implements ListItem{
 
     public static final String COUPLET_ID = "coupletID";
     private int _id;
@@ -97,4 +97,8 @@ public class Couplet {
         this.expln_en = expln_en;
     }
 
+    @Override
+    public ListItemType getListItemType() {
+        return ListItemType.COUPLET;
+    }
 }
