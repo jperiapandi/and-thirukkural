@@ -16,7 +16,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-<!--
+    <!--
     <style name="AppTheme.Widget"/>
     
     <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
@@ -25,8 +25,7 @@
 
 -->
     <!-- Define all font styles as per Material Design Standards -->
-    <style name="TextStyle">
-    </style>
+    <style name="TextStyle"></style>
 
     <style name="TextStyle.Regular">
         <item name="fontPath">fonts/NotoSansTamil-Regular.ttf</item>
@@ -36,7 +35,7 @@
         <item name="fontPath">fonts/NotoSansTamil-Bold.ttf</item>
         <item name="android:textStyle">bold</item>
     </style>
-<!--
+    <!--
     <style name="Display4" parent="TextStyle.Regular">
         <item name="android:textSize">112sp</item>
         <item name="android:color">@color/black_54</item>
@@ -111,8 +110,7 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="Badge" parent="Small">
-    </style>
+    <style name="Badge" parent="Small"></style>
 
     <style name="badge1" parent="Badge">
         <!--<item name="android:background">@drawable/badge1_bg</item>-->

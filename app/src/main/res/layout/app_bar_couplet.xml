@@ -33,5 +33,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_couplet" />
+    <include layout="@layout/fab_menu_couplets_layout" />
 
 </android.support.design.widget.CoordinatorLayout>

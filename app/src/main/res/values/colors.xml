@@ -17,4 +17,10 @@
     <color name="black_54">#8a000000</color>
     <color name="black_87">#de000000</color>
     <color name="black_38">#61000000</color>
+
+    <color name="fab_main">#006b5f</color>
+    <color name="fab_pdf">#ff303f9f</color>
+    <color name="fab_share">#990091</color>
+    <color name="fab_search">#249900</color>
+    <color name="fab_favorite">#ff2c88</color>
 </resources>
