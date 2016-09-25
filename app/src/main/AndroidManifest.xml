@@ -9,7 +9,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".SectionsActivity"
             android:label="@string/app_name"
@@ -17,10 +16,10 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ChapterActivity"
             android:label="@string/chapter"
@@ -31,7 +30,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
         </activity>
-
         <activity
             android:name=".CoupletSwipeActivity"
             android:label="@string/couplet_detail"
@@ -42,7 +40,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ChapterActivity" />
         </activity>
-
         <activity
             android:name=".AboutThirukkuralActivity"
             android:label="@string/about_thirukkural"
@@ -52,7 +49,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
         </activity>
-
         <activity
             android:name=".SearchResultsActivity"
             android:label="@string/search_results"
@@ -70,7 +66,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name=".FavoritesActivity"
             android:label="@string/fav_couplets"
@@ -80,7 +75,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.ChapterActivity" />
         </activity>
-
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings"
@@ -90,17 +84,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
+        <activity android:name=".ThirukkuralBaseActivity" />
 
-
-
-        <activity android:name=".ThirukkuralBaseActivity"></activity>
-
+        <activity android:name=".SearchActivity"
+            android:label="@string/search"
+            android:launchMode="singleTop"
+            android:parentActivityName=".SectionsActivity"
+            />
 
         <provider
             android:name=".provider.ThirukkuralContentProvider"
             android:authorities="com.jpp.and_thirukkural"
             android:enabled="true"
             android:exported="true" />
+
     </application>
 
 </manifest>

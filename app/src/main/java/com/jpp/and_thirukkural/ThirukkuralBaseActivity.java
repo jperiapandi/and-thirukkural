@@ -3,6 +3,7 @@ package com.jpp.and_thirukkural;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
 
     protected FloatingActionButton fab_main, fab_pdf, fab_search, fab_share, fab_favorite;
     protected Animation animationFabOpen, animationFabClose, animationRotateForward, animationRotateBackward;
-    private boolean isFabOpen = false;
+    public boolean isFabOpen = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -120,47 +121,68 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         int id = v.getId();
         switch (id){
             case R.id.fab_main:
-                animateFAB();
+                toggleFABState();
                 break;
             case R.id.fab_pdf:
+                Toast.makeText(v.getContext(), "PDF option is coming soon", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.fab_share:
-            case R.id.fab_search:
+                Toast.makeText(v.getContext(), "Share option is coming soon", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.fab_favorite:
-                Toast t = Toast.makeText(v.getContext(), "You clicked on a FAB", Toast.LENGTH_SHORT);
-                t.show();
+                Toast.makeText(v.getContext(), "Marking as favorite is coming soon", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
         }
     }
 
-    public void animateFAB(){
+    private void toggleFABState(){
 
         if(isFabOpen){
-            isFabOpen = false;
-            fab_main.startAnimation(animationRotateBackward);
-            fab_pdf.startAnimation(animationFabClose);
-            fab_pdf.setClickable(isFabOpen);
-            fab_share.startAnimation(animationFabClose);
-            fab_share.setClickable(isFabOpen);
-            fab_search.startAnimation(animationFabClose);
-            fab_search.setClickable(isFabOpen);
-            if(fab_favorite != null){
-                fab_favorite.startAnimation(animationFabClose);
-                fab_favorite.setClickable(isFabOpen);
-            }
+            closeFAB(null);
         } else {
-            isFabOpen = true;
-            fab_main.startAnimation(animationRotateForward);
-            fab_pdf.startAnimation(animationFabOpen);
-            fab_pdf.setClickable(isFabOpen);
-            fab_share.startAnimation(animationFabOpen);
-            fab_share.setClickable(isFabOpen);
-            fab_search.startAnimation(animationFabOpen);
-            fab_search.setClickable(isFabOpen);
-            if(fab_favorite != null){
-                fab_favorite.startAnimation(animationFabOpen);
-                fab_favorite.setClickable(isFabOpen);
-            }
+            openFAB(null);
+        }
+    }
 
+    public void closeFAB(Animation.AnimationListener animationListener){
+        isFabOpen = false;
+        fab_main.startAnimation(animationRotateBackward);
+        fab_pdf.startAnimation(animationFabClose);
+        fab_pdf.setClickable(isFabOpen);
+        fab_share.startAnimation(animationFabClose);
+        fab_share.setClickable(isFabOpen);
+        fab_search.startAnimation(animationFabClose);
+        fab_search.setClickable(isFabOpen);
+        if(fab_favorite != null){
+            fab_favorite.startAnimation(animationFabClose);
+            fab_favorite.setClickable(isFabOpen);
+        }
+
+        if(animationListener!=null){
+            animationRotateBackward.setAnimationListener(animationListener);
+        }
+    }
+
+    public void openFAB(Animation.AnimationListener animationListener){
+        isFabOpen = true;
+        fab_main.startAnimation(animationRotateForward);
+        fab_pdf.startAnimation(animationFabOpen);
+        fab_pdf.setClickable(isFabOpen);
+        fab_share.startAnimation(animationFabOpen);
+        fab_share.setClickable(isFabOpen);
+        fab_search.startAnimation(animationFabOpen);
+        fab_search.setClickable(isFabOpen);
+        if(fab_favorite != null){
+            fab_favorite.startAnimation(animationFabOpen);
+            fab_favorite.setClickable(isFabOpen);
+        }
+
+        if(animationListener!=null){
+            animationRotateForward.setAnimationListener(animationListener);
         }
     }
 }

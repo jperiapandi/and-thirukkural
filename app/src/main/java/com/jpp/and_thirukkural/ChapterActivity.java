@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -117,6 +118,18 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         String title = chapter.get_id()+". "+chapter.getTitle();
         getSupportActionBar().setTitle(title);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if(isFabOpen){
+            closeFAB(null);
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
     /*Create Framgment for Chapter Pager*/
     public static class ChapterPageFragment extends Fragment{
         public static final String CHAPTER_NUMBER="chapterNumber";
@@ -164,11 +177,36 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                    final Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);
-                    startActivity(intent);
+
+
+                    ThirukkuralBaseActivity myActivity = (ThirukkuralBaseActivity) view.getContext();
+                    if(myActivity!=null && myActivity.isFabOpen)
+                    {
+                        myActivity.closeFAB(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+                    }
+                    else
+                    {
+                        startActivity(intent);
+                    }
                 }
             });
             return chapterPageFragmentView;

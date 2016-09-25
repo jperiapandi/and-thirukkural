@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/chapter_info"
         android:id="@+id/info"
-        style="@style/VerySmall"
+        style="@style/Small"
         />
 
 </LinearLayout>

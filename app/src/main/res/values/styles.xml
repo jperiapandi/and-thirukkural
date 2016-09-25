@@ -132,4 +132,9 @@
         <item name="android:color">@color/badge_color4</item>
     </style>
 
+    <style name="input_field">
+        <item name="android:background">@drawable/input_text_bg</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
 </resources>

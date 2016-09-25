@@ -126,6 +126,15 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         getSupportActionBar().setTitle(title);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(isFabOpen){
+            closeFAB(null);
+            return;
+        }
+
+        super.onBackPressed();
+    }
     /**
      * A placeholder fragment containing a simple view.
      */

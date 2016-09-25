@@ -23,4 +23,7 @@
     <color name="fab_share">#990091</color>
     <color name="fab_search">#249900</color>
     <color name="fab_favorite">#ff2c88</color>
+
+    <color name="input_field_bg_color">#05000000</color>
+    <color name="input_field_stroke_color">#11000000</color>
 </resources>

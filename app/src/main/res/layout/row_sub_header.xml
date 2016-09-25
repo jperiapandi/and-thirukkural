@@ -14,5 +14,5 @@
         android:layout_height="wrap_content"
         android:text="Sub header title"
         android:id="@+id/sub_header_title"
-        />
+        style="@style/Body2" />
 </LinearLayout>

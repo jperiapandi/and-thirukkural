@@ -39,5 +39,7 @@
     <string name="couplets">குறள்கள்</string>
     <string name="none">ஏதுமில்லை</string>
     <string name="chapter_info"><![CDATA[அதிகாரம் <b>%1$d</b>     குறள்கள் <b>%2$s</b>]]></string>
-    <string name="title_activity_fab">FabActivity</string>
+    <string name="no_searches_yet">இதுவரை எதுவும்தேடப்படவில்லை</string>
+    <string name="recent_searches_will_appear_here">உங்கள் முந்தைய தேடுதல் முடிவுகள் இங்கே காட்டப்படும்</string>
+    <string name="recent_searches">சமீபத்திய தேடல்கள்</string>
 </resources>
