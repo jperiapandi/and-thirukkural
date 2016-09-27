@@ -38,7 +38,6 @@ import java.util.ArrayList;
 public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
-    static DataLoadHelper dlh;
 
     private ChapterPagerAdapter mChapterPagerAdapter;
     private ViewPager mChapterPager;
@@ -56,7 +55,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
        //Load data
 
-        dlh = new DataLoadHelper(getApplicationContext());
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
         allChapters = dlh.getAllChapters();
 
 
@@ -100,7 +99,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        configureSearchMenu(menu, R.menu.menu_chapter);
+
         return true;
     }
 
@@ -149,6 +148,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             View chapterPageFragmentView = inflater.inflate(R.layout.fragment_chapterpage, container, false);
             int position = getArguments().getInt(CHAPTER_NUMBER);
             Chapter chapter = allChapters.get(position);

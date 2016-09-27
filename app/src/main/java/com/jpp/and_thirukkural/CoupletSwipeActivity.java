@@ -32,7 +32,6 @@ import java.util.ArrayList;
 
 public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
     private static ArrayList<Couplet> allCouplets;
-    static DataLoadHelper dlh;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -62,7 +61,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         if(allCouplets==null)
         {
             //Load data
-            dlh = new DataLoadHelper(getApplicationContext());
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             allCouplets = dlh.getAllCouplets(true);
         }
 
@@ -106,7 +105,6 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        configureSearchMenu(menu, R.menu.menu_couplet);
         return true;
     }
 
@@ -162,7 +160,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             View coupletPageFragmentView = inflater.inflate(R.layout.fragment_couplet_swipe, container, false);
 
             int position = getArguments().getInt(ARG_COUPLET_ID) - 1;

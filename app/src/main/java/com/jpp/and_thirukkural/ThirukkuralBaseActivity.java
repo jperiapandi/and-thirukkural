@@ -78,20 +78,6 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         }
     }
 
-    public void configureSearchMenu(Menu menu, int menuResource){
-        /*
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(menuResource, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_menu_item).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
-
-        searchView.setOnQueryTextListener(this);
-        */
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         Log.i("Search submit" , query);

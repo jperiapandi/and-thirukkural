@@ -6,6 +6,8 @@ package com.jpp.and_thirukkural;
 
 import android.app.Application;
 
+import com.jpp.and_thirukkural.db.DataLoadHelper;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -18,6 +20,8 @@ public class ThirukkuralApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        DataLoadHelper.setContext(getApplicationContext());
 
         CalligraphyConfig.initDefault(
                 new CalligraphyConfig.Builder()

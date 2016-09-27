@@ -49,23 +49,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
         </activity>
-        <activity
-            android:name=".SearchResultsActivity"
-            android:label="@string/search_results"
-            android:parentActivityName=".SectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.SectionsActivity" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
         <activity
             android:name=".FavoritesActivity"
             android:label="@string/fav_couplets"
@@ -84,6 +68,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
+
         <activity android:name=".ThirukkuralBaseActivity" />
 
         <activity android:name=".SearchActivity"

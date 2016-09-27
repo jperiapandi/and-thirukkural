@@ -33,13 +33,12 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
     private static String SEARCH_QUERY = "search_query";
-    private DataLoadHelper dlh;
     private String query = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dlh = new DataLoadHelper(getBaseContext());
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
 
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,8 +78,10 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void search(String q) {
+
         this.query = q;
         //use the query to search your data-base
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
         SearchResult searchResult = dlh.search(query);
 
         Log.i("Search Result", "Results received");
