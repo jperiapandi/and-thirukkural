@@ -24,7 +24,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ThirukkuralBaseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnClickListener{
 
-    protected FloatingActionButton fab_main, fab_pdf, fab_search, fab_share, fab_favorite;
+    protected FloatingActionButton fab_main, fab_pdf, fab_search, fab_share, fab_favorite, fab_search_in_section;
     protected Animation animationFabOpen, animationFabClose, animationRotateForward, animationRotateBackward;
     public boolean isFabOpen = false;
 
@@ -48,6 +48,7 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         fab_pdf = (FloatingActionButton) findViewById(R.id.fab_pdf);
         fab_share = (FloatingActionButton) findViewById(R.id.fab_share);
         fab_search = (FloatingActionButton) findViewById(R.id.fab_search);
+        fab_search_in_section = (FloatingActionButton) findViewById(R.id.fab_search_in_section);
         fab_favorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
 
 
@@ -63,6 +64,9 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
 
         if(fab_search != null){
             fab_search.setOnClickListener(this);
+        }
+        if(fab_search_in_section != null){
+            fab_search_in_section.setOnClickListener(this);
         }
 
         if(fab_share != null){
@@ -110,17 +114,25 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
                 toggleFABState();
                 break;
             case R.id.fab_pdf:
+                quickCloseFAB();
                 Toast.makeText(v.getContext(), "PDF option is coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_share:
+                quickCloseFAB();
                 Toast.makeText(v.getContext(), "Share option is coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_favorite:
+                quickCloseFAB();
                 Toast.makeText(v.getContext(), "Marking as favorite is coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_search:
+                quickCloseFAB();
                 Intent intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.fab_search_in_section:
+                Intent intent2 = new Intent(this, SearchActivity.class);
+                startActivity(intent2);
                 break;
         }
     }
@@ -131,6 +143,24 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
             closeFAB(null);
         } else {
             openFAB(null);
+        }
+    }
+
+    public void quickCloseFAB(){
+        isFabOpen = false;
+        animationRotateBackward.setDuration(0);
+        animationFabClose.setDuration(0);
+
+        fab_main.startAnimation(animationRotateBackward);
+        fab_pdf.startAnimation(animationFabClose);
+        fab_pdf.setClickable(isFabOpen);
+        fab_share.startAnimation(animationFabClose);
+        fab_share.setClickable(isFabOpen);
+        fab_search.startAnimation(animationFabClose);
+        fab_search.setClickable(isFabOpen);
+        if(fab_favorite != null){
+            fab_favorite.startAnimation(animationFabClose);
+            fab_favorite.setClickable(isFabOpen);
         }
     }
 
@@ -152,6 +182,8 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
             animationRotateBackward.setAnimationListener(animationListener);
         }
     }
+
+
 
     public void openFAB(Animation.AnimationListener animationListener){
         isFabOpen = true;
