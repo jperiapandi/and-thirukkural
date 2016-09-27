@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="Caption2" parent="TextStyle.Regular">
+        <item name="android:textSize">10sp</item>
+        <item name="android:color">@color/black_87</item>
+    </style>
+
+
+    <style name="Body1" parent="TextStyle.Bold">
+        <item name="android:textSize">10sp</item>
+        <item name="android:color">@color/black_54</item>
+    </style>
+
+</resources>

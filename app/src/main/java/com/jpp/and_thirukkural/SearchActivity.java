@@ -3,19 +3,19 @@ package com.jpp.and_thirukkural;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,54 +30,95 @@ import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.model.SubHeader;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
-public class SearchResultsActivity extends ThirukkuralBaseActivity {
-
-    private DataLoadHelper dlh;
-
+public class SearchActivity extends AppCompatActivity {
+    private static String SEARCH_QUERY = "search_query";
+    private String query = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dlh = new DataLoadHelper(getBaseContext());
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
 
-        setContentView(R.layout.activity_search_results);
+        setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        handleIntent(getIntent());
+
+        //Listen for search action
+        EditText ipQueryText = (EditText) findViewById(R.id.ip_query_text);
+        ipQueryText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    handled = true;
+                    search(v.getText().toString());
+                }
+                return handled;
+            }
+        });
+
+        if(savedInstanceState != null){
+            this.query = savedInstanceState.getString(SEARCH_QUERY);
+            if(query != null && query.length() > 0){
+                search(query);
+            }
+        }
+
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(SEARCH_QUERY, this.query);
+        super.onSaveInstanceState(outState);
     }
 
-    private void handleIntent(Intent intent) {
 
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data-base
-            SearchResult searchResult = dlh.search(query);
+    private void search(String q) {
 
-            Log.i("Search Result", "Results received");
+        this.query = q;
+        //use the query to search your data-base
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
+        SearchResult searchResult = dlh.search(query);
+
+        Log.i("Search Result", "Results received");
+
+        View noSearchesYet = findViewById(R.id.no_searches_yet);
+        View searchSuccessView = findViewById(R.id.content_search_success);
+        View searchFailView = findViewById(R.id.content_search_fail);
+        View searchRecents = findViewById(R.id.content_search_recents);
+        try{
+            noSearchesYet.setVisibility(View.GONE);
+            searchFailView.setVisibility(View.GONE);
+            searchSuccessView.setVisibility(View.GONE);
+            searchRecents.setVisibility(View.GONE);
+        }catch (Exception e){
+            //ignore error
+        }
+
 
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             View childView;
+
             if(searchResult.isSearchResultFound())
             {
                 //Display results
-                childView = inflater.inflate(R.layout.content_search_success, (ViewGroup) findViewById(R.id.search_result_layout));
+                childView = searchSuccessView;
+                if(childView == null)
+                {
+                    childView = inflater.inflate(R.layout.content_search_success, (ViewGroup) findViewById(R.id.content_search));
+                }
+                childView.setVisibility(View.VISIBLE);
                 ArrayList<ListItem> resultItems = new ArrayList<ListItem>();
 
-                TextView qText = (TextView) childView.findViewById(R.id.qText);
-                TextView numberOfCouplets = (TextView) childView.findViewById(R.id.numberOfCouplets);
-                TextView numberOfChapters = (TextView) childView.findViewById(R.id.numberOfChapters);
-                TextView numberOfParts = (TextView) childView.findViewById(R.id.numberOfParts);
-                TextView numberOfSections = (TextView) childView.findViewById(R.id.numberOfSections);
+//                TextView qText = (TextView) childView.findViewById(R.id.qText);
+//                TextView numberOfCouplets = (TextView) childView.findViewById(R.id.numberOfCouplets);
+//                TextView numberOfChapters = (TextView) childView.findViewById(R.id.numberOfChapters);
+//                TextView numberOfParts = (TextView) childView.findViewById(R.id.numberOfParts);
+//                TextView numberOfSections = (TextView) childView.findViewById(R.id.numberOfSections);
 
                 ListView searchResultsListView = (ListView) childView.findViewById(R.id.listView);
 
@@ -130,11 +171,11 @@ public class SearchResultsActivity extends ThirukkuralBaseActivity {
                     resultItems.addAll(couplets);
                 }
 
-                qText.setText(searchResult.getQ());
-                numberOfCouplets.setText(strNumberOfCouplets);
-                numberOfChapters.setText(strNumberOfChapters);
-                numberOfParts.setText(strNumberOfParts);
-                numberOfSections.setText(strNumberOfSections);
+//                qText.setText(searchResult.getQ());
+//                numberOfCouplets.setText(strNumberOfCouplets);
+//                numberOfChapters.setText(strNumberOfChapters);
+//                numberOfParts.setText(strNumberOfParts);
+//                numberOfSections.setText(strNumberOfSections);
 
                 //
                 ListItem[] items = resultItems.toArray(new ListItem[resultItems.size()]);
@@ -175,15 +216,16 @@ public class SearchResultsActivity extends ThirukkuralBaseActivity {
             else
             {
                 //Display failure message if there were no results found
-                childView = inflater.inflate(R.layout.content_search_fail, (ViewGroup) findViewById(R.id.search_result_layout));
-
+                childView = searchFailView;
+                if(childView == null)
+                {
+                    childView = inflater.inflate(R.layout.content_search_fail, (ViewGroup) findViewById(R.id.content_search));
+                }
+                childView.setVisibility(View.VISIBLE);
                 TextView infoView = (TextView) childView.findViewById(R.id.searchFailureInfo);
                 String warningInfo = getResources().getString(R.string.searchFailureInfo);
                 warningInfo = String.format(warningInfo, searchResult.getQ());
                 infoView.setText(Html.fromHtml(warningInfo));
             }
-
-        }
     }
-
 }

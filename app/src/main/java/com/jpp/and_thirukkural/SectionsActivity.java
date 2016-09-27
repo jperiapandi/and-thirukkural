@@ -52,7 +52,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private DataLoadHelper dataLoadHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +71,8 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         navigationView.setNavigationItemSelectedListener(this);
 
         //Load Data
-        dataLoadHelper = new DataLoadHelper(getApplicationContext());
-        sections = dataLoadHelper.getAllSections();
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
+        sections = dlh.getAllSections();
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -115,7 +114,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        configureSearchMenu(menu, R.menu.menu_sections);
         return true;
     }
 
@@ -186,7 +184,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
             int sectionID = getArguments().getInt(ARG_SECTION_NUMBER);
 
-            DataLoadHelper dlh = new DataLoadHelper(getContext());
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             ArrayList<Part> parts = dlh.getPartsBySectionId(sectionID);
 
             ArrayList<ListItem> items = new ArrayList<ListItem>();

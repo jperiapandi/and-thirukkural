@@ -21,12 +21,30 @@ import java.util.ArrayList;
  */
 public class DataLoadHelper {
 
-    private final Context context;
+
+    private static DataLoadHelper instance;
+
+    private static Context context;
     private final ContentResolver cr;
 
-    public DataLoadHelper(Context context){
+    private DataLoadHelper(Context context){
         this.context = context;
         this.cr = context.getContentResolver();
+    }
+
+    public static void setContext(Context c){
+        if(DataLoadHelper.context == null){
+            DataLoadHelper.context = c;
+        }
+    }
+
+    public static DataLoadHelper getInstance() {
+        if(instance == null)
+        {
+            instance = new DataLoadHelper(DataLoadHelper.context);
+        }
+
+        return instance;
     }
 
     public Couplet getCoupletById(int coupletID, boolean includeExplanation){

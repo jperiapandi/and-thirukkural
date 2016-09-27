@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="202dp"
+        app:pressedTranslationZ="12dp"
+        app:fabSize="mini"
+        app:elevation="6dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_menu_search"
+        android:translationZ="6dp"
+        app:backgroundTint="@color/fab_search"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="146dp"
+        app:pressedTranslationZ="12dp"
+        app:fabSize="mini"
+        app:elevation="6dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_share_black_24dp"
+        android:translationZ="6dp"
+        app:backgroundTint="@color/fab_share"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="90dp"
+        app:fabSize="mini"
+        app:elevation="6dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_pdf_file_black_24dp"
+        app:backgroundTint="@color/fab_pdf"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:fabSize="normal"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="@color/fab_main"
+        />
+
+</merge>

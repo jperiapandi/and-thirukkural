@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
-    static DataLoadHelper dlh;
 
     private ChapterPagerAdapter mChapterPagerAdapter;
     private ViewPager mChapterPager;
@@ -55,7 +55,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
        //Load data
 
-        dlh = new DataLoadHelper(getApplicationContext());
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
         allChapters = dlh.getAllChapters();
 
 
@@ -73,11 +73,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
             @Override
             public void onPageSelected(int position) {
-                /*
-                Chapter c = allChapters.get(position);
-                String chapterName = c.get_id()+" "+c.getTitle();
-                getSupportActionBar().setTitle(chapterName);
-                */
+                setChapterTitle(position);
             }
 
             @Override
@@ -97,11 +93,13 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID-1);
             targetTab.select();
         }
+
+        setChapterTitle(tabLayout.getSelectedTabPosition());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        configureSearchMenu(menu, R.menu.menu_chapter);
+
         return true;
     }
 
@@ -112,6 +110,23 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         // as you specify a parent activity in AndroidManifest.xml.
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setChapterTitle(int tabPosition){
+        Chapter chapter = allChapters.get(tabPosition);
+        String title = chapter.get_id()+". "+chapter.getTitle();
+        getSupportActionBar().setTitle(title);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(isFabOpen){
+            closeFAB(null);
+            return;
+        }
+
+        super.onBackPressed();
     }
 
     /*Create Framgment for Chapter Pager*/
@@ -133,25 +148,23 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             View chapterPageFragmentView = inflater.inflate(R.layout.fragment_chapterpage, container, false);
             int position = getArguments().getInt(CHAPTER_NUMBER);
             Chapter chapter = allChapters.get(position);
             Section section = dlh.getSectionById(chapter.getSectionId());
             Part part = dlh.getPartById(chapter.getPartId());
 
-            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
-            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
-            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
-            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
-            TextView chapterSerial = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_serial);
+//            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
+//            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
+//            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
+//            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
 
-            chapterId.setText(chapter.get_id()+".");
-            chapterName.setText(chapter.getTitle());
+//            chapterId.setText(chapter.get_id()+".");
+//            chapterName.setText(chapter.getTitle());
 
-            sectionName.setText(section.get_id()+". "+section.getTitle());
-            partName.setText(part.get_id()+". "+part.getTitle());
-            chapterSerial.setText(getResources().getString(R.string.serial)+": "+chapter.getSerial());
-
+//            sectionName.setText(section.get_id()+". "+section.getTitle());
+//            partName.setText(part.get_id()+". "+part.getTitle());
 
             //Load couplets in a chapter and display in a list
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
@@ -164,11 +177,36 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                    final Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);
-                    startActivity(intent);
+
+
+                    ThirukkuralBaseActivity myActivity = (ThirukkuralBaseActivity) view.getContext();
+                    if(myActivity!=null && myActivity.isFabOpen)
+                    {
+                        myActivity.closeFAB(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+                    }
+                    else
+                    {
+                        startActivity(intent);
+                    }
                 }
             });
             return chapterPageFragmentView;

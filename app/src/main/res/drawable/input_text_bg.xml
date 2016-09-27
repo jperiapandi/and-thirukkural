@@ -9,6 +9,11 @@
 
     </padding>
 
-    <corners android:radius="@dimen/badge_radius"></corners>
+    <corners android:radius="2dp"></corners>
 
+    <gradient
+        android:startColor="#00000000"
+        android:endColor="#05000000"
+        android:type="linear"
+        android:angle="-90"/>
 </shape>
