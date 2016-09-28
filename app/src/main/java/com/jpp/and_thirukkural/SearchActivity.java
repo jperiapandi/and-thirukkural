@@ -79,7 +79,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void search(String q) {
 
-        this.query = q;
+        this.query = q.trim();
         //use the query to search your data-base
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         SearchResult searchResult = dlh.search(query);
