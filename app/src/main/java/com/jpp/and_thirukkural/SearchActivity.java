@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.adapters.SearchResultListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
@@ -32,6 +33,7 @@ import com.jpp.and_thirukkural.model.SearchResult;
 import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.model.SubHeader;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
@@ -56,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
                     handled = true;
-                    search(v.getText().toString());
+                    search(v.getText().toString(), true);
                 }
                 return handled;
             }
@@ -70,19 +72,19 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                search(s.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                search(s.toString(), false);
             }
         });
 
         if(savedInstanceState != null){
             this.query = savedInstanceState.getString(SEARCH_QUERY);
             if(query != null && query.trim().length() > 0){
-                search(query);
+                search(query, false);
             }
         }
 
@@ -100,19 +102,27 @@ public class SearchActivity extends AppCompatActivity {
         //Load earlier search history from DB
         ArrayList<SearchHistory> searchHistories = dlh.getAllSearchHistory();
         View noSearchesYet = findViewById(R.id.no_searches_yet);
-        View contentSearchRecents = findViewById(R.id.content_search_recents);
+        View contentSearchRecents = findViewById(R.id.search_history);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View childView;
 
         if(searchHistories !=null && searchHistories.size() > 0){
             noSearchesYet.setVisibility(View.GONE);
-            childView = contentSearchRecents;
-            if(childView == null)
-            {
-                childView = inflater.inflate(R.layout.content_search_recents, (ViewGroup) findViewById(R.id.content_search));
-            }
-            childView.setVisibility(View.VISIBLE);
+            contentSearchRecents.setVisibility(View.VISIBLE);
+
+            ListView searchHistoryList = (ListView) findViewById(R.id.searchHistoryList);
+            ListItem[] items = searchHistories.toArray(new ListItem[searchHistories.size()]);
+            ListItemAdapter adapter = new ListItemAdapter(getBaseContext(), items);
+            searchHistoryList.setAdapter(adapter);
+            searchHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    SearchHistory item = (SearchHistory) parent.getItemAtPosition(position);
+                    search(item.getQuery(), false);
+                }
+            });
+
         }else
         {
 //            noSearchesYet.setVisibility(View.VISIBLE);
@@ -120,7 +130,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void search(String q) {
+    private void search(String q, boolean saveInHistory) {
 
         this.query = q.trim();
 
@@ -151,6 +161,11 @@ public class SearchActivity extends AppCompatActivity {
 
         if(searchResult.isSearchResultFound())
         {
+            //Save the searched word in DB
+            if(saveInHistory){
+                dlh.insertSearchHistory(query);
+            }
+
             //Display results
             childView = searchSuccessView;
             if(childView == null)

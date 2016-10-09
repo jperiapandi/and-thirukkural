@@ -1,6 +1,7 @@
 package com.jpp.and_thirukkural.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -81,8 +82,23 @@ public class ThirukkuralContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Uri resultUri = getContext().getContentResolver().insert(uri, values);
-        return resultUri;
+
+
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType){
+            case URITypes.SEARCH_HISTORY:
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                long rowId = db.insert(SearchHistoryTable.TBL_NAME, null, values);
+                if(rowId != -1){
+                    Uri _uri = ContentUris.withAppendedId(uri, rowId);
+                    getContext().getContentResolver().notifyChange(_uri, null);
+                    return _uri;
+                }
+                break;
+
+        }
+
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
