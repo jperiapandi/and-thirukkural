@@ -12,6 +12,7 @@ import com.jpp.and_thirukkural.db.ChaptersTable;
 import com.jpp.and_thirukkural.db.CoupletsTable;
 import com.jpp.and_thirukkural.db.DBHelper;
 import com.jpp.and_thirukkural.db.PartsTable;
+import com.jpp.and_thirukkural.db.SearchHistoryTable;
 import com.jpp.and_thirukkural.db.SectionsTable;
 import com.jpp.and_thirukkural.db.URITypes;
 
@@ -26,6 +27,7 @@ public class ThirukkuralContentProvider extends ContentProvider {
     public static final Uri SECTIONS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ SectionsTable.TBL_NAME);
     public static final Uri PARTS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ PartsTable.TBL_NAME);
     public static final Uri CHAPTERS_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ ChaptersTable.TBL_NAME);
+    public static final Uri SEARCH_HISTORY_URI = Uri.parse("content://"+ThirukkuralContentProvider.AUTHORITY+"/"+ SearchHistoryTable.TBL_NAME);
 
     private DBHelper dbHelper;
     public static UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -51,6 +53,10 @@ public class ThirukkuralContentProvider extends ContentProvider {
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, ChaptersTable.TBL_NAME, URITypes.CHAPTERS);
         //Get chapter based on id
         sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, ChaptersTable.TBL_NAME+"/#", URITypes.CHAPTER_BY_ID);
+
+        //Get all search history
+        sURIMatcher.addURI(ThirukkuralContentProvider.AUTHORITY, SearchHistoryTable.TBL_NAME, URITypes.SEARCH_HISTORY);
+        //Get all (non deleted) search history
     }
 
     public ThirukkuralContentProvider() {
@@ -75,8 +81,8 @@ public class ThirukkuralContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        Uri resultUri = getContext().getContentResolver().insert(uri, values);
+        return resultUri;
     }
 
     @Override
@@ -109,6 +115,8 @@ public class ThirukkuralContentProvider extends ContentProvider {
             case URITypes.CHAPTERS:
             case URITypes.CHAPTER_BY_ID:
                 return queryChapters(uri, projection, selection, selectionArgs, sortOrder);
+            case URITypes.SEARCH_HISTORY :
+                return querySearchHistory(uri, projection, selection, selectionArgs, sortOrder);
         }
 
         return null;
@@ -211,6 +219,24 @@ public class ThirukkuralContentProvider extends ContentProvider {
                     break;
             }
 
+            Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            return cursor;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private Cursor querySearchHistory(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        try{
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+            queryBuilder.setTables(SearchHistoryTable.TBL_NAME);
+            SearchHistoryTable.checkColumns(projection);
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
             return cursor;
