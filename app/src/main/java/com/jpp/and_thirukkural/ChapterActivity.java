@@ -129,6 +129,45 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         super.onBackPressed();
     }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.fab_share:
+                //Share this Chapter
+                DataLoadHelper dlh = DataLoadHelper.getInstance();
+                int position = mChapterPager.getCurrentItem();
+                Chapter chapter = allChapters.get(position);
+                Part part = dlh.getPartById(chapter.getPartId());
+                Section section = dlh.getSectionById(chapter.getSectionId());
+
+                //
+                String subject = getResources().getString(R.string.app_name)+" - "+chapter.get_id()+". "+chapter.getTitle();
+                //
+                String shareableText = "";
+
+                //Add details
+                shareableText += getResources().getString(R.string.chapter)+": "+chapter.get_id()+". "+chapter.getTitle();
+                shareableText += "\n"+getResources().getString(R.string.section)+": "+section.get_id()+". "+section.getTitle();
+                shareableText += "\n"+getResources().getString(R.string.part)+": "+part.get_id()+". "+part.getTitle()+"\n\n";
+
+                ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
+                for(Couplet couplet:couplets){
+                    shareableText+="\n"+couplet.get_id()+"\n"+couplet.getCouplet()+"\n";
+                }
+
+                shareableText +="\n\nhttps://play.google.com/store/apps/details?id=com.jpp.and_thirukkural";
+
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareableText);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_a_chapter)));
+                break;
+        }
+    }
+
     /*Create Framgment for Chapter Pager*/
     public static class ChapterPageFragment extends Fragment{
         public static final String CHAPTER_NUMBER="chapterNumber";

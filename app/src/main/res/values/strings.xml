@@ -24,7 +24,7 @@
     <string name="parts">இயல்கள்</string>
     <string name="commentaryByManakudavar">மணக்குடவர் உரை</string>
     <string name="commentaryByMuKarunanidhi">மு. கருணாநிதி உரை</string>
-    <string name="commentaryByMuVaradarajan">மு.வரதராசன் உரை</string>
+    <string name="commentaryByMuVaradarajan"><![CDATA[மு. வரதராசனார் உரை]]></string>
     <string name="commentaryBySolomonPappaiah">சாலமன் பாப்பையா உரை</string>
     <string name="english">ஆங்கிலம்</string>
     <string name="englishCommentary">ஆங்கில உரை</string>
@@ -42,4 +42,9 @@
     <string name="no_searches_yet">இதுவரை எதுவும்தேடப்படவில்லை</string>
     <string name="recent_searches_will_appear_here">உங்கள் முந்தைய தேடுதல் முடிவுகள் இங்கே காட்டப்படும்</string>
     <string name="recent_searches">சமீபத்திய தேடல்கள்</string>
+    <string name="marked_as_favourite">விருப்பமான குறள் என்று குறிக்கப்பட்டுள்ளது</string>
+    <string name="unmarked_as_favourite">விருப்பமான குறள்களில் இருந்து நீக்கப்பட்டுள்ளது</string>
+    <string name="no_favorites">பிடித்தமான குறள்கள் என்று எதையும் நீங்கள் இன்னும் குறிக்கவில்லை.</string>
+    <string name="share_a_chapter">அதிகாரத்தை பகிர்க</string>
+    <string name="share_a_couplet">குறளை பகிர்க</string>
 </resources>

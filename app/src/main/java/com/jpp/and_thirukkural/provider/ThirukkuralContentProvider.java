@@ -149,8 +149,16 @@ public class ThirukkuralContentProvider extends ContentProvider {
 
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
-                      String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        int uriType = sURIMatcher.match(uri);
+
+        switch (uriType){
+            case URITypes.COUPLETS:
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                int r = db.update(CoupletsTable.TBL_NAME, values, selection, selectionArgs);
+                return r;
+        }
+
         // TODO: Implement this to handle requests to update one or more rows.
         throw new UnsupportedOperationException("Not yet implemented");
     }

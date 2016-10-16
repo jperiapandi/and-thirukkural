@@ -119,11 +119,10 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
                 break;
             case R.id.fab_share:
                 quickCloseFAB();
-                Toast.makeText(v.getContext(), "Share option is coming soon", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Share option is coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_favorite:
                 quickCloseFAB();
-                Toast.makeText(v.getContext(), "Marking as favorite is coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_search:
                 quickCloseFAB();

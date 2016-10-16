@@ -565,4 +565,22 @@ public class DataLoadHelper {
         values.put(SearchHistoryTable.COL_SOFT_DELETE, false);
         cr.insert(ThirukkuralContentProvider.SEARCH_HISTORY_URI, values);
     }
+
+    public void markFavoriteCouplet(int coupletID){
+        String where = CoupletsTable.COL_ID+"=?";
+        String[] selectionArgs = new String[]{coupletID+""};
+
+        ContentValues values = new ContentValues();
+        values.put(CoupletsTable.COL_FAV, 1);
+        cr.update(ThirukkuralContentProvider.COUPLETS_URI, values, where, selectionArgs);
+    }
+
+    public void unmarkFavoriteCouplet(int coupletID){
+        String where = CoupletsTable.COL_ID+"=?";
+        String[] selectionArgs = new String[]{coupletID+""};
+
+        ContentValues values = new ContentValues();
+        values.put(CoupletsTable.COL_FAV, 0);
+        cr.update(ThirukkuralContentProvider.COUPLETS_URI, values, where, selectionArgs);
+    }
 }
