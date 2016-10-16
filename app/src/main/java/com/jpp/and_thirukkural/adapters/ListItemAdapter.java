@@ -67,9 +67,11 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
 
             case COMMENTARY:
                 rowView = renderCommentary((Commentary) item, position,convertView,parent);
+                break;
 
             case SEARCH_HISTORY:
                 rowView = renderSearchHistory((SearchHistory) item, position, convertView, parent);
+                break;
         }
 
         return rowView;

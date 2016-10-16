@@ -13,6 +13,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -92,6 +94,44 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+
+        MenuItem title = menu.add(0, 1, 1, getResources().getString(R.string.recent_searches));
+        title.setEnabled(false);
+
+        DataLoadHelper dlh = DataLoadHelper.getInstance();
+        //Load earlier search history from DB
+        ArrayList<SearchHistory> searchHistories = dlh.getActiveSearchHistory();
+
+        if(searchHistories != null && searchHistories.size() > 0)
+        {
+            int i = 0;
+            int maxAllowedHistories = 5;
+
+            for(SearchHistory sh:searchHistories){
+                if(i < maxAllowedHistories){
+                    MenuItem menuItem = menu.add(1, 1+i, 1+i, sh.getQuery());
+                    menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            search(item.getTitle().toString(), false);
+
+                            EditText ipQueryText = (EditText) findViewById(R.id.ip_query_text);
+                            ipQueryText.setText(item.getTitle().toString());
+                            return true;
+                        };
+                    });
+                    i++;
+                }
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(SEARCH_QUERY, this.query);
         super.onSaveInstanceState(outState);
@@ -100,33 +140,14 @@ public class SearchActivity extends AppCompatActivity {
     private void drawInitialState(){
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         //Load earlier search history from DB
-        ArrayList<SearchHistory> searchHistories = dlh.getAllSearchHistory();
+        ArrayList<SearchHistory> searchHistories = dlh.getActiveSearchHistory();
         View noSearchesYet = findViewById(R.id.no_searches_yet);
-        View contentSearchRecents = findViewById(R.id.search_history);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View childView;
 
         if(searchHistories !=null && searchHistories.size() > 0){
             noSearchesYet.setVisibility(View.GONE);
-            contentSearchRecents.setVisibility(View.VISIBLE);
-
-            ListView searchHistoryList = (ListView) findViewById(R.id.searchHistoryList);
-            ListItem[] items = searchHistories.toArray(new ListItem[searchHistories.size()]);
-            ListItemAdapter adapter = new ListItemAdapter(getBaseContext(), items);
-            searchHistoryList.setAdapter(adapter);
-            searchHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    SearchHistory item = (SearchHistory) parent.getItemAtPosition(position);
-                    search(item.getQuery(), false);
-                }
-            });
-
-        }else
-        {
-//            noSearchesYet.setVisibility(View.VISIBLE);
-//            contentSearchRecents.setVisibility(View.GONE);
         }
     }
 
@@ -137,12 +158,12 @@ public class SearchActivity extends AppCompatActivity {
         View noSearchesYet = findViewById(R.id.no_searches_yet);
         View searchSuccessView = findViewById(R.id.content_search_success);
         View searchFailView = findViewById(R.id.content_search_fail);
-        View searchRecents = findViewById(R.id.content_search_recents);
+        //View searchRecents = findViewById(R.id.content_search_recents);
         try{
             noSearchesYet.setVisibility(View.GONE);
             searchFailView.setVisibility(View.GONE);
             searchSuccessView.setVisibility(View.GONE);
-            searchRecents.setVisibility(View.GONE);
+//            searchRecents.setVisibility(View.GONE);
         }catch (Exception e){
             //ignore error
         }

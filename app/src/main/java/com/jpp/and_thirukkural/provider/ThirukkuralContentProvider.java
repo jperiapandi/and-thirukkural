@@ -69,7 +69,16 @@ public class ThirukkuralContentProvider extends ContentProvider {
     }
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
+
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType){
+            case URITypes.SEARCH_HISTORY:
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                int i = db.delete(SearchHistoryTable.TBL_NAME, selection, selectionArgs);
+                return i;
+
+        }
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

@@ -529,7 +529,7 @@ public class DataLoadHelper {
         String[] mProjection = SearchHistoryTable.ALL_COLUMNS;
         String mSelectionClause = SearchHistoryTable.COL_SOFT_DELETE+"=?";
         String[] mSelectionArgs = {"0"};
-        String sortOrder = SearchHistoryTable.COL_ID;
+        String sortOrder = SearchHistoryTable.COL_ID+" DESC";
         Cursor cursor = cr.query(ThirukkuralContentProvider.SEARCH_HISTORY_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
         result = getSearchHistoryFromCursor(cursor);
         return result;
@@ -556,6 +556,10 @@ public class DataLoadHelper {
 
 
     public void insertSearchHistory(String query){
+        //Remove existing search histories from db
+        cr.delete(ThirukkuralContentProvider.SEARCH_HISTORY_URI, SearchHistoryTable.COL_QUERY+" = ?", new String[]{query});
+
+        //insert the query string into search history table
         ContentValues values = new ContentValues();
         values.put(SearchHistoryTable.COL_QUERY, query);
         values.put(SearchHistoryTable.COL_SOFT_DELETE, false);
