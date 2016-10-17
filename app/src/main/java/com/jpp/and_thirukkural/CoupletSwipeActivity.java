@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
@@ -133,6 +135,82 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
         super.onBackPressed();
     }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        int position;
+        Couplet couplet;
+
+        switch (v.getId()){
+            case R.id.fab_favorite:
+                position = mCoupletPager.getCurrentItem();
+                couplet = allCouplets.get(position);
+                if(couplet.getFav() == 1){
+                    couplet.setFav(0);
+                    DataLoadHelper.getInstance().unmarkFavoriteCouplet(couplet.get_id());
+                    Toast.makeText(getBaseContext(), getResources().getText(R.string.unmarked_as_favourite), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    couplet.setFav(1);
+                    DataLoadHelper.getInstance().markFavoriteCouplet(couplet.get_id());
+                    Toast.makeText(getBaseContext(), getResources().getText(R.string.marked_as_favourite), Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case R.id.fab_share:
+                //Share a couplet
+                DataLoadHelper dlh = DataLoadHelper.getInstance();
+                position = mCoupletPager.getCurrentItem();
+                couplet = allCouplets.get(position);
+                Chapter chapter = dlh.getChapterById(couplet.getChapterId());
+                Part part = dlh.getPartById(chapter.getPartId());
+                Section section = dlh.getSectionById(chapter.getSectionId());
+
+                //
+                String subject = getResources().getString(R.string.app_name)+" - "+getResources().getString(R.string.couplet)+" "+couplet.get_id();
+                //
+                String shareableText = "%1$s: %2$d\n%3$s";
+                shareableText = String.format(shareableText,
+                        getResources().getString(R.string.couplet),
+                        couplet.get_id(),
+                        couplet.getCouplet());
+
+                //Add details
+                shareableText += "\n\n"+getResources().getString(R.string.section)+": "+section.get_id()+". "+section.getTitle();
+                shareableText += "\n"+getResources().getString(R.string.part)+": "+part.get_id()+". "+part.getTitle();
+                shareableText += "\n"+getResources().getString(R.string.chapter)+": "+chapter.get_id()+". "+chapter.getTitle();
+                //Add Pappaiah commentary
+                shareableText +="\n\n"+getResources().getString(R.string.commentaryBySolomonPappaiah)+":\n"+couplet.getExpln_pappaiah();
+
+                //Add Mu.Va commentary
+                shareableText +="\n\n"+getResources().getString(R.string.commentaryByMuVaradarajan)+":\n"+couplet.getExpln_muva();
+
+                //Add Karunanidhi commentary
+                shareableText +="\n\n"+getResources().getString(R.string.commentaryByMuKarunanidhi)+":\n"+couplet.getExpln_karunanidhi();
+
+                //Add Manakudavar commentary
+                shareableText +="\n\n"+getResources().getString(R.string.commentaryByManakudavar)+":\n"+couplet.getExpln_manakudavar();
+
+                //Add English couplet
+                shareableText +="\n\n"+getResources().getString(R.string.english)+":\n"+couplet.getCouplet_en();
+
+                //Add English commentary
+                shareableText +="\n\n"+getResources().getString(R.string.englishCommentary)+":\n"+couplet.getExpln_en();
+
+                shareableText +="\n\nhttps://play.google.com/store/apps/details?id=com.jpp.and_thirukkural";
+
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareableText);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_a_couplet)));
+                break;
+        }
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */

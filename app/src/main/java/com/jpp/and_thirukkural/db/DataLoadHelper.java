@@ -2,6 +2,7 @@ package com.jpp.and_thirukkural.db;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.util.Log;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.Part;
+import com.jpp.and_thirukkural.model.SearchHistory;
 import com.jpp.and_thirukkural.model.SearchResult;
 import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.provider.ThirukkuralContentProvider;
@@ -501,5 +503,84 @@ public class DataLoadHelper {
         result.setCouplets(couplets);
 
         return result;
+    }
+
+
+    public ArrayList<SearchHistory> getAllSearchHistory(){
+        ArrayList<SearchHistory> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from search history table
+
+        String[] mProjection = SearchHistoryTable.ALL_COLUMNS;
+        String mSelectionClause = null;
+        String[] mSelectionArgs = null;
+        String sortOrder = SearchHistoryTable.COL_ID;
+        Cursor cursor = cr.query(ThirukkuralContentProvider.SEARCH_HISTORY_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+        result = getSearchHistoryFromCursor(cursor);
+
+        return result;
+    }
+
+    public ArrayList<SearchHistory> getActiveSearchHistory(){
+        ArrayList<SearchHistory> result =null;
+        ContentResolver cr = context.getContentResolver();
+        //Load data from search history table
+
+        String[] mProjection = SearchHistoryTable.ALL_COLUMNS;
+        String mSelectionClause = SearchHistoryTable.COL_SOFT_DELETE+"=?";
+        String[] mSelectionArgs = {"0"};
+        String sortOrder = SearchHistoryTable.COL_ID+" DESC";
+        Cursor cursor = cr.query(ThirukkuralContentProvider.SEARCH_HISTORY_URI, mProjection, mSelectionClause, mSelectionArgs, sortOrder);
+        result = getSearchHistoryFromCursor(cursor);
+        return result;
+    }
+
+    private ArrayList<SearchHistory> getSearchHistoryFromCursor(Cursor cursor){
+        ArrayList<SearchHistory> result =null;
+        if (cursor != null ) {
+            if  (cursor.moveToFirst()) {
+                result = new ArrayList<SearchHistory>();
+                do {
+                    SearchHistory searchHistory = new SearchHistory();
+                    searchHistory.set_id(cursor.getInt(cursor.getColumnIndex(SearchHistoryTable.COL_ID)));
+                    searchHistory.setQuery(cursor.getString(cursor.getColumnIndex(SearchHistoryTable.COL_QUERY)));
+                    searchHistory.setSoftDelete(cursor.getInt(cursor.getColumnIndex(SearchHistoryTable.COL_SOFT_DELETE)));
+                    result.add(searchHistory);
+                }while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+
+        return result;
+    }
+
+
+    public void insertSearchHistory(String query){
+        //Remove existing search histories from db
+        cr.delete(ThirukkuralContentProvider.SEARCH_HISTORY_URI, SearchHistoryTable.COL_QUERY+" = ?", new String[]{query});
+
+        //insert the query string into search history table
+        ContentValues values = new ContentValues();
+        values.put(SearchHistoryTable.COL_QUERY, query);
+        values.put(SearchHistoryTable.COL_SOFT_DELETE, false);
+        cr.insert(ThirukkuralContentProvider.SEARCH_HISTORY_URI, values);
+    }
+
+    public void markFavoriteCouplet(int coupletID){
+        String where = CoupletsTable.COL_ID+"=?";
+        String[] selectionArgs = new String[]{coupletID+""};
+
+        ContentValues values = new ContentValues();
+        values.put(CoupletsTable.COL_FAV, 1);
+        cr.update(ThirukkuralContentProvider.COUPLETS_URI, values, where, selectionArgs);
+    }
+
+    public void unmarkFavoriteCouplet(int coupletID){
+        String where = CoupletsTable.COL_ID+"=?";
+        String[] selectionArgs = new String[]{coupletID+""};
+
+        ContentValues values = new ContentValues();
+        values.put(CoupletsTable.COL_FAV, 0);
+        cr.update(ThirukkuralContentProvider.COUPLETS_URI, values, where, selectionArgs);
     }
 }

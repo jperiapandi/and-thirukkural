@@ -9,5 +9,6 @@ public enum ListItemType {
     CHAPTER,
     COUPLET,
     COMMENTARY,
-    SUB_HEADER
+    SUB_HEADER,
+    SEARCH_HISTORY
 }

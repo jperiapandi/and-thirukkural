@@ -15,4 +15,7 @@ public class URITypes {
 
     public static final int PARTS = 7;
     public static final int PART_BY_ID = 8;
+
+    public static final int SEARCH_HISTORY = 9;
+//    public static final int SEARCH_HISTORY_BY_SOFT_DELETE = 10;
 }

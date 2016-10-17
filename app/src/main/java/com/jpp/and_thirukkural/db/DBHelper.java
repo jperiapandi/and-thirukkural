@@ -28,22 +28,40 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String DB_PATH;
     private SQLiteDatabase myDataBase;
 
-    public DBHelper(Context context){
-        super(context, DB_NAME, null, 1);
-        this.DB_PATH = "/data/data/"+context.getPackageName()+"/databases/";
+    private static final int DB_VERSION = 2;
+
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+        this.DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         this.context = context;
     }
 
     /**
      * Creates a empty database on the system and rewrites it with your own database.
-     * */
+     */
     public void createDataBase() throws IOException {
 
         boolean dbExist = checkDataBase();
 
-        if(dbExist){
-            //do nothing - database already exist
-        }else{
+        int version = 0;
+
+        SQLiteDatabase checkDB = null;
+        String myPath = DB_PATH + DB_NAME;
+
+        //Read installed DB version
+        try {
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        } catch (SQLiteException e) {
+            //database does’t exist yet.
+        }
+        if (checkDB != null) {
+            version = checkDB.getVersion();
+        }
+
+        if (dbExist && version >= DB_VERSION) {
+            //do nothing – database already exist
+        } else {
+
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
             this.getReadableDatabase();
@@ -55,26 +73,38 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
 
+        //Set the installed DB version
+        try {
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        } catch (SQLiteException e) {
+            //database does’t exist yet.
+        }
+        if (checkDB != null) {
+            checkDB.setVersion(DB_VERSION);
+            checkDB.close();
+        }
+
     }
 
     /**
      * Check if the database already exist to avoid re-copying the file each time you open the application.
+     *
      * @return true if it exists, false if it doesn't
      */
-    private boolean checkDataBase(){
+    private boolean checkDataBase() {
 
         SQLiteDatabase checkDB = null;
 
-        try{
+        try {
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
-        }catch(SQLiteException e){
+        } catch (SQLiteException e) {
             //database does't exist yet.
             e.printStackTrace();
         }
 
-        if(checkDB != null){
+        if (checkDB != null) {
             checkDB.close();
         }
 
@@ -85,8 +115,8 @@ public class DBHelper extends SQLiteOpenHelper {
      * Copies your database from your local assets-folder to the just created empty database in the
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
-     * */
-    private void copyDataBase() throws IOException{
+     */
+    private void copyDataBase() throws IOException {
 
         //Open your local db as an input stream
         InputStream myInput = context.getAssets().open(DB_NAME);
@@ -100,7 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myInput.read(buffer))>0){
+        while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
 
@@ -119,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public synchronized void close() {
-        if(myDataBase != null)
+        if (myDataBase != null)
             myDataBase.close();
 
         super.close();
@@ -134,4 +164,5 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 }

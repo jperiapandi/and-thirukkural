@@ -14,6 +14,7 @@ import com.jpp.and_thirukkural.model.Commentary;
 import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.ListItem;
 import com.jpp.and_thirukkural.model.Part;
+import com.jpp.and_thirukkural.model.SearchHistory;
 import com.jpp.and_thirukkural.model.Section;
 import com.jpp.and_thirukkural.model.SubHeader;
 
@@ -66,6 +67,11 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
 
             case COMMENTARY:
                 rowView = renderCommentary((Commentary) item, position,convertView,parent);
+                break;
+
+            case SEARCH_HISTORY:
+                rowView = renderSearchHistory((SearchHistory) item, position, convertView, parent);
+                break;
         }
 
         return rowView;
@@ -140,6 +146,14 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
         commentaryBy.setText(data.getCommentaryBy());
         commentary.setText(data.getCommentary());
 
+        return rowView;
+    }
+
+    protected View renderSearchHistory(SearchHistory data, int position, View convertView, ViewGroup parent){
+        View rowView = inflater.inflate(R.layout.row_search_history, parent, false);
+
+        TextView query = (TextView) rowView.findViewById(R.id.query_text_view);
+        query.setText(data.getQuery());
         return rowView;
     }
 
