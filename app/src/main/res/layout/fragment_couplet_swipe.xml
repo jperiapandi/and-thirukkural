@@ -30,6 +30,10 @@
         android:id="@+id/commentaryList"
         android:divider="@null"
         android:clickable="false"
-        android:contextClickable="false" />
+        android:contextClickable="false"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
+        />
 
 </LinearLayout>

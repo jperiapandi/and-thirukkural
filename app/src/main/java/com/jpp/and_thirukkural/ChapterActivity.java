@@ -165,7 +165,13 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_a_chapter)));
                 break;
+            case R.id.fab_pdf:
+                break;
         }
+    }
+
+    private void createPDF(){
+
     }
 
     /*Create Framgment for Chapter Pager*/
