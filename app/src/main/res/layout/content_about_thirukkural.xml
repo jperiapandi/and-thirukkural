@@ -1,23 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jpp.and_thirukkural.AboutThirukkuralActivity"
     tools:showIn="@layout/activity_about_thirukkural">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="@string/about_thirukkural_content"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/textView3" />
+    </ScrollView>
+
 </RelativeLayout>
+-->
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.jpp.and_thirukkural.AboutThirukkuralActivity"
+    tools:showIn="@layout/activity_about_thirukkural"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/textView3"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'இறைவன் மனிதனுக்குச் சொன்னது கீதை \nமனிதன் இறைவனுக்குச் சொன்னது திருவாசகம் \nமனிதன் மனிதனுக்குச் சொன்னது திருக்குறள்'"
+            android:id="@+id/textView8"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            style="@style/Caption2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறள் உலகப்புகழ் பெற்ற தமிழ் இலக்கியமாகும். இதனை இயற்றியவர் திருவள்ளுவர் என்று அறியப்படுபவர். இதில் 1330 குறள்கள் பத்து பத்தாக 133 அதிகாரங்களின் கீழ் தொகுக்கப் பெற்றுள்ளன. திருக்குறள் சங்க இலக்கிய வகைப்பாட்டில் பதினெண்கீழ்க்கணக்கு எனப்படும் பதினெட்டு நூல்களின் திரட்டில் இருக்கிறது. "
+            android:id="@+id/textView9"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="இது அடிப்படையில் ஒரு வாழ்வியல் நூல். மாந்தர்கள் தம் அகவாழ்விலும் சுமுகமாக கூடி வாழவும், புற வாழ்விலும் இன்பமுடனும் இசைவுடனும் நலமுடனும் வாழவும் தேவையான அடிப்படைப் பண்புகளை விளக்குகிறது. இந்நூல் அறம், பொருள், இன்பம் அல்லது காமம் என்னும் முப்பெரும் பிரிவுகளாய் (முப்பால்) பிரித்தும் அழகுடன் இணைத்தும் கோர்த்தும் விளக்குகிறது."
+            android:id="@+id/textView10"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறளின் வேறு பெயர்கள்"
+            android:id="@+id/textView11"
+            android:layout_marginBottom="8dp"
+            style="@style/Body2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="வாழ்வியலின் எல்லா அங்கங்களையும் திருக்குறள் கூறுவதால், அதைச் சிறப்பித்துப் பல பெயர்களால் அழைப்பர்:"
+            android:id="@+id/textView13"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறள்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="முப்பால்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="உத்தரவேதம்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="தெய்வநூல்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பொதுமறை"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பொய்யாமொழி"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="வாயுறை வாழ்த்து"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பொதுமறை"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="கருத்துக்களை இன, மொழி, பாலின பேதங்களின்றி காலம் கடந்தும் பொருந்துவது போல் கூறி உள்ளதால் இந்நூல் &quot;உலகப் பொது மறை&quot; என்றும் அழைக்கப்படுகிறது"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="இயற்றப்பட்ட காலம்"
+            android:layout_marginBottom="8dp"
+            style="@style/Body2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறள் இயற்றப்பட்ட காலம் இன்னும் சரியாக வரையறுக்கப்படவில்லை. இந்நூல் ஏறக்குறைய 2000 ஆண்டு பழமையானது என்று கணிக்கப்படுகிறது. மறைமலை அடிகள் செய்த ஆராய்ச்சியின் பயனாய், தமிழ்நாட்டில் ஆண்டுகளைக் குறிக்க திருவள்ளுவர் ஆண்டும் பயன்படுத்தப் படுகின்றது. இதன் அடிப்படையில், ”திருவள்ளுவர் ஆண்டு” என்பது பொது ஆண்டோடு 31 ஆண்டுகள் கூட்ட வேண்டும்."
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="நூற் பிரிவுகள்"
+            android:layout_marginBottom="8dp"
+            style="@style/Body2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறள் அறம், பொருள், இன்பம் ஆகிய மூன்று பால்களும் கொண்டமையால் &quot;முப்பால்&quot; எனப் பெயர் பெற்றது. முப்பால்களாகிய இவை ஒவ்வொன்றும் &quot;இயல்&quot; என்னும் பகுதிகளாக மேலும் பகுக்கப்பட்டுள்ளன. ஒவ்வொரு இயலும் சில குறிப்பிட்ட எண்ணிக்கையான அதிகாரங்களைக் கொண்டதாக விளங்குகின்றது. ஒவ்வொரு அதிகாரமும் பத்து பாடல்களைத் தன்னுள் அடக்கியது.
+\n\nஅறத்துப்பாலில் 38 அத்தியாயங்களும், பொருட்பாலில் 70 அத்தியாயங்களும் மற்றும் இன்பத்துப்பாலில் 25 அத்தியாயங்களும் உள்ளன. ஒவ்வொரு அத்தியாயத்தில் பத்து ஈரடி குறள்கள் என மொத்தம் 1330 குறள்கள் உள்ளன."
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="திருவள்ளுவர்"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Title" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருக்குறளை இயற்றியவர் திருவள்ளுவர். ஈரடி குறளில் உலகத் தத்துவங்கள் அனைத்தையும் தனது உன்னதப் படைப்பில் மக்களுக்கு எடுத்துச் சொன்னவர், திருவள்ளுவர்.
+\n\nதிருவள்ளுவர் அவர்களின் இயற்பெயர், பிறப்பு மற்றும் பிறப்பிடத்திற்கான சரியான சான்றுகள் இதுவரை இல்லை என்று தான் கூறவேண்டும். ஏனென்றால், அவர் கி.மு.31 ஆம் ஆண்டு பிறந்திருக்கிறார் என்றும், மதுரையில் பிறந்ததாகவும், சென்னையில் உள்ள மயிலாப்பூரில் பிறந்ததாகவும் மக்கள் செவிவழிச் செய்தியாய் கூறுகின்றனர்.
+மேலும், அவர் ஆதி – பகவன் என்ற பெற்றோருக்குப் பிறந்ததாகவும் சிலர் சொல்கின்றனர். ஆனால், இதுவரை இவை எதுவுமே உறுதிப்படவில்லை."
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="வாழ்ந்த காலம்"
+            android:layout_marginBottom="8dp"
+            style="@style/Body2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 ஆம் நூறாண்டு முதல் 8 நூற்றாண்டு வரையிலான இடைப்பட்ட காலம்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="வேறு பெயர்கள்"
+            android:layout_marginBottom="8dp"
+            style="@style/Body2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="திருவள்ளுவர் உலக மக்களால் கீழ்காணும் வேறு பெயர்களால் அழைக்கப்படுகிறார்."
+            android:layout_marginBottom="8dp"
+            style="@style/Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="தெய்வப்புலவர்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பொய்யில் புலவர்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="நாயனார்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="செந்நாப்போதர்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பெருநாவலர்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="பொய்யாமொழிப் புலவர்"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Caption2" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="நினைவுச் சின்னங்கள்"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            style="@style/Body2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="இந்தியாவின் தென் கோடியில் அமைந்துள்ள முக்கடல் சங்கமிக்கும் இடமான கன்னியாகுமரியில், வள்ளுவரின் புகழைப் பறைசாற்றும் விதமாக அவருக்கென்று ஒரு பிரம்மாண்டமான சிலை ஒன்று தமிழக அரசால் நிறுவப்பட்டுள்ளது. 133 அடி உயரமுள்ள இச்சிலை, 30 அடி உயரமுள்ள பாறை மீது அமைந்துள்ளது. இதனை அமைக்க 10 ஆண்டுகள் தேவைப்பட்டது என இதை வடிவமைத்த சிற்பி கணேசன் கூறியுள்ளார். மேலும், சிலையின் உட்புறச் சுவற்றில் ஒவ்வொரு அதிகாரத்திலிருந்து ஒரு குறள் வீதம் 133 குறட்பாக்கள் தமிழிலும், ஆங்கிலத்திலும் பொறிக்கப்பட்டுள்ளன.
+\n\n
+அவர் நினைவாக, சென்னையில் ‘வள்ளுவர் கோட்டம்’ ஒன்று அமைக்கப்பட்டுள்ளது. அவர் இயற்றிய திருக்குறளின் 1330 குறள்களும், இங்குள்ள குரல் மண்டபத்தில் பொறிக்கப்பட்டுள்ளது.
+\n\n
+லண்டனிலுள்ள ரஸ்ஸல் ஸ்கொயரில் இருக்கும் ‘ஸ்கூல் ஆஃப் ஓரியண்டல் மற்றும் ஆப்ரிக்கன் ஸ்டடீஸ்’ என்னும் கல்வி நிறுவனத்தில், அவரது திருவுருவச்சிலை நிறுவப்பட்டுள்ளது.
+\n\n
+திருவள்ளுவர் மறைந்தாலும், அவர் படைத்த திருக்குறள் என்னும் உன்னத நூல், எக்கால மனிதர்களுக்கும் ஓர் வழிகாட்டியாக இருந்து தமிழர்களின் புகழையும் உலகளவில் ஓங்கச் செய்கிறது.
+\n\n"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            style="@style/Body1" />
+
+
+    </LinearLayout>
+
+</ScrollView>
