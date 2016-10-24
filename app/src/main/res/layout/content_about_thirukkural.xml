@@ -54,7 +54,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="'இறைவன் மனிதனுக்குச் சொன்னது கீதை \nமனிதன் இறைவனுக்குச் சொன்னது திருவாசகம் \nமனிதன் மனிதனுக்குச் சொன்னது திருக்குறள்'"
+            android:text="'இறைவன் மனிதனுக்குச் சொன்னது கீதை .\nமனிதன் இறைவனுக்குச் சொன்னது திருவாசகம். \nமனிதன் மனிதனுக்குச் சொன்னது திருக்குறள்.'"
             android:id="@+id/textView8"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -218,7 +218,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2 ஆம் நூறாண்டு முதல் 8 நூற்றாண்டு வரையிலான இடைப்பட்ட காலம்"
+            android:text="2 ஆம் நூறாண்டு முதல் 8 நூற்றாண்டு வரையிலான இடைப்பட்ட காலம்."
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             style="@style/Body1" />
