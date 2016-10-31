@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
+import com.jpp.and_thirukkural.content.ContentHlpr;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.ListItem;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private ArrayList<Section> sections;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -71,9 +72,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         navigationView.setNavigationItemSelectedListener(this);
 
         //Load Data
-        DataLoadHelper dlh = DataLoadHelper.getInstance();
-        sections = dlh.getAllSections();
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -140,11 +138,11 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         }else if (id == R.id.favs_menuItem) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
-        } /*else if (id == R.id.about_app_creator) {
-            Intent intent = new Intent(this, AboutDeveloperActivity.class);
-            startActivity(intent);
-        } */else if (id == R.id.settings_menuItem) {
+        } else if (id == R.id.settings_menuItem) {
             Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        } else if(id == R.id.parts_menuItem){
+            Intent intent = new Intent(this, PartListActivity.class);
             startActivity(intent);
         }
 
@@ -184,8 +182,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
             int sectionID = getArguments().getInt(ARG_SECTION_NUMBER);
 
-            DataLoadHelper dlh = DataLoadHelper.getInstance();
-            ArrayList<Part> parts = dlh.getPartsBySectionId(sectionID);
+            ArrayList<Part> parts = ContentHlpr.getPartsBySection(sectionID);
 
             ArrayList<ListItem> items = new ArrayList<ListItem>();
 
@@ -194,7 +191,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                 Part part = partsListIterator.next();
                 items.add((ListItem) part);
 
-                ArrayList<Chapter> chapters = dlh.getChaptersByPartId(part.get_id());
+                ArrayList<Chapter> chapters = ContentHlpr.getChaptersByPart(part.get_id());
                 part.setNumOfChapters(chapters.size());
 
                 Iterator<Chapter> chapterIterator = chapters.iterator();
@@ -251,12 +248,12 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
         @Override
         public int getCount() {
-            return sections.size();
+            return ContentHlpr.SECTIONS.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String title = sections.get(position).getTitle();
+            String title = ContentHlpr.SECTIONS.get(position).getTitle();
             return title;
         }
     }
