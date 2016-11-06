@@ -87,7 +87,7 @@ public class PartDetailFragment extends ListFragment {
             int n = ContentHlpr.getChaptersByPart(mPart.get_id()).size();
 //            String nChapters = n > 1 ? n+" "+getResources().getString(R.string.chapters) : n+" "+getResources().getString(R.string.chapter);
             String nChapters = getResources().getString(R.string.total)+" "+n;
-            
+
             mChaptersCount.setText(nChapters);
         }
     }

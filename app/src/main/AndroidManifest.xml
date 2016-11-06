@@ -83,7 +83,8 @@
         <activity
             android:name=".PartListActivity"
             android:label="@string/parts"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".SectionsActivity"/>
         <activity
             android:name=".PartDetailActivity"
             android:label="@string/chapters"

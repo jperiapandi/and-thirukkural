@@ -42,6 +42,7 @@ public class PartListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         View recyclerView = findViewById(R.id.part_list);
         assert recyclerView != null;
