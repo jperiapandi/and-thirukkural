@@ -2,14 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        >
+
+        <TextView
+            android:text="Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:id="@+id/title"
+            style="@style/Subheading"/>
+
+        <TextView
+            android:text="20 Chapters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chaptersCount"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            style="@style/badge1"
+            android:textColor="@android:color/white"
+            />
+    </RelativeLayout>
 
     <ListView android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawSelectorOnTop="false"/>
+        android:paddingLeft="8dp"/>
 
 </LinearLayout>

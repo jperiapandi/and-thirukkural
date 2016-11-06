@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="0dp"
     android:baselineAligned="false"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
@@ -17,22 +17,20 @@
     
     -->
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/part_list"
         android:name="com.jpp.and_thirukkural.PartListFragment"
-        android:layout_width="@dimen/item_width"
-        android:layout_height="match_parent"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.jpp.and_thirukkural.PartListActivity"
-        tools:listitem="@layout/part_list_content" />
+        tools:listitem="@layout/row_part_partlist" />
 
     <FrameLayout
         android:id="@+id/part_detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

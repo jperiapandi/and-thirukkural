@@ -3,9 +3,13 @@ package com.jpp.and_thirukkural;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.content.ContentHlpr;
@@ -26,6 +30,8 @@ public class PartDetailFragment extends ListFragment {
      * represents.
      */
     public static final String ARG_PART_ID = "partId";
+    private TextView mTitle;
+    private TextView mChaptersCount;
 
     /**
      * The dummy content this fragment is presenting.
@@ -40,6 +46,15 @@ public class PartDetailFragment extends ListFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.part_detail,
+                container, false);
+        mTitle = (TextView) rootView.findViewById(R.id.title);
+        mChaptersCount = (TextView) rootView.findViewById(R.id.chaptersCount);
+        return rootView;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -49,13 +64,31 @@ public class PartDetailFragment extends ListFragment {
             mPart = ContentHlpr.PARTS.get(partId-1);
 
             Activity activity = this.getActivity();
-//            activity.setTitle(mPart.get_id()+". "+mPart.getTitle()+" - "+ContentHlpr.getChaptersByPart(mPart.get_id()).size());
-            activity.setTitle(mPart.get_id()+". "+mPart.getTitle()+" "+getResources().getString(R.string.chapters));
+
 
             ArrayList<Chapter> chapters = ContentHlpr.getChaptersByPart(mPart.get_id());
             Chapter[] items = chapters.toArray(new Chapter[chapters.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
             setListAdapter(adapter);
+
+
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        String titleStr = mPart.get_id()+". "+mPart.getTitle()+" "+getResources().getString(R.string.chapters);
+        //set title
+        if(mTitle != null){
+            mTitle.setText(titleStr);
+        }
+        if(mChaptersCount != null){
+            int n = ContentHlpr.getChaptersByPart(mPart.get_id()).size();
+//            String nChapters = n > 1 ? n+" "+getResources().getString(R.string.chapters) : n+" "+getResources().getString(R.string.chapter);
+            String nChapters = getResources().getString(R.string.total)+" "+n;
+            
+            mChaptersCount.setText(nChapters);
         }
     }
 

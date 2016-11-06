@@ -72,7 +72,7 @@ public class PartListActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.part_list_content, parent, false);
+                    .inflate(R.layout.row_part_partlist, parent, false);
             return new ViewHolder(view);
         }
 
@@ -80,8 +80,11 @@ public class PartListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
 
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).get_id()+"");
-            holder.mContentView.setText(mValues.get(position).getTitle());
+            String partName = mValues.get(position).get_id()+"  "+mValues.get(position).getTitle();
+            int n = ContentHlpr.getChaptersByPart(mValues.get(position).get_id()).size();
+            String nChapters = n > 1 ? n+" "+getResources().getString(R.string.chapters) : n+" "+getResources().getString(R.string.chapter);
+            holder.mPartName.setText(partName);
+            holder.mChaptersCount.setText(nChapters);
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,20 +115,20 @@ public class PartListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
+            public final TextView mChaptersCount;
+            public final TextView mPartName;
             public Part mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                mChaptersCount = (TextView) view.findViewById(R.id.chaptersCount);
+                mPartName = (TextView) view.findViewById(R.id.partName);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + mPartName.getText() + "'";
             }
         }
     }

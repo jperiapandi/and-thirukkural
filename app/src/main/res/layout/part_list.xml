@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.jpp.and_thirukkural.PartListActivity"
-    tools:listitem="@layout/part_list_content" />
+    tools:listitem="@layout/row_part_partlist"/>
