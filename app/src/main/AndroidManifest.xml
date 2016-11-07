@@ -49,7 +49,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
         </activity>
-
         <activity
             android:name=".FavoritesActivity"
             android:label="@string/fav_couplets"
@@ -68,14 +67,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
-
         <activity android:name=".ThirukkuralBaseActivity" />
-
-        <activity android:name=".SearchActivity"
+        <activity
+            android:name=".SearchActivity"
             android:label="@string/search"
             android:launchMode="singleTop"
-            android:parentActivityName=".SectionsActivity"
-            />
+            android:parentActivityName=".SectionsActivity" />
 
         <provider
             android:name=".provider.ThirukkuralContentProvider"
@@ -83,6 +80,30 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name=".PartListActivity"
+            android:label="@string/parts"
+            android:parentActivityName=".SectionsActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PartDetailActivity"
+            android:label="@string/chapters"
+            android:parentActivityName=".PartListActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpp.and_thirukkural.PartListActivity" />
+        </activity>
+
+        <activity
+            android:name=".ChaptersListActivity"
+            android:label="@string/chapters"
+            android:parentActivityName=".SectionsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpp.and_thirukkural.SectionsActivity" />
+        </activity>
     </application>
 
 </manifest>
