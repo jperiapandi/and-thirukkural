@@ -83,8 +83,8 @@
         <activity
             android:name=".PartListActivity"
             android:label="@string/parts"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".SectionsActivity"/>
+            android:parentActivityName=".SectionsActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".PartDetailActivity"
             android:label="@string/chapters"
@@ -93,6 +93,16 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.PartListActivity" />
+        </activity>
+
+        <activity
+            android:name=".ChaptersListActivity"
+            android:label="@string/chapters"
+            android:parentActivityName=".SectionsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
     </application>
 

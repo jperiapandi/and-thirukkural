@@ -144,6 +144,9 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         } else if(id == R.id.parts_menuItem){
             Intent intent = new Intent(this, PartListActivity.class);
             startActivity(intent);
+        } else if(id == R.id.chapters_menuItem){
+            Intent intent = new Intent(this, ChaptersListActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

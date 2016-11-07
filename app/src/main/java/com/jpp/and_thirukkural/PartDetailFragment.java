@@ -70,8 +70,6 @@ public class PartDetailFragment extends ListFragment {
             Chapter[] items = chapters.toArray(new Chapter[chapters.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
             setListAdapter(adapter);
-
-
         }
     }
 
