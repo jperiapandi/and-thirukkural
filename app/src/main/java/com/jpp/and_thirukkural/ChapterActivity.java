@@ -1,9 +1,6 @@
 package com.jpp.and_thirukkural;
 
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +19,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
+import com.jpp.and_thirukkural.content.ContentHlpr;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Couplet;
@@ -136,10 +131,10 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             case R.id.fab_share:
                 //Share this Chapter
                 DataLoadHelper dlh = DataLoadHelper.getInstance();
-                int position = mChapterPager.getCurrentItem();
-                Chapter chapter = allChapters.get(position);
-                Part part = dlh.getPartById(chapter.getPartId());
-                Section section = dlh.getSectionById(chapter.getSectionId());
+                int chapterID = mChapterPager.getCurrentItem();
+                Chapter chapter = ContentHlpr.CHAPTERS.get(chapterID);
+                Part part = ContentHlpr.PARTS.get(chapter.getPartId());
+                Section section = ContentHlpr.SECTIONS.get(chapter.getSectionId());
 
                 //
                 String subject = getResources().getString(R.string.app_name)+" - "+chapter.get_id()+". "+chapter.getTitle();
@@ -158,6 +153,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
                 shareableText +="\n\nhttps://play.google.com/store/apps/details?id=com.jpp.and_thirukkural";
 
+                //Start SHARE the Chapter content
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareableText);
@@ -176,7 +172,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
     /*Create Framgment for Chapter Pager*/
     public static class ChapterPageFragment extends Fragment{
-        public static final String CHAPTER_NUMBER="chapterNumber";
+        public static final String CHAPTER_ID ="chapterId";
 
         public ChapterPageFragment(){
 
@@ -185,7 +181,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         public static ChapterPageFragment newInstance(int position){
             ChapterPageFragment fragment = new ChapterPageFragment();
             Bundle args = new Bundle();
-            args.putInt(CHAPTER_NUMBER, position);
+            args.putInt(CHAPTER_ID, position);
             fragment.setArguments(args);
             return fragment;
         }
@@ -193,25 +189,12 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            DataLoadHelper dlh = DataLoadHelper.getInstance();
             View chapterPageFragmentView = inflater.inflate(R.layout.fragment_chapterpage, container, false);
-            int position = getArguments().getInt(CHAPTER_NUMBER);
-            Chapter chapter = allChapters.get(position);
-            Section section = dlh.getSectionById(chapter.getSectionId());
-            Part part = dlh.getPartById(chapter.getPartId());
-
-//            TextView chapterId = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_id);
-//            TextView chapterName = (TextView) chapterPageFragmentView.findViewById(R.id.chapter_name);
-//            TextView sectionName = (TextView) chapterPageFragmentView.findViewById(R.id.section_name);
-//            TextView partName = (TextView) chapterPageFragmentView.findViewById(R.id.part_name);
-
-//            chapterId.setText(chapter.get_id()+".");
-//            chapterName.setText(chapter.getTitle());
-
-//            sectionName.setText(section.get_id()+". "+section.getTitle());
-//            partName.setText(part.get_id()+". "+part.getTitle());
+            int chapterID = getArguments().getInt(CHAPTER_ID);
+            Chapter chapter = ContentHlpr.CHAPTERS.get(chapterID);
 
             //Load couplets in a chapter and display in a list
+            DataLoadHelper dlh = DataLoadHelper.getInstance();
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
             ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
             Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
