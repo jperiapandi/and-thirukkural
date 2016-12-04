@@ -48,4 +48,6 @@
     <string name="share_a_chapter">அதிகாரத்தை பகிர்க</string>
     <string name="share_a_couplet">குறளை பகிர்க</string>
     <string name="total">மொத்தம்</string>
+    <string name="remove_all">அனைத்தையும் நீக்குக</string>
+
 </resources>

@@ -18,17 +18,17 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-<!--
-        <HorizontalScrollView
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.design.widget.TabLayout
-                android:id="@+id/chapterTabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:measureAllChildren="true" />
-        </HorizontalScrollView>
--->
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/coupletDetail"
+            android:paddingLeft="16dp"
+            android:paddingBottom="8dp"
+            style="@style/Body1"
+            android:textColor="@android:color/white"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

@@ -116,6 +116,17 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         Couplet couplet = ContentHlpr.COUPLETS.get(position);
         String title = getResources().getString(R.string.couplet)+" "+couplet.get_id();
         getSupportActionBar().setTitle(title);
+
+        Chapter chapter = ContentHlpr.CHAPTERS.get(couplet.getChapterId()-1);
+        Section section = ContentHlpr.SECTIONS.get(chapter.getSectionId()-1);
+        Part part = ContentHlpr.PARTS.get(chapter.getPartId()-1);
+
+        String detail = section.get_id()+". "+section.getTitle();
+        detail += "   " + part.get_id()+". "+part.getTitle();
+        detail += "   " + chapter.get_id()+". "+chapter.getTitle();
+
+        TextView coupletDetailTextView = (TextView) findViewById(R.id.coupletDetail);
+        coupletDetailTextView.setText(detail);
     }
 
     @Override
@@ -232,18 +243,13 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            DataLoadHelper dlh = DataLoadHelper.getInstance();
             View view = inflater.inflate(R.layout.fragment_couplet_swipe, container, false);
 
             int index = getArguments().getInt(COUPLET_ID) - 1;
             Couplet couplet = ContentHlpr.COUPLETS.get(index);
-            Chapter chapter = dlh.getChapterById(couplet.getChapterId());
-            Section section = dlh.getSectionById(chapter.getSectionId());
-            Part part = dlh.getPartById(chapter.getPartId());
 
             //Bind data to view
             TextView coupletTextView = (TextView) view.findViewById(R.id.couplet_text);
-            TextView chapterTitleView = (TextView) view.findViewById(R.id.chapter_title);
 
             ListView commentaryList = (ListView) view.findViewById(R.id.commentaryList);
             ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
@@ -285,12 +291,6 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
                 int color = ContextCompat.getColor(getContext(), R.color.fav_couplete_color);
                 coupletTextView.setTextColor(color);
             }
-
-            String detail = section.get_id()+". "+section.getTitle();
-            detail += " / " + part.get_id()+". "+part.getTitle();
-            detail += " / " + chapter.get_id()+". "+chapter.getTitle();
-
-            chapterTitleView.setText(detail);
 
             Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
