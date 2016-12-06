@@ -3,7 +3,7 @@
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_favorite"
+        android:id="@+id/remove_favorites"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="@string/remove_all"
         app:showAsAction="ifRoom"
