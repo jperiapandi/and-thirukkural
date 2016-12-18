@@ -2,6 +2,7 @@ package com.jpp.and_thirukkural.content;
 
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
+import com.jpp.and_thirukkural.model.Couplet;
 import com.jpp.and_thirukkural.model.Part;
 import com.jpp.and_thirukkural.model.Section;
 
@@ -16,6 +17,7 @@ public class ContentHlpr {
     public static ArrayList<Section> SECTIONS;
     public static ArrayList<Part> PARTS;
     public static ArrayList<Chapter> CHAPTERS;
+    public static ArrayList<Couplet> COUPLETS;
 
     private static HashMap<String, Chapter> chapterHashMap = new HashMap<String, Chapter>();
     private static HashMap<String, ArrayList<Part>> partsOfSection = new HashMap<String, ArrayList<Part>>();
@@ -27,6 +29,7 @@ public class ContentHlpr {
         SECTIONS = dlh.getAllSections();
         PARTS = dlh.getAllParts();
         CHAPTERS = dlh.getAllChapters();
+        COUPLETS = dlh.getAllCouplets(true);
 
         //Generate hasMaps
 

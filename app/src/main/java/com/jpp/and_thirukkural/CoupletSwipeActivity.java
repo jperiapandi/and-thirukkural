@@ -1,9 +1,10 @@
 package com.jpp.and_thirukkural;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -17,12 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
+import com.jpp.and_thirukkural.content.ContentHlpr;
 import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.Commentary;
@@ -32,8 +33,7 @@ import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 
-public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
-    private static ArrayList<Couplet> allCouplets;
+public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -59,14 +59,6 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         setSupportActionBar(toolbar);
         applyFontForToolbarTitle(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if(allCouplets==null)
-        {
-            //Load data
-            DataLoadHelper dlh = DataLoadHelper.getInstance();
-            allCouplets = dlh.getAllCouplets(true);
-        }
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -121,9 +113,20 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
 
 
     private void setActivityTitle(int position){
-        Couplet couplet = allCouplets.get(position);
+        Couplet couplet = ContentHlpr.COUPLETS.get(position);
         String title = getResources().getString(R.string.couplet)+" "+couplet.get_id();
         getSupportActionBar().setTitle(title);
+
+        Chapter chapter = ContentHlpr.CHAPTERS.get(couplet.getChapterId()-1);
+        Section section = ContentHlpr.SECTIONS.get(chapter.getSectionId()-1);
+        Part part = ContentHlpr.PARTS.get(chapter.getPartId()-1);
+
+        String detail = section.get_id()+". "+section.getTitle();
+        detail += "   " + part.get_id()+". "+part.getTitle();
+        detail += "   " + chapter.get_id()+". "+chapter.getTitle();
+
+        TextView coupletDetailTextView = (TextView) findViewById(R.id.coupletDetail);
+        coupletDetailTextView.setText(detail);
     }
 
     @Override
@@ -139,13 +142,15 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        int position;
+        int coupletIndex;
         Couplet couplet;
 
         switch (v.getId()){
             case R.id.fab_favorite:
-                position = mCoupletPager.getCurrentItem();
-                couplet = allCouplets.get(position);
+                coupletIndex = mCoupletPager.getCurrentItem();
+
+                couplet = ContentHlpr.COUPLETS.get(coupletIndex);
+
                 if(couplet.getFav() == 1){
                     couplet.setFav(0);
                     DataLoadHelper.getInstance().unmarkFavoriteCouplet(couplet.get_id());
@@ -157,13 +162,12 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
                     DataLoadHelper.getInstance().markFavoriteCouplet(couplet.get_id());
                     Toast.makeText(getBaseContext(), getResources().getText(R.string.marked_as_favourite), Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             case R.id.fab_share:
                 //Share a couplet
                 DataLoadHelper dlh = DataLoadHelper.getInstance();
-                position = mCoupletPager.getCurrentItem();
-                couplet = allCouplets.get(position);
+                coupletIndex = mCoupletPager.getCurrentItem();
+                couplet = ContentHlpr.COUPLETS.get(coupletIndex);
                 Chapter chapter = dlh.getChapterById(couplet.getChapterId());
                 Part part = dlh.getPartById(chapter.getPartId());
                 Section section = dlh.getSectionById(chapter.getSectionId());
@@ -190,8 +194,10 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
                 //Add Karunanidhi commentary
                 shareableText +="\n\n"+getResources().getString(R.string.commentaryByMuKarunanidhi)+":\n"+couplet.getExpln_karunanidhi();
 
-                //Add Manakudavar commentary
-                shareableText +="\n\n"+getResources().getString(R.string.commentaryByManakudavar)+":\n"+couplet.getExpln_manakudavar();
+                if(couplet.getExpln_manakudavar() != null){
+                    //Add Manakudavar commentary
+                    shareableText +="\n\n"+getResources().getString(R.string.commentaryByManakudavar)+":\n"+couplet.getExpln_manakudavar();
+                }
 
                 //Add English couplet
                 shareableText +="\n\n"+getResources().getString(R.string.english)+":\n"+couplet.getCouplet_en();
@@ -214,47 +220,40 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class CoupletPageFragment extends Fragment {
+        private View mCoupletPageFragmentView;
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_COUPLET_ID = "section_number";
+        private static final String COUPLET_ID = "couplet_id";
 
-        public PlaceholderFragment() {
+        public CoupletPageFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static CoupletPageFragment newInstance(int coupletID) {
+            CoupletPageFragment fragment = new CoupletPageFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_COUPLET_ID, sectionNumber);
+            args.putInt(COUPLET_ID, coupletID);
             fragment.setArguments(args);
             return fragment;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            DataLoadHelper dlh = DataLoadHelper.getInstance();
-            View coupletPageFragmentView = inflater.inflate(R.layout.fragment_couplet_swipe, container, false);
+            View view = inflater.inflate(R.layout.fragment_couplet_swipe, container, false);
 
-            int position = getArguments().getInt(ARG_COUPLET_ID) - 1;
-            Couplet couplet = allCouplets.get(position);
-            Chapter chapter = dlh.getChapterById(couplet.getChapterId());
-            Section section = dlh.getSectionById(chapter.getSectionId());
-            Part part = dlh.getPartById(chapter.getPartId());
+            int index = getArguments().getInt(COUPLET_ID) - 1;
+            Couplet couplet = ContentHlpr.COUPLETS.get(index);
 
             //Bind data to view
-//            TextView coupletIdView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_id);
-            TextView coupletTextView = (TextView) coupletPageFragmentView.findViewById(R.id.couplet_text);
-            TextView chapterTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.chapter_title);
-//            TextView sectionTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.section_title);
-//            TextView partTitleView = (TextView) coupletPageFragmentView.findViewById(R.id.part_title);
+            TextView coupletTextView = (TextView) view.findViewById(R.id.couplet_text);
 
-            ListView commentaryList = (ListView) coupletPageFragmentView.findViewById(R.id.commentaryList);
+            ListView commentaryList = (ListView) view.findViewById(R.id.commentaryList);
             ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
 
             Commentary c1 = new Commentary();
@@ -272,10 +271,12 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             c3.setCommentary(couplet.getExpln_karunanidhi());
             commentaries.add(c3);
 
-            Commentary c4 = new Commentary();
-            c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
-            c4.setCommentary(couplet.getExpln_manakudavar());
-            commentaries.add(c4);
+            if(couplet.getExpln_manakudavar() != null){
+                Commentary c4 = new Commentary();
+                c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
+                c4.setCommentary(couplet.getExpln_manakudavar());
+                commentaries.add(c4);
+            }
 
 
             Commentary c5 = new Commentary();
@@ -289,18 +290,17 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             c6.setCommentary(couplet.getExpln_en());
             commentaries.add(c6);
 
-//            coupletIdView.setText(getResources().getString(R.string.couplet)+"  "+couplet.get_id()+"");
             coupletTextView.setText(couplet.getCouplet());
-
-            chapterTitleView.setText(chapter.get_id()+". "+chapter.getTitle());
-//            sectionTitleView.setText(section.get_id()+". "+section.getTitle());
-//            partTitleView.setText(part.get_id()+". "+part.getTitle());
+            if(couplet.getFav() == 1){
+                int color = ContextCompat.getColor(getContext(), R.color.fav_couplete_color);
+                coupletTextView.setTextColor(color);
+            }
 
             Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
             commentaryList.setAdapter(adapter);
 
-            return coupletPageFragmentView;
+            return view;
         }
     }
 
@@ -318,13 +318,13 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return CoupletPageFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 1330 total pages.
-            return allCouplets.size();
+            return ContentHlpr.COUPLETS.size();
         }
 
         @Override

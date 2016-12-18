@@ -1,6 +1,7 @@
 package com.jpp.and_thirukkural.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,11 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
 
         couplet_id.setText(data.get_id()+"");
         couplet_text.setText(data.getCouplet());
-
+        int color = ContextCompat.getColor(parent.getContext(), R.color.fav_couplete_color);
+        if(data.getFav() == 1){
+            couplet_text.setTextColor(color);
+        }
+        
         return rowView;
     }
 

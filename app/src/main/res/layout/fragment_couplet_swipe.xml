@@ -8,21 +8,14 @@
     android:paddingTop="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chapter name"
-        android:id="@+id/chapter_title"
-        style="@style/badge3" />
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Couplet couplet \nCouplet"
         android:id="@+id/couplet_text"
         android:textColor="@color/colorPrimaryDark"
         style="@style/Body1"
         android:paddingBottom="16dp"
-        android:paddingTop="8dp" />
+        android:paddingTop="8dp"/>
 
     <ListView
         android:layout_width="match_parent"

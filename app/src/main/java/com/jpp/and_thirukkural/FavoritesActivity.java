@@ -1,12 +1,17 @@
 package com.jpp.and_thirukkural;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -36,10 +41,59 @@ public class FavoritesActivity extends ThirukkuralBaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.favorites_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
         drawFavorites();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.remove_favorites){
+            //Mark favorites couplets as not favorite
+            String selection = CoupletsTable.COL_FAV + "=?";
+            String[] selectionArgs = new String[]{"1"};
+            final DataLoadHelper dlh = DataLoadHelper.getInstance();
+            final ArrayList<Couplet> favoriteCouplets = dlh.getAllCouplets(false, selection, selectionArgs);
+
+
+
+            if(favoriteCouplets !=null && favoriteCouplets.size()>0){
+
+                //Build confirm dialog
+                final AlertDialog.Builder confirmDialog = new AlertDialog.Builder(FavoritesActivity.this);
+                confirmDialog.setTitle(getResources().getString(R.string.remove_all_alert_title));
+                confirmDialog.setMessage(getResources().getString(R.string.remove_all_alert_msg));
+                confirmDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        for (Couplet couplet : favoriteCouplets) {
+                            dlh.unmarkFavoriteCouplet(couplet.get_id());
+                        }
+                        drawFavorites();
+                    }
+                });
+
+                confirmDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                confirmDialog.show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void drawFavorites(){
