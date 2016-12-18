@@ -197,10 +197,10 @@ public class SearchActivity extends AppCompatActivity {
             ArrayList<ListItem> resultItems = new ArrayList<ListItem>();
 
 //                TextView qText = (TextView) childView.findViewById(R.id.qText);
-//                TextView numberOfCouplets = (TextView) childView.findViewById(R.id.numberOfCouplets);
-//                TextView numberOfChapters = (TextView) childView.findViewById(R.id.numberOfChapters);
-//                TextView numberOfParts = (TextView) childView.findViewById(R.id.numberOfParts);
-//                TextView numberOfSections = (TextView) childView.findViewById(R.id.numberOfSections);
+                TextView numberOfCouplets = (TextView) childView.findViewById(R.id.txt_couplets);
+                TextView numberOfChapters = (TextView) childView.findViewById(R.id.txt_chapters);
+                TextView numberOfParts = (TextView) childView.findViewById(R.id.txt_parts);
+                TextView numberOfSections = (TextView) childView.findViewById(R.id.txt_sections);
 
             ListView searchResultsListView = (ListView) childView.findViewById(R.id.listView);
 
@@ -254,10 +254,10 @@ public class SearchActivity extends AppCompatActivity {
             }
 
 //                qText.setText(searchResult.getQ());
-//                numberOfCouplets.setText(strNumberOfCouplets);
-//                numberOfChapters.setText(strNumberOfChapters);
-//                numberOfParts.setText(strNumberOfParts);
-//                numberOfSections.setText(strNumberOfSections);
+                numberOfCouplets.setText(getResources().getString(R.string.couplets)+": "+strNumberOfCouplets);
+                numberOfChapters.setText(getResources().getString(R.string.chapters)+": "+strNumberOfChapters);
+                numberOfParts.setText(getResources().getString(R.string.parts)+": "+strNumberOfParts);
+                numberOfSections.setText(getResources().getString(R.string.sections)+": "+strNumberOfSections);
 
             //
             ListItem[] items = resultItems.toArray(new ListItem[resultItems.size()]);
