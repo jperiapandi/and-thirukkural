@@ -194,8 +194,10 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
                 //Add Karunanidhi commentary
                 shareableText +="\n\n"+getResources().getString(R.string.commentaryByMuKarunanidhi)+":\n"+couplet.getExpln_karunanidhi();
 
-                //Add Manakudavar commentary
-                shareableText +="\n\n"+getResources().getString(R.string.commentaryByManakudavar)+":\n"+couplet.getExpln_manakudavar();
+                if(couplet.getExpln_manakudavar() != null){
+                    //Add Manakudavar commentary
+                    shareableText +="\n\n"+getResources().getString(R.string.commentaryByManakudavar)+":\n"+couplet.getExpln_manakudavar();
+                }
 
                 //Add English couplet
                 shareableText +="\n\n"+getResources().getString(R.string.english)+":\n"+couplet.getCouplet_en();
@@ -269,10 +271,12 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
             c3.setCommentary(couplet.getExpln_karunanidhi());
             commentaries.add(c3);
 
-            Commentary c4 = new Commentary();
-            c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
-            c4.setCommentary(couplet.getExpln_manakudavar());
-            commentaries.add(c4);
+            if(couplet.getExpln_manakudavar() != null){
+                Commentary c4 = new Commentary();
+                c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
+                c4.setCommentary(couplet.getExpln_manakudavar());
+                commentaries.add(c4);
+            }
 
 
             Commentary c5 = new Commentary();
