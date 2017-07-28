@@ -15,6 +15,13 @@ import android.view.View;
 import android.widget.ListView;
 
 public class SettingsActivity extends ThirukkuralBaseActivity {
+    public static final String KEY_COMM_1 = "commentary1";
+    public static final String KEY_COMM_2 = "commentary2";
+    public static final String KEY_COMM_3 = "commentary3";
+    public static final String KEY_COMM_4 = "commentary4";
+    public static final String KEY_COMM_5 = "commentary5";
+    public static final String KEY_MORNING_COUPLET = "morningCouplet";
+    public static final String KEY_EVENING_COUPLET = "eveningCouplet";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
