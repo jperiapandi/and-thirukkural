@@ -14,4 +14,13 @@
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin_4">4dp</dimen>
+    <dimen name="widget_margin_8">8dp</dimen>
+    <dimen name="widget_margin_16">16dp</dimen>
+    <dimen name="widget_strip">38dp</dimen>
 </resources>

@@ -56,4 +56,5 @@
     <string name="notifications">அறிவிப்புகள்</string>
     <string name="morningCouplet">காலையில் ஓர் குறள்</string>
     <string name="eveningCouplet">மாலையில் ஓர் குறள்</string>
+    <string name="add_widget">Add widget</string>
 </resources>

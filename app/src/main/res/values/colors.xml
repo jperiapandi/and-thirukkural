@@ -27,4 +27,10 @@
     <color name="input_field_bg_color">#05000000</color>
     <color name="input_field_stroke_color">#11000000</color>
     <color name="fav_couplete_color">#ff4081</color>
+
+    <!-- Widget related -->
+    <color name="widget_bg_color">#99ffffff</color>
+    <color name="widget_body1">#000000</color>
+    <color name="widget_body2">#000000</color>
+
 </resources>

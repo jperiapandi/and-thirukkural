@@ -90,7 +90,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         Bundle extras = getIntent().getExtras();
         if(extras != null)
         {
-            int coupletID = extras.getInt(Couplet.COUPLET_ID, 1);
+            int coupletID = extras.getInt(Couplet.COUPLET_ID);
             mCoupletPager.setCurrentItem(coupletID-1);
         }
 
