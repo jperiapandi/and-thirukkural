@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/widget_bg_color"
+    android:background="@color/white_1"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -11,13 +11,12 @@
         style="@style/Widget.Body3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toRightOf="@+id/refresh_btn"
         android:paddingBottom="@dimen/widget_margin_4"
         android:paddingLeft="@dimen/widget_margin_8"
         android:paddingRight="@dimen/widget_margin_4"
         android:paddingTop="@dimen/widget_margin_4"
-        android:text="Couplet detail"
-        android:textColor="@color/widget_body2" />
+        android:text="Couplet detail"/>
 
     <TextView
         android:id="@+id/couplet_text"
@@ -29,16 +28,15 @@
         android:paddingTop="@dimen/widget_margin_8"
         android:lines="2"
         android:text="Sample Text"
-        android:textColor="@color/widget_body1"
         android:layout_below="@+id/couplet_detail_text"
-        android:layout_toRightOf="@+id/imageButton"/>
+        android:layout_toRightOf="@+id/refresh_btn"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/refresh_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/widget_strip"
         android:layout_height="match_parent"
-        android:background="@color/cardview_light_background"
+        android:background="@color/white_2"
         android:src="@drawable/ic_refresh_black_24px"
         android:layout_below="@+id/couplet_number"
         android:layout_alignParentLeft="true"/>
@@ -52,7 +50,6 @@
         android:padding="2dp"
         android:text="Kural\n1330"
         android:textAlignment="center"
-        android:background="@color/cardview_light_background"
-        android:textColor="@color/widget_body2" />
+        android:background="@color/white_2"/>
 
 </RelativeLayout>

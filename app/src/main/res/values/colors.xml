@@ -13,10 +13,11 @@
     <color name="bullet_color">#8c8c8c</color>
     <color name="warning_icon_color">#ff8800</color>
     <color name="error_box_color">#ffe5d9d9</color>
-    
+
+    <color name="black_38">#61000000</color>
     <color name="black_54">#8a000000</color>
     <color name="black_87">#de000000</color>
-    <color name="black_38">#61000000</color>
+    <color name="black">#000000</color>
 
     <color name="fab_main">#006b5f</color>
     <color name="fab_pdf">#ff303f9f</color>
@@ -30,7 +31,7 @@
 
     <!-- Widget related -->
     <color name="widget_bg_color">#99ffffff</color>
-    <color name="widget_body1">#000000</color>
-    <color name="widget_body2">#000000</color>
+    <color name="white_1">#c3ffffff</color>
+    <color name="white_2">#f0ffffff</color>
 
 </resources>
