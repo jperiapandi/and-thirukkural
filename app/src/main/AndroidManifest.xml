@@ -33,7 +33,7 @@
         <activity
             android:name=".CoupletSwipeActivity"
             android:label="@string/couplet_detail"
-            android:launchMode="singleTop"
+            android:launchMode="standard"
             android:parentActivityName=".ChapterActivity"
             android:theme="@style/AppTheme">
             <meta-data

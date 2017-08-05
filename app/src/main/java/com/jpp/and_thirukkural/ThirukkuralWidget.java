@@ -43,13 +43,12 @@ public class ThirukkuralWidget extends AppWidgetProvider {
 
         //Launch CoupletSwipeActivity on click on the widget
         Intent intent = new Intent(context, CoupletSwipeActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Bundle extras = new Bundle();
-        extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
-        int i = extras.getInt(Couplet.COUPLET_ID);
+        extras.putInt(Couplet.COUPLET_ID, coupletID);
         intent.putExtras(extras);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.couplet_text, pendingIntent);
-
 
         //Self refresh
         Intent selfSyncIntent = new Intent(context, ThirukkuralWidget.class);
@@ -79,11 +78,10 @@ public class ThirukkuralWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
         int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -100);
         if(intent.getAction() == AppWidgetManager.ACTION_APPWIDGET_UPDATE && appWidgetId != -100){
-            System.out.println(">>>>>> onReceive is called "+appWidgetId);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             setupWidget(context, appWidgetManager, appWidgetId, appWidgetIds);
-//            onUpdate(context, appWidgetManager, appWidgetIds);
+//            this.onUpdate(context, appWidgetManager, appWidgetIds);
         }
     }
 

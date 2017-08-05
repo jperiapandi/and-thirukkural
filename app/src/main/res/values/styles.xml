@@ -83,6 +83,7 @@
 
     <style name="Widget.Body1" parent="TextStyle.Regular">
         <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="Widget.Body2" parent="TextStyle.Regular">

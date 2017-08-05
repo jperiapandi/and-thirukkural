@@ -97,7 +97,6 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         setActivityTitle(mCoupletPager.getCurrentItem());
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
