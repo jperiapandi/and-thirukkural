@@ -30,6 +30,8 @@ import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 
+import static com.jpp.and_thirukkural.R.string.chapter;
+
 public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
@@ -131,11 +133,33 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             case R.id.fab_share:
                 //Share this Chapter
                 DataLoadHelper dlh = DataLoadHelper.getInstance();
-                int chapterID = mChapterPager.getCurrentItem();
-                Chapter chapter = ContentHlpr.CHAPTERS.get(chapterID);
-                Part part = ContentHlpr.PARTS.get(chapter.getPartId());
-                Section section = ContentHlpr.SECTIONS.get(chapter.getSectionId());
 
+                int chapterIndex = mChapterPager.getCurrentItem();
+                int partIndex = 0;
+                int sectionIndex = 0;
+                Chapter chapter;
+                Part part;
+                Section section;
+                try {
+                    chapter = ContentHlpr.CHAPTERS.get(chapterIndex);
+                }catch(IndexOutOfBoundsException indexExcp){
+                    String msg = "Failed to get Chapter by index "+chapterIndex+" ContentHlpr.CHAPTERS ArrayList";
+                    throw new Error(msg, new Throwable(msg));
+                }
+                try {
+                    partIndex=chapter.getPartId()-1;
+                    part = ContentHlpr.PARTS.get(partIndex);
+                }catch(IndexOutOfBoundsException indexExcp){
+                    String msg = "Failed to get Part by index "+partIndex+" ContentHlpr.PARTS ArrayList";
+                    throw new Error(msg, new Throwable(msg));
+                }
+                try {
+                    sectionIndex=chapter.getSectionId()-1;
+                    section = ContentHlpr.SECTIONS.get(sectionIndex);
+                }catch(IndexOutOfBoundsException indexExcp){
+                    String msg = "Failed to get Section by index "+sectionIndex+" ContentHlpr.SECTIONS ArrayList";
+                    throw new Error(msg, new Throwable(msg));
+                }
                 //
                 String subject = getResources().getString(R.string.app_name)+" - "+chapter.get_id()+". "+chapter.getTitle();
                 //

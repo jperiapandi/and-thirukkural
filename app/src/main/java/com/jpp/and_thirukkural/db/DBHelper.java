@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String DB_PATH;
     private SQLiteDatabase myDataBase;
 
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

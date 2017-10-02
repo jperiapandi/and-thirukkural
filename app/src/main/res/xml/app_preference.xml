@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/commentaries">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="commentary1"
+            android:title="@string/commentaryBySolomonPappaiah" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="commentary2"
+            android:title="@string/commentaryByMuVaradarajan" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="commentary3"
+            android:title="@string/commentaryByMuKarunanidhi" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="commentary4"
+            android:title="@string/commentaryByManakudavar" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="commentary5"
+            android:title="@string/englishCommentary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/notifications" android:enabled="false">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="morningCouplet"
+            android:title="@string/morningCouplet" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="eveningCouplet"
+            android:title="@string/eveningCouplet" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

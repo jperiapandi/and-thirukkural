@@ -81,6 +81,25 @@
         <item name="android:color">@color/black_87</item>
     </style>
 
+    <style name="Body3" parent="TextStyle.Regular">
+        <item name="android:textSize">14sp</item>
+        <item name="android:color">@color/black_87</item>
+    </style>
+
+    <style name="Widget.Body1" parent="TextStyle.Regular">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Widget.Body2" parent="TextStyle.Regular">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+    <style name="Widget.Body3" parent="TextStyle.Regular">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black_87</item>
+    </style>
+
     <style name="Button" parent="TextStyle.Bold">
         <item name="android:textSize">15sp</item>
         <item name="android:color">@color/black_87</item>

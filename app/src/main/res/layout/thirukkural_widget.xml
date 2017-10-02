@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_1"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/couplet_detail_text"
+        style="@style/Widget.Body3"
+        android:lines="1"
+        android:ellipsize="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/refresh_btn"
+        android:paddingBottom="@dimen/widget_margin_4"
+        android:paddingLeft="@dimen/widget_margin_8"
+        android:paddingRight="@dimen/widget_margin_4"
+        android:paddingTop="@dimen/widget_margin_4"
+        android:text="Couplet detail" />
+    <TextView
+        android:id="@+id/couplet_text"
+        style="@style/Widget.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Couplet"
+        android:paddingLeft="@dimen/widget_margin_8"
+        android:paddingTop="@dimen/widget_margin_8"
+        android:lines="2"
+        android:text="Sample Text"
+        android:layout_below="@+id/couplet_detail_text"
+        android:layout_toRightOf="@+id/refresh_btn"/>
+
+    <ImageButton
+        android:id="@+id/refresh_btn"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/widget_strip"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/couplet_number"
+        android:background="@color/white_2"
+        android:src="@drawable/ic_shuffle_black_24dp" />
+
+    <TextView
+        android:id="@+id/couplet_number"
+        style="@style/Widget.Body2"
+        android:layout_width="@dimen/widget_strip"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:padding="2dp"
+        android:text="Kural\n1330"
+        android:textAlignment="center"
+        android:background="@color/white_2"/>
+
+</RelativeLayout>

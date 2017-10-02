@@ -33,7 +33,7 @@
         <activity
             android:name=".CoupletSwipeActivity"
             android:label="@string/couplet_detail"
-            android:launchMode="singleTop"
+            android:launchMode="standard"
             android:parentActivityName=".ChapterActivity"
             android:theme="@style/AppTheme">
             <meta-data
@@ -94,7 +94,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.PartListActivity" />
         </activity>
-
         <activity
             android:name=".ChaptersListActivity"
             android:label="@string/chapters"
@@ -104,6 +103,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jpp.and_thirukkural.SectionsActivity" />
         </activity>
+
+        <receiver android:name=".ThirukkuralWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/thirukkural_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
