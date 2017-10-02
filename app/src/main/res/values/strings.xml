@@ -6,7 +6,6 @@
 
     <string name="app_desc">பொய்யாமொழி</string>
     <string name="about_thirukkural">நூல் குறிப்பு</string>
-    <string name="book_index">நூற்பிரிவு அட்டவணை</string>
     <string name="fav_couplets">பிடித்தமான குறள்கள்</string>
     <string name="search">தேடு</string>
     <string name="search_hint">வார்த்தை அல்லது எண்  </string>
@@ -14,7 +13,6 @@
     <string name="serial">குறள் வரிசை</string>
     <string name="part">இயல்</string>
     <string name="search_results">தேடல் முடிவுகள்</string>
-    <string name="about_app_creator">செயலியை உருவாக்கியவர்</string>
     <string name="settings">அமைப்புகள்</string>
     <string name="couplet_detail">குறள் விளக்கம்</string>
     <string name="chapter">அதிகாரம்</string>
@@ -29,13 +27,11 @@
     <string name="english">ஆங்கிலம்</string>
     <string name="englishCommentary">ஆங்கில உரை</string>
     <string name="couplet">குறள்</string>
-    <string name="action_settings">அமைப்புகள்</string>
     <string name="suggestion1">நீங்கள் தேடும் வார்த்தை எழுத்துப்பிழை ஏதுமின்றி இருக்க வேண்டும்.</string>
     <string name="suggestion2">வேறு சில வார்த்தைகளை பயன்படுத்தி பார்க்கவும்.</string>
     <string name="suggestion3">திருக்குறள் சம்பந்தப்பட்ட வார்த்தைகள், குறள் வரிசை எண், அதிகார எண் போன்றவற்றை பயன்படுத்தி பார்க்கவும்.</string>
     <string name="suggestions">ஆலோசனைகள்:</string>
     <string name="searchFailureInfo"><![CDATA[நீங்கள் தேடிய <b>- %1$s -</b> எந்தவொரு குறளுடனோ, அதிகாரத்துடனோ, இயலுடனோ அல்லது பால்வகைப்பாடுடனோ பொருந்தவில்லை. ]]></string>
-    <string name="searched_word">தேடப்பட்டது</string>
     <string name="couplets">குறள்கள்</string>
     <string name="none">ஏதுமில்லை</string>
     <string name="chapter_info"><![CDATA[அதிகாரம் <b>%1$d</b>     குறள்கள் <b>%2$s</b>]]></string>
@@ -56,5 +52,4 @@
     <string name="notifications">அறிவிப்புகள்</string>
     <string name="morningCouplet">காலையில் ஓர் குறள்</string>
     <string name="eveningCouplet">மாலையில் ஓர் குறள்</string>
-    <string name="add_widget">Add widget</string>
 </resources>

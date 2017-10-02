@@ -3,18 +3,12 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#ff4081</color>
-    <color name="colorSubHeader">#90a4ae</color>
 
     <color name="badge_color1">#ff9cc9</color>
     <color name="badge_color2">#a6b7ff</color>
     <color name="badge_color3">#a2f2a5</color>
     <color name="badge_color4">#ffdea5</color>
 
-    <color name="bullet_color">#8c8c8c</color>
-    <color name="warning_icon_color">#ff8800</color>
-    <color name="error_box_color">#ffe5d9d9</color>
-
-    <color name="black_38">#61000000</color>
     <color name="black_54">#8a000000</color>
     <color name="black_87">#de000000</color>
     <color name="black">#000000</color>
@@ -25,12 +19,9 @@
     <color name="fab_search">#249900</color>
     <color name="fab_favorite">#ff2c88</color>
 
-    <color name="input_field_bg_color">#05000000</color>
-    <color name="input_field_stroke_color">#11000000</color>
     <color name="fav_couplete_color">#ff4081</color>
 
     <!-- Widget related -->
-    <color name="widget_bg_color">#99ffffff</color>
     <color name="white_1">#c3ffffff</color>
     <color name="white_2">#f0ffffff</color>
 
