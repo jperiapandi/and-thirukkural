@@ -174,9 +174,36 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         int coupletIndex = mCoupletPager.getCurrentItem();
         Couplet couplet = ContentHlpr.COUPLETS.get(coupletIndex);
-        Chapter chapter = dlh.getChapterById(couplet.getChapterId());
-        Part part = dlh.getPartById(chapter.getPartId());
-        Section section = dlh.getSectionById(chapter.getSectionId());
+
+        int chapterIndex = couplet.getChapterId()-1;
+        int partIndex = 0;
+        int sectionIndex = 0;
+
+        Chapter chapter;
+        Part part;
+        Section section;
+
+        try {
+            chapter = ContentHlpr.CHAPTERS.get(chapterIndex);
+        }catch(IndexOutOfBoundsException indexExcp){
+            String msg = "Failed to get Chapter by index "+chapterIndex+" ContentHlpr.CHAPTERS ArrayList";
+            throw new Error(msg, new Throwable(msg));
+        }
+        try {
+            partIndex=chapter.getPartId()-1;
+            part = ContentHlpr.PARTS.get(partIndex);
+        }catch(IndexOutOfBoundsException indexExcp){
+            String msg = "Failed to get Part by index "+partIndex+" ContentHlpr.PARTS ArrayList";
+            throw new Error(msg, new Throwable(msg));
+        }
+        try {
+            sectionIndex=chapter.getSectionId()-1;
+            section = ContentHlpr.SECTIONS.get(sectionIndex);
+        }catch(IndexOutOfBoundsException indexExcp){
+            String msg = "Failed to get Section by index "+sectionIndex+" ContentHlpr.SECTIONS ArrayList";
+            throw new Error(msg, new Throwable(msg));
+        }
+
         //
         boolean showCom1 = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext()).getBoolean(SettingsActivity.KEY_COMM_1, true);
         boolean showCom2 = PreferenceManager.getDefaultSharedPreferences(this.getBaseContext()).getBoolean(SettingsActivity.KEY_COMM_2, true);
