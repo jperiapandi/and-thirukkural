@@ -19,18 +19,21 @@
         android:paddingRight="@dimen/widget_margin_4"
         android:paddingTop="@dimen/widget_margin_4"
         android:text="Couplet detail" />
+
     <TextView
         android:id="@+id/couplet_text"
         style="@style/Widget.Body1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/couplet_detail_text"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/refresh_btn"
         android:contentDescription="Couplet"
+        android:lines="2"
         android:paddingLeft="@dimen/widget_margin_8"
         android:paddingTop="@dimen/widget_margin_8"
-        android:lines="2"
-        android:text="Sample Text"
-        android:layout_below="@+id/couplet_detail_text"
-        android:layout_toRightOf="@+id/refresh_btn"/>
+        android:text="Sample Text" />
 
     <ImageButton
         android:id="@+id/refresh_btn"

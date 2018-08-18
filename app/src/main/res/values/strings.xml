@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="signature">signature</string>
     <string name="app_desc">பொய்யாமொழி</string>
     <string name="about_thirukkural">நூல் குறிப்பு</string>
     <string name="fav_couplets">பிடித்தமான குறள்கள்</string>

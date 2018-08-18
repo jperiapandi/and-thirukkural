@@ -16,14 +16,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <!--
-    <style name="AppTheme.Widget"/>
-    
-    <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
-        <item name="fontPath">fonts/NotoSansTamil-Regular.ttf</item>
-    </style>
 
--->
     <!-- Define all font styles as per Material Design Standards -->
     <style name="TextStyle"></style>
 
