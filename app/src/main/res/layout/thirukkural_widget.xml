@@ -1,6 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_1"
@@ -18,7 +16,7 @@
         android:paddingLeft="@dimen/widget_margin_8"
         android:paddingRight="@dimen/widget_margin_4"
         android:paddingTop="@dimen/widget_margin_4"
-        android:text="Couplet detail" />
+        android:text="2.பொருள் 11.குடியியல் 103.குடி செயல்வகை" />
 
     <TextView
         android:id="@+id/couplet_text"
@@ -30,10 +28,11 @@
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/refresh_btn"
         android:contentDescription="Couplet"
-        android:lines="2"
+        android:lines="3"
         android:paddingLeft="@dimen/widget_margin_8"
         android:paddingTop="@dimen/widget_margin_8"
-        android:text="Sample Text" />
+        android:text="இடும்பைக்கே கொள்கலம் கொல்லோ குடும்பத்தைக்
+குற்ற மறைப்பான் உடம்பு." />
 
     <ImageButton
         android:id="@+id/refresh_btn"
@@ -52,7 +51,7 @@
         android:layout_height="wrap_content"
         android:lines="2"
         android:padding="2dp"
-        android:text="Kural\n1330"
+        android:text="குறள்\n1330"
         android:textAlignment="center"
         android:background="@color/white_2"/>
 
