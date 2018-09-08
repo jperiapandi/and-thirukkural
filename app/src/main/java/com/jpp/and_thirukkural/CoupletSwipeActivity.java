@@ -1,19 +1,14 @@
 package com.jpp.and_thirukkural;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -294,9 +289,11 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
             //Bind data to view
             TextView coupletTextView = (TextView) view.findViewById(R.id.couplet_text);
+//            registerForContextMenu(coupletTextView);
 
             ListView commentaryList = (ListView) view.findViewById(R.id.commentaryList);
             ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
+//            registerForContextMenu(commentaryList);
 
             boolean showCom1 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_1, true);
             boolean showCom2 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_2, true);
@@ -353,9 +350,9 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
             Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
             commentaryList.setAdapter(adapter);
-
             return view;
         }
+
     }
 
     /**

@@ -27,7 +27,7 @@ public class ContentHlpr {
     public static final void init(){
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         SECTIONS = dlh.getAllSections();
-        PARTS = dlh.getAllParts();
+        PARTS = dlh.getAllParts(null, null);
         CHAPTERS = dlh.getAllChapters();
         COUPLETS = dlh.getAllCouplets(true);
 

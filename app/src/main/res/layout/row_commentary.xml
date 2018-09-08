@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/commentaryByMuVaradarajan"
         android:id="@+id/commentary_by"
+        android:textIsSelectable="true"
         android:paddingBottom="16dp" />
 
     <TextView
@@ -17,5 +18,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:text="commentary 1 goes here"
+        android:textIsSelectable="true"
         android:id="@+id/commentary" />
 </LinearLayout>

@@ -78,7 +78,8 @@
             android:name=".provider.ThirukkuralContentProvider"
             android:authorities="com.jpp.and_thirukkural"
             android:enabled="true"
-            android:exported="true" />
+            android:permission="@string/signature"
+            android:exported="false" />
 
         <activity
             android:name=".PartListActivity"
