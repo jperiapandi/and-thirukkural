@@ -25,7 +25,7 @@
             android:label="@string/chapter"
             android:launchMode="singleTop"
             android:parentActivityName=".SectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
@@ -44,7 +44,7 @@
             android:name=".AboutThirukkuralActivity"
             android:label="@string/about_thirukkural"
             android:parentActivityName=".SectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SectionsActivity" />
