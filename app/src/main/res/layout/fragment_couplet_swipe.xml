@@ -15,7 +15,9 @@
         android:textColor="@color/colorPrimaryDark"
         style="@style/Body1"
         android:paddingBottom="16dp"
-        android:paddingTop="8dp"/>
+        android:paddingTop="8dp"
+        android:textIsSelectable="true"
+        />
 
     <ListView
         android:layout_width="match_parent"
