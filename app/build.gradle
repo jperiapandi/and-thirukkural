@@ -8,8 +8,8 @@ android {
         applicationId "com.jpp.and_thirukkural"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 8
-        versionName "2.0.0"
+        versionCode 9
+        versionName "2.0.1"
     }
     buildTypes {
         release {
