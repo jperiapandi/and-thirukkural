@@ -36,6 +36,7 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
     }
 
