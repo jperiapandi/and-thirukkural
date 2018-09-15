@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +26,10 @@ import android.widget.TextView;
 
 import com.jpp.and_thirukkural.adapters.ListItemAdapter;
 import com.jpp.and_thirukkural.content.ContentHlpr;
-import com.jpp.and_thirukkural.db.DataLoadHelper;
 import com.jpp.and_thirukkural.model.Chapter;
 import com.jpp.and_thirukkural.model.ListItem;
 import com.jpp.and_thirukkural.model.ListItemType;
 import com.jpp.and_thirukkural.model.Part;
-import com.jpp.and_thirukkural.model.Section;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -88,16 +85,12 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
     private void createCustomTabs(TabLayout tabLayout){
         int n = tabLayout.getTabCount();
-
         for(int i=0; i<n; i++){
             TextView tabTextView = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_bar_item_layout, null);
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tabTextView.setText(tab.getText());
             tab.setCustomView(tabTextView);
         }
-
-
-
     }
 
     @Override
