@@ -19,16 +19,11 @@
         android:textIsSelectable="true"
         />
 
-    <ListView
+    <TextView
+        android:id="@+id/all_commentariesTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/commentaryList"
-        android:divider="@null"
-        android:clickable="false"
-        android:contextClickable="false"
-        android:paddingBottom="80dp"
-        android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"
-        />
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:textIsSelectable="true" />
 
 </LinearLayout>

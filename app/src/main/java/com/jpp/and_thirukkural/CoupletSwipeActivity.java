@@ -1,14 +1,21 @@
 package com.jpp.and_thirukkural;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.FontsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -289,11 +296,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
             //Bind data to view
             TextView coupletTextView = (TextView) view.findViewById(R.id.couplet_text);
-//            registerForContextMenu(coupletTextView);
-
-            ListView commentaryList = (ListView) view.findViewById(R.id.commentaryList);
-            ArrayList<Commentary> commentaries = new ArrayList<Commentary>();
-//            registerForContextMenu(commentaryList);
+            TextView allCommentaries = (TextView) view.findViewById(R.id.all_commentariesTextView);
 
             boolean showCom1 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_1, true);
             boolean showCom2 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_2, true);
@@ -301,55 +304,79 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
             boolean showCom4 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_4, true);
             boolean showCom5 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_5, true);
 
+            SpannableStringBuilder spanBuilder = new SpannableStringBuilder();
+            SpannableString nl = new SpannableString(System.getProperty("line.separator")+System.getProperty("line.separator"));
             if(showCom1){
-                Commentary c1 = new Commentary();
-                c1.setCommentaryBy(getResources().getString(R.string.commentaryBySolomonPappaiah));
-                c1.setCommentary(couplet.getExpln_pappaiah());
-                commentaries.add(c1);
+                SpannableString s1 = new SpannableString(getResources().getString(R.string.commentaryBySolomonPappaiah));
+                s1.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString s2 = new SpannableString(couplet.getExpln_pappaiah());
+
+                spanBuilder.append(s1);
+                spanBuilder.append(nl);
+                spanBuilder.append(s2);
+                spanBuilder.append(nl);
             }
 
             if(showCom2){
-                Commentary c2 = new Commentary();
-                c2.setCommentaryBy(getResources().getString(R.string.commentaryByMuVaradarajan));
-                c2.setCommentary(couplet.getExpln_muva());
-                commentaries.add(c2);
+                SpannableString s1 = new SpannableString(getResources().getString(R.string.commentaryByMuVaradarajan));
+                s1.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString s2 = new SpannableString(couplet.getExpln_muva());
+
+                spanBuilder.append(s1);
+                spanBuilder.append(nl);
+                spanBuilder.append(s2);
+                spanBuilder.append(nl);
             }
             if(showCom3){
-                Commentary c3 = new Commentary();
-                c3.setCommentaryBy(getResources().getString(R.string.commentaryByMuKarunanidhi));
-                c3.setCommentary(couplet.getExpln_karunanidhi());
-                commentaries.add(c3);
+                SpannableString s1 = new SpannableString(getResources().getString(R.string.commentaryByMuKarunanidhi));
+                s1.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString s2 = new SpannableString(couplet.getExpln_karunanidhi());
+
+                spanBuilder.append(s1);
+                spanBuilder.append(nl);
+                spanBuilder.append(s2);
+                spanBuilder.append(nl);
             }
             if(showCom4){
                 if(couplet.getExpln_manakudavar() != null){
-                    Commentary c4 = new Commentary();
-                    c4.setCommentaryBy(getResources().getString(R.string.commentaryByManakudavar));
-                    c4.setCommentary(couplet.getExpln_manakudavar());
-                    commentaries.add(c4);
+                    SpannableString s1 = new SpannableString(getResources().getString(R.string.commentaryByManakudavar));
+                    s1.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    SpannableString s2 = new SpannableString(couplet.getExpln_manakudavar());
+
+                    spanBuilder.append(s1);
+                    spanBuilder.append(nl);
+                    spanBuilder.append(s2);
+                    spanBuilder.append(nl);
                 }
             }
             if(showCom5){
-                Commentary c5 = new Commentary();
-                c5.setCommentaryBy(getResources().getString(R.string.english));
-                c5.setCommentary(couplet.getCouplet_en());
-                commentaries.add(c5);
+                SpannableString s1 = new SpannableString(getResources().getString(R.string.english));
+                s1.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString s2 = new SpannableString(couplet.getCouplet_en());
 
+                spanBuilder.append(s1);
+                spanBuilder.append(nl);
+                spanBuilder.append(s2);
+                spanBuilder.append(nl);
 
-                Commentary c6 = new Commentary();
-                c6.setCommentaryBy(getResources().getString(R.string.englishCommentary));
-                c6.setCommentary(couplet.getExpln_en());
-                commentaries.add(c6);
+                SpannableString s3 = new SpannableString(getResources().getString(R.string.englishCommentary));
+                s3.setSpan(new TextAppearanceSpan(getContext(), R.style.Commentary_Title), 0, s3.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString s4 = new SpannableString(couplet.getExpln_en());
+
+                spanBuilder.append(s3);
+                spanBuilder.append(nl);
+                spanBuilder.append(s4);
             }
-
+            spanBuilder.append(nl);
+            spanBuilder.append(nl);
+            spanBuilder.append(nl);
             coupletTextView.setText(couplet.getCouplet());
             if(couplet.getFav() == 1){
                 int color = ContextCompat.getColor(getContext(), R.color.fav_couplete_color);
                 coupletTextView.setTextColor(color);
             }
 
-            Commentary[] items = commentaries.toArray(new Commentary[commentaries.size()]);
-            ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
-            commentaryList.setAdapter(adapter);
+            allCommentaries.setText(spanBuilder);
             return view;
         }
 
