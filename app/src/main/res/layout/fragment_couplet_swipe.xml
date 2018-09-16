@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:text="Couplet couplet \nCouplet"
         android:id="@+id/couplet_text"
-        android:textColor="@color/colorPrimaryDark"
-        style="@style/Body1"
-        android:paddingBottom="16dp"
-        android:paddingTop="8dp"
+        style="@style/Couplet"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="11sp"
+        android:autoSizeMaxTextSize="15.5sp"
+        android:autoSizeStepGranularity="0.1sp"
         android:textIsSelectable="true"
         />
 
