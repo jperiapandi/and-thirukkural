@@ -6,7 +6,7 @@
         android:drawable="@color/cardview_light_background"/>
 
     <item
-        android:drawable="@mipmap/ic_launcher"
-        android:gravity="center"></item>
+        android:drawable="@drawable/valluvar_icon"
+        android:gravity="center" ></item>
 
 </layer-list>

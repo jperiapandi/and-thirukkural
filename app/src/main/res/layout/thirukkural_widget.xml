@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_1"
@@ -19,6 +20,7 @@
         android:paddingTop="@dimen/widget_margin_4"
         android:text="2.பொருள் 11.குடியியல் 103.குடி செயல்வகை" />
 
+
     <TextView
         android:id="@+id/couplet_text"
         android:layout_width="match_parent"
@@ -28,10 +30,17 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/refresh_btn"
+
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="11sp"
-        android:autoSizeMaxTextSize="15.5sp"
-        android:autoSizeStepGranularity="0.1sp"
+        android:autoSizeMinTextSize="9sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="1sp"
+
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="9sp"
+        app:autoSizeMaxTextSize="18sp"
+        app:autoSizeStepGranularity="1sp"
+
         android:contentDescription="@string/couplet"
         android:lines="2"
         android:paddingLeft="@dimen/widget_margin_4"
