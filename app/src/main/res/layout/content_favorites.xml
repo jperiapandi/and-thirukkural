@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.jpp.and_thirukkural.FavoritesActivity"
+    tools:context="com.jpp.and.thirukkural.FavoritesActivity"
     tools:showIn="@layout/activity_favorites">
 
     <TextView
