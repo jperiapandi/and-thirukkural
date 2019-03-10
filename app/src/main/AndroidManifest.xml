@@ -1,110 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jpp.and_thirukkural">
+    package="com.jpp.and.thirukkural">
 
     <application
-        android:name=".ThirukkuralApplication"
+        android:name="com.jpp.and.thirukkural.ThirukkuralApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SectionsActivity"
+            android:name="com.jpp.and.thirukkural.SectionsActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.thirukuralLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChapterActivity"
+            android:name="com.jpp.and.thirukkural.ChapterActivity"
             android:label="@string/chapter"
             android:launchMode="singleTop"
-            android:parentActivityName=".SectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SectionsActivity" />
+                android:value="com.jpp.and.thirukkural.SectionsActivity" />
         </activity>
         <activity
-            android:name=".CoupletSwipeActivity"
+            android:name="com.jpp.and.thirukkural.CoupletSwipeActivity"
             android:label="@string/couplet_detail"
             android:launchMode="standard"
-            android:parentActivityName=".ChapterActivity"
-            android:theme="@style/AppTheme">
+            android:parentActivityName="com.jpp.and.thirukkural.ChapterActivity"
+            android:theme="@style/AppTheme.thirukuralLauncher">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ChapterActivity" />
+                android:value="com.jpp.and.thirukkural.ChapterActivity" />
         </activity>
         <activity
-            android:name=".AboutThirukkuralActivity"
+            android:name="com.jpp.and.thirukkural.AboutThirukkuralActivity"
             android:label="@string/about_thirukkural"
-            android:parentActivityName=".SectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SectionsActivity" />
+                android:value="com.jpp.and.thirukkural.SectionsActivity" />
         </activity>
         <activity
-            android:name=".FavoritesActivity"
+            android:name="com.jpp.and.thirukkural.FavoritesActivity"
             android:label="@string/fav_couplets"
-            android:parentActivityName=".SectionsActivity"
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.ChapterActivity" />
+                android:value="com.jpp.and.thirukkural.ChapterActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.jpp.and.thirukkural.SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName=".SectionsActivity"
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.SectionsActivity" />
+                android:value="com.jpp.and.thirukkural.SectionsActivity" />
         </activity>
-        <activity android:name=".ThirukkuralBaseActivity" />
+        <activity android:name="com.jpp.and.thirukkural.ThirukkuralBaseActivity" />
         <activity
-            android:name=".SearchActivity"
+            android:name="com.jpp.and.thirukkural.SearchActivity"
             android:label="@string/search"
             android:launchMode="singleTop"
-            android:parentActivityName=".SectionsActivity" />
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity" />
 
         <provider
-            android:name=".provider.ThirukkuralContentProvider"
-            android:authorities="com.jpp.and_thirukkural"
+            android:name="com.jpp.and.thirukkural.provider.ThirukkuralContentProvider"
+            android:authorities="com.jpp.and.thirukkural"
             android:enabled="true"
-            android:exported="true" />
+            android:permission="@string/signature"
+            android:exported="false" />
 
         <activity
-            android:name=".PartListActivity"
+            android:name="com.jpp.and.thirukkural.PartListActivity"
             android:label="@string/parts"
-            android:parentActivityName=".SectionsActivity"
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PartDetailActivity"
+            android:name="com.jpp.and.thirukkural.PartDetailActivity"
             android:label="@string/chapters"
-            android:parentActivityName=".PartListActivity"
+            android:parentActivityName="com.jpp.and.thirukkural.PartListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.PartListActivity" />
+                android:value="com.jpp.and.thirukkural.PartListActivity" />
         </activity>
         <activity
-            android:name=".ChaptersListActivity"
+            android:name="com.jpp.and.thirukkural.ChaptersListActivity"
             android:label="@string/chapters"
-            android:parentActivityName=".SectionsActivity"
+            android:parentActivityName="com.jpp.and.thirukkural.SectionsActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jpp.and_thirukkural.SectionsActivity" />
+                android:value="com.jpp.and.thirukkural.SectionsActivity" />
         </activity>
 
-        <receiver android:name=".ThirukkuralWidget">
+        <receiver android:name="com.jpp.and.thirukkural.ThirukkuralWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

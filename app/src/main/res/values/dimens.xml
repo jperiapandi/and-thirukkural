@@ -15,4 +15,5 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="widget_margin_4">4dp</dimen>
     <dimen name="widget_margin_8">8dp</dimen>
     <dimen name="widget_strip">46dp</dimen>
+    <dimen name="launcher_bg_icon_size">86dp</dimen>
 </resources>
