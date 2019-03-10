@@ -2,8 +2,10 @@ package com.jpp.and.thirukkural;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +51,8 @@ import com.jpp.and.thirukkural.model.ListItem;
 import com.jpp.and.thirukkural.model.ListItemType;
 import com.jpp.and.thirukkural.model.Part;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -124,6 +130,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     }
 
     private void invokeLogin(){
+//        this.printKeyHash();
         isWelcomeDone = false;
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -147,7 +154,24 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                         .build(),
                 RC_SIGN_IN);
     }
+    /*
+    private void printKeyHash() {
+        // Add code to print out the key hash
+        try {
 
+            PackageInfo info = getPackageManager().getPackageInfo("com.jpp.and.thirukkural", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("KeyHash:", e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("KeyHash:", e.toString());
+        }
+    }
+    */
     private void welcomeUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null){

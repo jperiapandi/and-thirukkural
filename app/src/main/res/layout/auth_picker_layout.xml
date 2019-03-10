@@ -15,6 +15,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:contentDescription="@string/thiru_valluvar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,11 +61,12 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:drawableStart="@drawable/googleg_standard_color_18"
+        android:drawableLeft="@drawable/googleg_standard_color_18"
         android:text="@string/common_signin_button_text_long"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        android:drawableLeft="@drawable/googleg_standard_color_18"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <Button
@@ -77,11 +79,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:drawableStart="@drawable/com_facebook_button_icon"
+        android:drawableLeft="@drawable/com_facebook_button_icon"
         android:text="@string/com_facebook_loginview_log_in_button_long"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        android:drawableLeft="@drawable/com_facebook_button_icon"
         app:layout_constraintTop_toBottomOf="@+id/login_google_btn" />
 
 </android.support.constraint.ConstraintLayout>

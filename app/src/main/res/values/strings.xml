@@ -2,6 +2,7 @@
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">437874350291218</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb437874350291218</string>
+    <string name="thiru_valluvar" translatable="false">திருவள்ளுவர்</string>
 
     <string name="app_name">திருக்குறள்</string>
 
