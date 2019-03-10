@@ -1,12 +1,35 @@
 <resources>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">437874350291218</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb437874350291218</string>
+
     <string name="app_name">திருக்குறள்</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="signature">signature</string>
+
+    <string name="hello">வணக்கம் !</string>
+    <string name="welcomeMsg">இந்த திருக்குறள் செயலியை முழுமையாய் பயன்படுத்தி மகிழ லாக் இன் செய்யுங்கள் !!</string>
+    <string name="fui_progress_dialog_signing_up">Creating your shiny new account...</string>
+
+    <string name="good_morning">காலை வணக்கம்</string>
+    <string name="good_afternoon">மதிய வணக்கம்</string>
+    <string name="good_evening">மாலை வணக்கம்</string>
+    <string name="good_night">இரவு வணக்கம்</string>
+
+    <string name="my_profile">சுயவிவரங்கள்</string>
+    <string name="fav_couplets">பிடித்தமான குறள்கள்</string>
+    <string name="my_comments">என் கருத்துக்கள்</string>
+    <string name="logout">வெளியேறு</string>
+    <string name="login">உள் நுழை</string>
+
+    <string name="err_no_internet">இப்போது இணைய இணைப்பு இல்லை. தயவுசெய்து பின்னர் உள்நுழைய முயற்சிக்கவும்.</string>
+    <string name="err_common_login_err">இப்போது உள்நுழைய முடியவில்லை. தயவுசெய்து பின்னர் முயற்சிக்கவும்.</string>
+
     <string name="app_desc">பொய்யாமொழி</string>
     <string name="about_thirukkural">நூல் குறிப்பு</string>
-    <string name="fav_couplets">பிடித்தமான குறள்கள்</string>
+
     <string name="search">தேடு</string>
     <string name="search_hint">வார்த்தை அல்லது எண்  </string>
     <string name="section">பால் வகை</string>
