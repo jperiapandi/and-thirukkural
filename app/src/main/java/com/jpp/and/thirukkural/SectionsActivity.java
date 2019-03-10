@@ -314,22 +314,31 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             // Handle the camera action
             Intent i = new Intent(this, AboutThirukkuralActivity.class);
             startActivity(i);
-        }else if (id == R.id.my_favs_menuItem) {
-            Intent intent = new Intent(this, FavoritesActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.settings_menuItem) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+        } else if(id == R.id.chapters_menuItem){
+            Intent intent = new Intent(this, ChaptersListActivity.class);
             startActivity(intent);
         } else if(id == R.id.parts_menuItem){
             Intent intent = new Intent(this, PartListActivity.class);
             startActivity(intent);
-        } else if(id == R.id.chapters_menuItem){
-            Intent intent = new Intent(this, ChaptersListActivity.class);
+        }  else if(id == R.id.couplets_menuItem){
+            Intent intent = new Intent(this, AllCoupletsActivity.class);
             startActivity(intent);
+        } else if(id == R.id.my_profile_menuItem){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.my_favs_menuItem) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+        } else if(id == R.id.my_comments_menuItem){
+            Intent intent = new Intent(this, CommentsActivity.class);
+            startActivity(intent);
+        }  else if(id == R.id.logout_menuItem){
+            this.signOut();
         } else if(id == R.id.login_menuItem){
             this.invokeLogin();
-        } else if(id == R.id.logout_menuItem){
-            this.signOut();
+        } else if (id == R.id.settings_menuItem) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

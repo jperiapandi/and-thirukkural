@@ -13,6 +13,7 @@
     <string name="hello">வணக்கம் !</string>
     <string name="welcomeMsg">இந்த திருக்குறள் செயலியை முழுமையாய் பயன்படுத்தி மகிழ லாக் இன் செய்யுங்கள் !!</string>
     <string name="fui_progress_dialog_signing_up">Creating your shiny new account...</string>
+    <string name="coming_soon">Coming soon</string>
 
     <string name="good_morning">காலை வணக்கம்</string>
     <string name="good_afternoon">மதிய வணக்கம்</string>
@@ -30,6 +31,17 @@
 
     <string name="app_desc">பொய்யாமொழி</string>
     <string name="about_thirukkural">நூல் குறிப்பு</string>
+
+    <string name="name">பெயர்</string>
+    <string name="photo">Photo</string>
+    <string name="tamil_name">தமிழில் பெயர்</string>
+    <string name="email">மின்னஞ்சல்</string>
+    <string name="phone">தொலைபேசி</string>
+    <string name="address">முகவரி</string>
+    <string name="city">நகரம் / மாவட்டம்</string>
+    <string name="state">மாநிலம்</string>
+    <string name="zipcode">அஞ்சல் குறியீடு</string>
+    <string name="country">நாடு</string>
 
     <string name="search">தேடு</string>
     <string name="search_hint">வார்த்தை அல்லது எண்  </string>

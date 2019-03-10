@@ -17,7 +17,7 @@
         <item
             android:id="@+id/couplets_menuItem"
             android:icon="@drawable/ic_description_black_24dp"
-            android:title="@string/couplets" android:enabled="false" />
+            android:title="@string/couplets"/>
     </group>
 
     <group android:checkableBehavior="none" android:id="@+id/user_menu_group">
