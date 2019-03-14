@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "454900536894-t0kr28g70k7gpn2c4oq3vbbla38jpd6g.apps.googleusercontent.com",
+          "client_id": "454900536894-5juna1djap73smgja84itvnikk4a6dlh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jpp.and.thirukkural",
-            "certificate_hash": "ad1dacd62f5f016c8fd9e379a79bdaec24f654c0"
+            "certificate_hash": "a3e62cf80bdfc173de791b604c3305623c3234be"
+          }
+        },
+        {
+          "client_id": "454900536894-e9pfa4aqp31083c2qp4f8tg5gj7kf76q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jpp.and.thirukkural",
+            "certificate_hash": "60c291b50cf0e30fa8f506b4f3b79f24303fa723"
           }
         },
         {
