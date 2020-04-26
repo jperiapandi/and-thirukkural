@@ -314,8 +314,9 @@ public class DataLoadHelper {
                     result.add(c);
                 }while (cursor.moveToNext());
             }
+            cursor.close();
         }
-        cursor.close();
+
 
         return result;
     }

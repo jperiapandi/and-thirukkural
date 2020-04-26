@@ -1,10 +1,12 @@
 package com.jpp.and.thirukkural.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String DB_PATH;
     private SQLiteDatabase myDataBase;
 
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 6;
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -36,33 +38,36 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public void createDataBase() throws IOException {
 
-        boolean dbExist = checkDataBase();
-
+        boolean dbExist = false;
         int version = 0;
-
         SQLiteDatabase checkDB = null;
         String myPath = DB_PATH + DB_NAME;
-
         //Read installed DB version
         try {
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
         } catch (SQLiteException e) {
             //database does’t exist yet.
+            e.printStackTrace();
         }
         if (checkDB != null) {
+            dbExist=true;
             version = checkDB.getVersion();
+            checkDB.close();
         }
 
         if (dbExist && version >= DB_VERSION) {
             //do nothing – database already exist
+            Log.d("DBHelper", "Data base file already exists");
         } else {
-
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
-
+            checkDB = this.getReadableDatabase();
+            this.close();
             try {
                 copyDataBase();
+                if(checkDB!=null){
+                    checkDB.close();
+                }
             } catch (IOException e) {
                 throw new Error("Error copying database");
             }
@@ -73,37 +78,12 @@ public class DBHelper extends SQLiteOpenHelper {
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
         } catch (SQLiteException e) {
             //database does’t exist yet.
+            e.printStackTrace();
         }
         if (checkDB != null) {
             checkDB.setVersion(DB_VERSION);
             checkDB.close();
         }
-
-    }
-
-    /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
-     *
-     * @return true if it exists, false if it doesn't
-     */
-    private boolean checkDataBase() {
-
-        SQLiteDatabase checkDB = null;
-
-        try {
-            String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-
-        } catch (SQLiteException e) {
-            //database does't exist yet.
-            e.printStackTrace();
-        }
-
-        if (checkDB != null) {
-            checkDB.close();
-        }
-
-        return checkDB != null ? true : false;
     }
 
     /**
@@ -159,5 +139,4 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
 }
