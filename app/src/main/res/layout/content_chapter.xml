@@ -8,11 +8,11 @@
     tools:context="com.jpp.and.thirukkural.ChapterActivity"
     tools:showIn="@layout/app_bar_chapter">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/chapterPager"
         >
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 </RelativeLayout>

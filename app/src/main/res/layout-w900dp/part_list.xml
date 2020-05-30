@@ -17,7 +17,7 @@
     
     -->
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/part_list"
         android:name="com.jpp.and.thirukkural.PartListFragment"
         android:layout_width="280dp"

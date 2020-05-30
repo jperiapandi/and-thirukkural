@@ -2,8 +2,8 @@ package com.jpp.and.thirukkural;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 public class SettingsActivity extends ThirukkuralBaseActivity {
     public static final String KEY_COMM_1 = "commentary1";
