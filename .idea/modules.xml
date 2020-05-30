@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/and-thirukkural.iml" filepath="$PROJECT_DIR$/and-thirukkural.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/calligraphy-2.2.0/calligraphy-2.2.0.iml" filepath="$PROJECT_DIR$/calligraphy-2.2.0/calligraphy-2.2.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/and-thirukkural.iml" filepath="$PROJECT_DIR$/and-thirukkural.iml" group="and-thirukkural" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="and-thirukkural/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calligraphy-2.2.0/calligraphy-2.2.0.iml" filepath="$PROJECT_DIR$/.idea/modules/calligraphy-2.2.0/calligraphy-2.2.0.iml" group="and-thirukkural/calligraphy-2.2.0" />
     </modules>
   </component>
 </project>
