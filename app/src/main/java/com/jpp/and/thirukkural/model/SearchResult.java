@@ -53,7 +53,7 @@ public class SearchResult {
     }
 
     public boolean isSearchResultFound(){
-        boolean r = false;
+        boolean r;
         boolean sectionsFound = false;
         boolean partsFound = false;
         boolean chaptersFound = false;

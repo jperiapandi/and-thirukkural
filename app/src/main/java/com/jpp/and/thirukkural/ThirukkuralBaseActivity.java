@@ -85,19 +85,6 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         return false;
     }
 
-
-    public void applyFontForToolbarTitle(Toolbar toolbar){
-/*
-        for(int i = 0; i < toolbar.getChildCount(); i++){
-            View view = toolbar.getChildAt(i);
-            if(view instanceof TextView){
-                TextView tv = (TextView) view;
-
-                tv.setTypeface(FontCache.getTypeface("fonts/NotoSansTamil-Regular.ttf", getApplicationContext()));
-            }
-        }*/
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();

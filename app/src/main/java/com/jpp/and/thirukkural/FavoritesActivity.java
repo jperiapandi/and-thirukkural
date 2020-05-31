@@ -1,11 +1,8 @@
 package com.jpp.and.thirukkural;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
 import com.jpp.and.thirukkural.db.CoupletsTable;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
@@ -21,6 +21,7 @@ import com.jpp.and.thirukkural.model.Couplet;
 import com.jpp.and.thirukkural.model.ListItem;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FavoritesActivity extends ThirukkuralBaseActivity {
 
@@ -28,11 +29,10 @@ public class FavoritesActivity extends ThirukkuralBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         drawFavorites();
     }
@@ -104,18 +104,18 @@ public class FavoritesActivity extends ThirukkuralBaseActivity {
 
         if(favoriteCouplets != null && favoriteCouplets.size() > 0){
 
-            noFavTextView = (TextView) findViewById(R.id.noFavTextView);
+            noFavTextView = findViewById(R.id.noFavTextView);
             noFavTextView.setVisibility(View.GONE);
 
-            favCoupletsListView = (ListView) findViewById(R.id.favCoupletsListView);
-            ListItem[] items = favoriteCouplets.toArray(new ListItem[favoriteCouplets.size()]);
+            favCoupletsListView = findViewById(R.id.favCoupletsListView);
+            ListItem[] items = favoriteCouplets.toArray(new ListItem[0]);
             ListItemAdapter adapter = new ListItemAdapter(getBaseContext(), items);
             favCoupletsListView.setAdapter(adapter);
             favCoupletsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    final Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                    final Intent intent = new Intent(view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);
@@ -126,11 +126,11 @@ public class FavoritesActivity extends ThirukkuralBaseActivity {
         }
         else
         {
-            favCoupletsListView = (ListView) findViewById(R.id.favCoupletsListView);
+            favCoupletsListView = findViewById(R.id.favCoupletsListView);
             favCoupletsListView.setAdapter(null);
             favCoupletsListView.setVisibility(View.GONE);
 
-            noFavTextView = (TextView) findViewById(R.id.noFavTextView);
+            noFavTextView = findViewById(R.id.noFavTextView);
             noFavTextView.setVisibility(View.VISIBLE);
         }
     }

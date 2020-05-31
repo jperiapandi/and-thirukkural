@@ -15,6 +15,7 @@ import com.jpp.and.thirukkural.model.Couplet;
 import com.jpp.and.thirukkural.model.Part;
 import com.jpp.and.thirukkural.model.Section;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -61,10 +62,6 @@ public class ThirukkuralWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    public static void drawWidget(int coupletID){
-
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
@@ -77,7 +74,7 @@ public class ThirukkuralWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -100);
-        if(intent.getAction() == AppWidgetManager.ACTION_APPWIDGET_UPDATE && appWidgetId != -100){
+        if(Objects.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE) && appWidgetId != -100){
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             setupWidget(context, appWidgetManager, appWidgetId, appWidgetIds);

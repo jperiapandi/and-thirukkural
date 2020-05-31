@@ -1,9 +1,5 @@
 package com.jpp.and.thirukkural;
 
-/**
- * Created by jperiapandi on 05-09-2016.
- */
-
 import android.app.Application;
 
 import com.jpp.and.thirukkural.content.ContentHlpr;

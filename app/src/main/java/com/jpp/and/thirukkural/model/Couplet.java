@@ -44,8 +44,8 @@ public class Couplet implements ListItem{
     }
 
     public int getChapterId() {
-        Double chapterID = Math.floor((this._id-1)/10)+1;
-        return chapterID.intValue();
+        double chapterID = Math.floor((this._id-1)/10)+1;
+        return (int) chapterID;
     }
 
 

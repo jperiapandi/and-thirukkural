@@ -1,8 +1,10 @@
 package com.jpp.and.thirukkural;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
+import java.util.Objects;
 
 public class CommentsActivity extends ThirukkuralBaseActivity {
 
@@ -10,10 +12,9 @@ public class CommentsActivity extends ThirukkuralBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 }

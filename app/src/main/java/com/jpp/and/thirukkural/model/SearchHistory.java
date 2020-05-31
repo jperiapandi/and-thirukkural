@@ -24,7 +24,7 @@ public class SearchHistory implements ListItem {
         this.query = query;
     }
 
-    public int getSoftDelete() {
+    public int getSoftDelete2() {
         return softDelete;
     }
 

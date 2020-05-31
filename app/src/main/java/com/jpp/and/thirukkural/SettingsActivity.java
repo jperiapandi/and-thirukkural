@@ -5,6 +5,8 @@ import android.preference.PreferenceFragment;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Objects;
+
 public class SettingsActivity extends ThirukkuralBaseActivity {
     public static final String KEY_COMM_1 = "commentary1";
     public static final String KEY_COMM_2 = "commentary2";
@@ -22,29 +24,14 @@ public class SettingsActivity extends ThirukkuralBaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        applyFontForToolbarTitle(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager().
                 beginTransaction().
                 replace(R.id.frameLayout, new ThirukkuralPreferenceFragment()).
-//                replace(android.R.id.content, new ThirukkuralPreferenceFragment()).
                 commit();
     }
-/*
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        int horizontalMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
-        int verticalMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
-        int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int) getResources().getDimension(R.dimen.activity_vertical_margin) + 30, getResources().getDisplayMetrics());
 
-        View view = findViewById(android.R.id.content);
-        view.setPadding(horizontalMargin, topMargin, horizontalMargin, verticalMargin);
-
-        return super.onCreateView(name, context, attrs);
-
-    }
-*/
     public static class ThirukkuralPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {

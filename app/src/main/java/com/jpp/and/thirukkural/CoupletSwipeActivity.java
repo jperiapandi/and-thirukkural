@@ -3,14 +3,6 @@ package com.jpp.and.thirukkural;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,6 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
 import com.jpp.and.thirukkural.model.Chapter;
@@ -30,17 +29,10 @@ import com.jpp.and.thirukkural.model.Couplet;
 import com.jpp.and.thirukkural.model.Part;
 import com.jpp.and.thirukkural.model.Section;
 
-public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
+import java.util.Locale;
+import java.util.Objects;
 
-    /**
-     * The {@link PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link FragmentStatePagerAdapter}.
-     */
-    private CoupletsPagerAdapter mCoupletsPagerAdapter;
+public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -52,17 +44,16 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_couplet_swipe);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mCoupletsPagerAdapter = new CoupletsPagerAdapter(getSupportFragmentManager());
+        CoupletsPagerAdapter mCoupletsPagerAdapter = new CoupletsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mCoupletPager = (ViewPager) findViewById(R.id.coupletPager);
+        mCoupletPager = findViewById(R.id.coupletPager);
         mCoupletPager.setAdapter(mCoupletsPagerAdapter);
         mCoupletPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -111,7 +102,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
     private void setActivityTitle(int position){
         Couplet couplet = ContentHlpr.COUPLETS.get(position);
         String title = getResources().getString(R.string.couplet)+" "+couplet.get_id();
-        getSupportActionBar().setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
 
         Chapter chapter = ContentHlpr.CHAPTERS.get(couplet.getChapterId()-1);
         Section section = ContentHlpr.SECTIONS.get(chapter.getSectionId()-1);
@@ -121,7 +112,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         detail += "   " + part.get_id()+". "+part.getTitle();
         detail += "   " + chapter.get_id()+". "+chapter.getTitle();
 
-        TextView coupletDetailTextView = (TextView) findViewById(R.id.coupletDetail);
+        TextView coupletDetailTextView = findViewById(R.id.coupletDetail);
         coupletDetailTextView.setText(detail);
     }
 
@@ -167,7 +158,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
     }
 
     private void shareCouplet() {
-        DataLoadHelper dlh = DataLoadHelper.getInstance();
+
         int coupletIndex = mCoupletPager.getCurrentItem();
         Couplet couplet = ContentHlpr.COUPLETS.get(coupletIndex);
 
@@ -210,7 +201,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         String subject = getResources().getString(R.string.app_name)+" - "+getResources().getString(R.string.couplet)+" "+couplet.get_id();
         //
         String shareableText = "%1$s: %2$d\n%3$s";
-        shareableText = String.format(shareableText,
+        shareableText = String.format(new Locale("ta", "in"), shareableText,
                 getResources().getString(R.string.couplet),
                 couplet.get_id(),
                 couplet.getCouplet());
@@ -259,7 +250,6 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
      * A placeholder fragment containing a simple view.
      */
     public static class CoupletPageFragment extends Fragment {
-        private View mCoupletPageFragmentView;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -285,12 +275,13 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_couplet_swipe, container, false);
 
+            assert getArguments() != null;
             int index = getArguments().getInt(COUPLET_ID) - 1;
             Couplet couplet = ContentHlpr.COUPLETS.get(index);
 
             //Bind data to view
-            TextView coupletTextView = (TextView) view.findViewById(R.id.couplet_text);
-            TextView allCommentaries = (TextView) view.findViewById(R.id.all_commentariesTextView);
+            TextView coupletTextView = view.findViewById(R.id.couplet_text);
+            TextView allCommentaries = view.findViewById(R.id.all_commentariesTextView);
 
             boolean showCom1 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_1, true);
             boolean showCom2 = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(SettingsActivity.KEY_COMM_2, true);
@@ -366,7 +357,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
             spanBuilder.append(nl);
             coupletTextView.setText(couplet.getCouplet());
             if(couplet.getFav() == 1){
-                int color = ContextCompat.getColor(getContext(), R.color.fav_couplete_color);
+                int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.fav_couplete_color);
                 coupletTextView.setTextColor(color);
             }
 
@@ -380,7 +371,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class CoupletsPagerAdapter extends FragmentPagerAdapter {
+    public static class CoupletsPagerAdapter extends FragmentPagerAdapter {
 
         public CoupletsPagerAdapter(FragmentManager fm) {
             super(fm);

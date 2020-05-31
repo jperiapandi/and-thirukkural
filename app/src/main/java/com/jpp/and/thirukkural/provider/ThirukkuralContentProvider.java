@@ -18,6 +18,7 @@ import com.jpp.and.thirukkural.db.SectionsTable;
 import com.jpp.and.thirukkural.db.URITypes;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class ThirukkuralContentProvider extends ContentProvider {
 
@@ -64,19 +65,14 @@ public class ThirukkuralContentProvider extends ContentProvider {
 
     }
 
-    public DBHelper getDbHelper(){
-        return this.dbHelper;
-    }
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
         int uriType = sURIMatcher.match(uri);
-        switch (uriType){
-            case URITypes.SEARCH_HISTORY:
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                int i = db.delete(SearchHistoryTable.TBL_NAME, selection, selectionArgs);
-                return i;
-
+        if (uriType == URITypes.SEARCH_HISTORY) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            int i = db.delete(SearchHistoryTable.TBL_NAME, selection, selectionArgs);
+            return i;
         }
 
         throw new UnsupportedOperationException("Not yet implemented");
@@ -94,17 +90,14 @@ public class ThirukkuralContentProvider extends ContentProvider {
 
 
         int uriType = sURIMatcher.match(uri);
-        switch (uriType){
-            case URITypes.SEARCH_HISTORY:
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                long rowId = db.insert(SearchHistoryTable.TBL_NAME, null, values);
-                if(rowId != -1){
-                    Uri _uri = ContentUris.withAppendedId(uri, rowId);
-                    getContext().getContentResolver().notifyChange(_uri, null);
-                    return _uri;
-                }
-                break;
-
+        if (uriType == URITypes.SEARCH_HISTORY) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            long rowId = db.insert(SearchHistoryTable.TBL_NAME, null, values);
+            if (rowId != -1) {
+                Uri _uri = ContentUris.withAppendedId(uri, rowId);
+                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(_uri, null);
+                return _uri;
+            }
         }
 
         throw new UnsupportedOperationException("Not yet implemented");
@@ -152,11 +145,9 @@ public class ThirukkuralContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int uriType = sURIMatcher.match(uri);
 
-        switch (uriType){
-            case URITypes.COUPLETS:
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                int r = db.update(CoupletsTable.TBL_NAME, values, selection, selectionArgs);
-                return r;
+        if (uriType == URITypes.COUPLETS) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            return db.update(CoupletsTable.TBL_NAME, values, selection, selectionArgs);
         }
 
         // TODO: Implement this to handle requests to update one or more rows.
@@ -172,14 +163,12 @@ public class ThirukkuralContentProvider extends ContentProvider {
             queryBuilder.setTables(CoupletsTable.TBL_NAME);
             CoupletsTable.checkColumns(projection);
             int uriType = sURIMatcher.match(uri);
-            switch (uriType){
-                case URITypes.COUPLET_BY_ID :
-                    queryBuilder.appendWhere(CoupletsTable.COL_ID+" = "+uri.getLastPathSegment());
-                    break;
+            if (uriType == URITypes.COUPLET_BY_ID) {
+                queryBuilder.appendWhere(CoupletsTable.COL_ID + " = " + uri.getLastPathSegment());
             }
 
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
             return cursor;
         }
         catch (Exception e)
@@ -197,14 +186,12 @@ public class ThirukkuralContentProvider extends ContentProvider {
             queryBuilder.setTables(SectionsTable.TBL_NAME);
             SectionsTable.checkColumns(projection);
             int uriType = sURIMatcher.match(uri);
-            switch (uriType){
-                case URITypes.SECTION_BY_ID :
-                    queryBuilder.appendWhere(SectionsTable.COL_ID+" = "+uri.getLastPathSegment());
-                    break;
+            if (uriType == URITypes.SECTION_BY_ID) {
+                queryBuilder.appendWhere(SectionsTable.COL_ID + " = " + uri.getLastPathSegment());
             }
 
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
             return cursor;
         }
         catch (Exception e)
@@ -222,14 +209,12 @@ public class ThirukkuralContentProvider extends ContentProvider {
             queryBuilder.setTables(PartsTable.TBL_NAME);
             PartsTable.checkColumns(projection);
             int uriType = sURIMatcher.match(uri);
-            switch (uriType){
-                case URITypes.PART_BY_ID :
-                    queryBuilder.appendWhere(PartsTable.COL_ID+" = "+uri.getLastPathSegment());
-                    break;
+            if (uriType == URITypes.PART_BY_ID) {
+                queryBuilder.appendWhere(PartsTable.COL_ID + " = " + uri.getLastPathSegment());
             }
 
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
             return cursor;
         }
         catch (Exception e)
@@ -246,14 +231,12 @@ public class ThirukkuralContentProvider extends ContentProvider {
             queryBuilder.setTables(ChaptersTable.TBL_NAME);
             ChaptersTable.checkColumns(projection);
             int uriType = sURIMatcher.match(uri);
-            switch (uriType){
-                case URITypes.CHAPTER_BY_ID :
-                    queryBuilder.appendWhere(ChaptersTable.COL_ID+" = "+uri.getLastPathSegment());
-                    break;
+            if (uriType == URITypes.CHAPTER_BY_ID) {
+                queryBuilder.appendWhere(ChaptersTable.COL_ID + " = " + uri.getLastPathSegment());
             }
 
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
             return cursor;
         }
         catch (Exception e)
@@ -271,7 +254,7 @@ public class ThirukkuralContentProvider extends ContentProvider {
             queryBuilder.setTables(SearchHistoryTable.TBL_NAME);
             SearchHistoryTable.checkColumns(projection);
             Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
             return cursor;
         }
         catch (Exception e)

@@ -1,12 +1,12 @@
 package com.jpp.and.thirukkural;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.jpp.and.thirukkural.adapters.AllChaptersListItemAdapter;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
@@ -16,6 +16,7 @@ import com.jpp.and.thirukkural.model.ListItem;
 import com.jpp.and.thirukkural.model.ListItemType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChaptersListActivity extends ThirukkuralBaseActivity {
 
@@ -23,17 +24,16 @@ public class ChaptersListActivity extends ThirukkuralBaseActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapters_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        ListView mList = (ListView) findViewById(android.R.id.list);
+        ListView mList = findViewById(android.R.id.list);
         //
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         ArrayList<Chapter> chapters = dlh.getAllChapters();
-        Chapter[] values = chapters.toArray(new Chapter[chapters.size()]);
+        Chapter[] values = chapters.toArray(new Chapter[0]);
 
         ListItemAdapter adapter = new AllChaptersListItemAdapter(getBaseContext(), values);
         mList.setAdapter(adapter);
@@ -46,7 +46,7 @@ public class ChaptersListActivity extends ThirukkuralBaseActivity {
                 {
                     //Open the clicked chapter in Main Activity
                     Chapter chapter = (Chapter) clickedItem;
-                    Intent intent = new Intent((Activity) view.getContext(), ChapterActivity.class);
+                    Intent intent = new Intent(view.getContext(), ChapterActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
                     intent.putExtras(extras);

@@ -49,8 +49,8 @@ public class PartDetailFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.part_detail,
                 container, false);
-        mTitle = (TextView) rootView.findViewById(R.id.title);
-        mChaptersCount = (TextView) rootView.findViewById(R.id.chaptersCount);
+        mTitle = rootView.findViewById(R.id.title);
+        mChaptersCount = rootView.findViewById(R.id.chaptersCount);
         return rootView;
     }
 
@@ -58,16 +58,14 @@ public class PartDetailFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        assert getArguments() != null;
         if (getArguments().containsKey(ARG_PART_ID)) {
             // Load data
             int partId = getArguments().getInt(ARG_PART_ID);
             mPart = ContentHlpr.PARTS.get(partId-1);
 
-            Activity activity = this.getActivity();
-
-
             ArrayList<Chapter> chapters = ContentHlpr.getChaptersByPart(mPart.get_id());
-            Chapter[] items = chapters.toArray(new Chapter[chapters.size()]);
+            Chapter[] items = chapters.toArray(new Chapter[0]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), items);
             setListAdapter(adapter);
         }

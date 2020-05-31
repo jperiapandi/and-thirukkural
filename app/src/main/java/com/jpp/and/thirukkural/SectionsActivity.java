@@ -1,35 +1,28 @@
 package com.jpp.and.thirukkural;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
@@ -39,6 +32,9 @@ import com.firebase.ui.auth.FirebaseUiException;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
@@ -51,56 +47,40 @@ import com.jpp.and.thirukkural.model.Part;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int RC_SIGN_IN = 2000;
-    /**
-     * The {@link PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private static boolean isWelcomeDone = false;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sections);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //Load Data
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.sectionsPager);
+        ViewPager mViewPager = findViewById(R.id.sectionsPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sectionTabs);
+        TabLayout tabLayout = findViewById(R.id.sectionTabs);
         tabLayout.setupWithViewPager(mViewPager);
         createCustomTabs(tabLayout);
 
@@ -117,15 +97,16 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     private void createCustomTabs(TabLayout tabLayout){
         int n = tabLayout.getTabCount();
         for(int i=0; i<n; i++){
+            @SuppressLint("InflateParams")
             TextView tabTextView = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_bar_item_layout, null);
             TabLayout.Tab tab = tabLayout.getTabAt(i);
+            assert tab != null;
             tabTextView.setText(tab.getText());
             tab.setCustomView(tabTextView);
         }
     }
 
     private void invokeLogin(){
-//        this.printKeyHash();
         isWelcomeDone = false;
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -149,30 +130,13 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                         .build(),
                 RC_SIGN_IN);
     }
-    /*
-    private void printKeyHash() {
-        // Add code to print out the key hash
-        try {
 
-            PackageInfo info = getPackageManager().getPackageInfo("com.jpp.and.thirukkural", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("KeyHash:", e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("KeyHash:", e.toString());
-        }
-    }
-    */
     private void welcomeUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user==null){
             return;
         }
-        String msg = "";
+        String msg;
         //User is signed in
         int h =Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if(h>=4 && h<=11){
@@ -195,11 +159,11 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         }
         //
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
-        ImageView userPhoto = (ImageView) header.findViewById(R.id.user_photo_imageview);
-        TextView displayName = (TextView) header.findViewById(R.id.display_name_txtview);
-        TextView email = (TextView) header.findViewById(R.id.email_txtview);
+        ImageView userPhoto = header.findViewById(R.id.user_photo_imageview);
+        TextView displayName = header.findViewById(R.id.display_name_txtview);
+        TextView email = header.findViewById(R.id.email_txtview);
 
         Glide.with(this).load(user.getPhotoUrl()).circleCrop().into(userPhoto);
         displayName.setText(user.getDisplayName());
@@ -211,11 +175,11 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     }
 
     private void clearUserDetail() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
-        ImageView userPhoto = (ImageView) header.findViewById(R.id.user_photo_imageview);
-        TextView displayName = (TextView) header.findViewById(R.id.display_name_txtview);
-        TextView email = (TextView) header.findViewById(R.id.email_txtview);
+        ImageView userPhoto = header.findViewById(R.id.user_photo_imageview);
+        TextView displayName = header.findViewById(R.id.display_name_txtview);
+        TextView email = header.findViewById(R.id.email_txtview);
 
         userPhoto.setImageResource(R.mipmap.ic_launcher);
         displayName.setText(getResources().getString(R.string.app_desc));
@@ -262,21 +226,18 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             return;
         }
         FirebaseUiException error = response.getError();
-        switch (error.getErrorCode()){
-            case ErrorCodes.NO_NETWORK:
-                //No internet connection
-                Snackbar.make(findViewById(R.id.drawer_layout), getResources().getString(R.string.err_no_internet), Snackbar.LENGTH_LONG).show();
-                break;
-            case ErrorCodes.PROVIDER_ERROR:
-            default:
-                Snackbar.make(findViewById(R.id.drawer_layout), getResources().getString(R.string.err_common_login_err), Snackbar.LENGTH_LONG).show();
-                break;
+        assert error != null;
+        if (error.getErrorCode() == ErrorCodes.NO_NETWORK) {
+            //No internet connection
+            Snackbar.make(findViewById(R.id.drawer_layout), getResources().getString(R.string.err_no_internet), Snackbar.LENGTH_LONG).show();
+        } else {
+            Snackbar.make(findViewById(R.id.drawer_layout), getResources().getString(R.string.err_common_login_err), Snackbar.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -299,7 +260,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -336,7 +296,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -370,30 +330,25 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
+            assert getArguments() != null;
             int sectionID = getArguments().getInt(ARG_SECTION_NUMBER);
 
             ArrayList<Part> parts = ContentHlpr.getPartsBySection(sectionID);
 
-            ArrayList<ListItem> items = new ArrayList<ListItem>();
+            ArrayList<ListItem> items = new ArrayList<>();
 
-            Iterator<Part> partsListIterator = parts.iterator();
-            while (partsListIterator.hasNext()){
-                Part part = partsListIterator.next();
-                items.add((ListItem) part);
+            for (Part part : parts) {
+                items.add(part);
 
                 ArrayList<Chapter> chapters = ContentHlpr.getChaptersByPart(part.get_id());
                 part.setNumOfChapters(chapters.size());
 
-                Iterator<Chapter> chapterIterator = chapters.iterator();
-                while (chapterIterator.hasNext()){
-                    Chapter chapter = chapterIterator.next();
-                    items.add((ListItem) chapter);
-                }
+                items.addAll(chapters);
             }
 
 
-            ListView partsAndChaptersList = (ListView) rootView.findViewById(R.id.partsAndChaptersList);
-            ListItem[] values = items.toArray(new ListItem[items.size()]);
+            ListView partsAndChaptersList = rootView.findViewById(R.id.partsAndChaptersList);
+            ListItem[] values = items.toArray(new ListItem[0]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             partsAndChaptersList.setAdapter(adapter);
 
@@ -405,7 +360,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                     {
                         //Open the clicked chapter in Main Activity
                         Chapter chapter = (Chapter) clickedItem;
-                        Intent intent = new Intent((Activity) view.getContext(), ChapterActivity.class);
+                        Intent intent = new Intent(view.getContext(), ChapterActivity.class);
                         Bundle extras = new Bundle();
                         extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
                         intent.putExtras(extras);
@@ -423,7 +378,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -443,8 +398,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String title = ContentHlpr.SECTIONS.get(position).getTitle();
-            return title;
+            return ContentHlpr.SECTIONS.get(position).getTitle();
         }
     }
 }

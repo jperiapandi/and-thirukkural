@@ -1,10 +1,7 @@
 package com.jpp.and.thirukkural;
 
-import android.app.Activity;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -20,6 +17,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.jpp.and.thirukkural.adapters.SearchResultListItemAdapter;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
 import com.jpp.and.thirukkural.model.Chapter;
@@ -32,6 +32,7 @@ import com.jpp.and.thirukkural.model.Section;
 import com.jpp.and.thirukkural.model.SubHeader;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SearchActivity extends AppCompatActivity {
     private static String SEARCH_QUERY = "search_query";
@@ -41,13 +42,13 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Listen for search action
-        EditText ipQueryText = (EditText) findViewById(R.id.ip_query_text);
+        EditText ipQueryText = findViewById(R.id.ip_query_text);
         ipQueryText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -112,10 +113,10 @@ public class SearchActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             search(item.getTitle().toString(), false);
 
-                            EditText ipQueryText = (EditText) findViewById(R.id.ip_query_text);
+                            EditText ipQueryText = findViewById(R.id.ip_query_text);
                             ipQueryText.setText(item.getTitle().toString());
                             return true;
-                        };
+                        }
                     });
                     i++;
                 }
@@ -138,9 +139,6 @@ public class SearchActivity extends AppCompatActivity {
         ArrayList<SearchHistory> searchHistories = dlh.getActiveSearchHistory();
         View noSearchesYet = findViewById(R.id.no_searches_yet);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View childView;
-
         if(searchHistories !=null && searchHistories.size() > 0){
             noSearchesYet.setVisibility(View.GONE);
         }
@@ -153,7 +151,7 @@ public class SearchActivity extends AppCompatActivity {
         View noSearchesYet = findViewById(R.id.no_searches_yet);
         View searchSuccessView = findViewById(R.id.content_search_success);
         View searchFailView = findViewById(R.id.content_search_fail);
-        //View searchRecents = findViewById(R.id.content_search_recents);
+
         try{
             noSearchesYet.setVisibility(View.GONE);
             searchFailView.setVisibility(View.GONE);
@@ -189,15 +187,14 @@ public class SearchActivity extends AppCompatActivity {
                 childView = inflater.inflate(R.layout.content_search_success, (ViewGroup) findViewById(R.id.content_search));
             }
             childView.setVisibility(View.VISIBLE);
-            ArrayList<ListItem> resultItems = new ArrayList<ListItem>();
+            ArrayList<ListItem> resultItems = new ArrayList<>();
 
-//                TextView qText = (TextView) childView.findViewById(R.id.qText);
-                TextView numberOfCouplets = (TextView) childView.findViewById(R.id.txt_couplets);
-                TextView numberOfChapters = (TextView) childView.findViewById(R.id.txt_chapters);
-                TextView numberOfParts = (TextView) childView.findViewById(R.id.txt_parts);
-                TextView numberOfSections = (TextView) childView.findViewById(R.id.txt_sections);
+                TextView numberOfCouplets = childView.findViewById(R.id.txt_couplets);
+                TextView numberOfChapters = childView.findViewById(R.id.txt_chapters);
+                TextView numberOfParts = childView.findViewById(R.id.txt_parts);
+                TextView numberOfSections = childView.findViewById(R.id.txt_sections);
 
-            ListView searchResultsListView = (ListView) childView.findViewById(R.id.listView);
+            ListView searchResultsListView = childView.findViewById(R.id.listView);
 
             ArrayList<Couplet> couplets = searchResult.getCouplets();
             ArrayList<Chapter> chapters = searchResult.getChapters();
@@ -248,14 +245,12 @@ public class SearchActivity extends AppCompatActivity {
                 resultItems.addAll(couplets);
             }
 
-//                qText.setText(searchResult.getQ());
                 numberOfCouplets.setText(getResources().getString(R.string.couplets)+": "+strNumberOfCouplets);
                 numberOfChapters.setText(getResources().getString(R.string.chapters)+": "+strNumberOfChapters);
                 numberOfParts.setText(getResources().getString(R.string.parts)+": "+strNumberOfParts);
                 numberOfSections.setText(getResources().getString(R.string.sections)+": "+strNumberOfSections);
 
-            //
-            ListItem[] items = resultItems.toArray(new ListItem[resultItems.size()]);
+            ListItem[] items = resultItems.toArray(new ListItem[0]);
             SearchResultListItemAdapter adapter = new SearchResultListItemAdapter(getBaseContext(), items);
             searchResultsListView.setAdapter(adapter);
 
@@ -270,7 +265,7 @@ public class SearchActivity extends AppCompatActivity {
                         case COUPLET:
                             Couplet couplet = (Couplet) item;
 
-                            intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                            intent = new Intent(view.getContext(), CoupletSwipeActivity.class);
                             extras = new Bundle();
                             extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                             intent.putExtras(extras);
@@ -279,7 +274,7 @@ public class SearchActivity extends AppCompatActivity {
                             break;
                         case CHAPTER:
                             Chapter chapter = (Chapter) item;
-                            intent = new Intent((Activity) view.getContext(), ChapterActivity.class);
+                            intent = new Intent(view.getContext(), ChapterActivity.class);
                             extras = new Bundle();
                             extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
                             intent.putExtras(extras);
@@ -299,7 +294,7 @@ public class SearchActivity extends AppCompatActivity {
                 childView = inflater.inflate(R.layout.content_search_fail, (ViewGroup) findViewById(R.id.content_search));
             }
             childView.setVisibility(View.VISIBLE);
-            TextView infoView = (TextView) childView.findViewById(R.id.searchFailureInfo);
+            TextView infoView = childView.findViewById(R.id.searchFailureInfo);
             String warningInfo = getResources().getString(R.string.searchFailureInfo);
             warningInfo = String.format(warningInfo, searchResult.getQ());
             infoView.setText(Html.fromHtml(warningInfo));

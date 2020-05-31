@@ -17,6 +17,7 @@ import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.model.Part;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * An activity representing a list of Parts. This activity
@@ -39,10 +40,10 @@ public class PartListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_part_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         View recyclerView = findViewById(R.id.part_list);
         assert recyclerView != null;
@@ -123,8 +124,8 @@ public class PartListActivity extends AppCompatActivity {
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mChaptersCount = (TextView) view.findViewById(R.id.chaptersCount);
-                mPartName = (TextView) view.findViewById(R.id.partName);
+                mChaptersCount = view.findViewById(R.id.chaptersCount);
+                mPartName = view.findViewById(R.id.partName);
             }
 
             @Override

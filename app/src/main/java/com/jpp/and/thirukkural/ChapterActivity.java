@@ -29,12 +29,12 @@ import com.jpp.and.thirukkural.model.Part;
 import com.jpp.and.thirukkural.model.Section;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChapterActivity extends ThirukkuralBaseActivity implements SearchView.OnQueryTextListener {
 
     private static ArrayList<Chapter> allChapters;
 
-    private ChapterPagerAdapter mChapterPagerAdapter;
     private ViewPager mChapterPager;
 
     @Override
@@ -42,11 +42,10 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_chapter);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applyFontForToolbarTitle(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
        //Load data
 
@@ -55,7 +54,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
 
         // Create the adapter that will return a fragment for each of the chapters
-        mChapterPagerAdapter = new ChapterPagerAdapter(getSupportFragmentManager());
+        ChapterPagerAdapter mChapterPagerAdapter = new ChapterPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mChapterPager = (ViewPager) findViewById(R.id.chapterPager);
@@ -86,6 +85,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         {
             int chapterID = extras.getInt(Chapter.CHAPTER_ID, 1);
             TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID-1);
+            assert targetTab != null;
             targetTab.select();
         }
 
@@ -110,7 +110,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
     private void setChapterTitle(int tabPosition){
         Chapter chapter = allChapters.get(tabPosition);
         String title = chapter.get_id()+". "+chapter.getTitle();
-        getSupportActionBar().setTitle(title);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
 
@@ -161,24 +161,24 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 //
                 String subject = getResources().getString(R.string.app_name)+" - "+chapter.get_id()+". "+chapter.getTitle();
                 //
-                String shareableText = "";
+                StringBuilder shareableText = new StringBuilder();
 
                 //Add details
-                shareableText += getResources().getString(R.string.chapter)+": "+chapter.get_id()+". "+chapter.getTitle();
-                shareableText += "\n"+getResources().getString(R.string.section)+": "+section.get_id()+". "+section.getTitle();
-                shareableText += "\n"+getResources().getString(R.string.part)+": "+part.get_id()+". "+part.getTitle()+"\n\n";
+                shareableText.append(getResources().getString(R.string.chapter)).append(": ").append(chapter.get_id()).append(". ").append(chapter.getTitle());
+                shareableText.append("\n").append(getResources().getString(R.string.section)).append(": ").append(section.get_id()).append(". ").append(section.getTitle());
+                shareableText.append("\n").append(getResources().getString(R.string.part)).append(": ").append(part.get_id()).append(". ").append(part.getTitle()).append("\n\n");
 
                 ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
                 for(Couplet couplet:couplets){
-                    shareableText+="\n"+couplet.get_id()+"\n"+couplet.getCouplet()+"\n";
+                    shareableText.append("\n").append(couplet.get_id()).append("\n").append(couplet.getCouplet()).append("\n");
                 }
 
-                shareableText +="\n\nhttps://play.google.com/store/apps/details?id=com.jpp.and.thirukkural";
+                shareableText.append("\n\nhttps://play.google.com/store/apps/details?id=com.jpp.and.thirukkural");
 
                 //Start SHARE the Chapter content
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareableText);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareableText.toString());
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_a_chapter)));
@@ -188,11 +188,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         }
     }
 
-    private void createPDF(){
-
-    }
-
-    /*Create Framgment for Chapter Pager*/
+    /*Create Fragment for Chapter Pager*/
     public static class ChapterPageFragment extends Fragment{
         public static final String CHAPTER_ID ="chapterId";
 
@@ -212,6 +208,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View chapterPageFragmentView = inflater.inflate(R.layout.fragment_chapterpage, container, false);
+            assert getArguments() != null;
             int chapterID = getArguments().getInt(CHAPTER_ID);
             Chapter chapter = ContentHlpr.CHAPTERS.get(chapterID);
 
@@ -219,7 +216,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             DataLoadHelper dlh = DataLoadHelper.getInstance();
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
             ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
-            Couplet[] values = couplets.toArray(new Couplet[couplets.size()]);
+            Couplet[] values = couplets.toArray(new Couplet[0]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             coupletsListView.setAdapter(adapter);
 
@@ -264,7 +261,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
     }
 
     /*Create Fragment Adapter for ChapterPager*/
-    public class ChapterPagerAdapter extends FragmentPagerAdapter {
+    public static class ChapterPagerAdapter extends FragmentPagerAdapter {
 
         public ChapterPagerAdapter(FragmentManager fm){
             super(fm);
