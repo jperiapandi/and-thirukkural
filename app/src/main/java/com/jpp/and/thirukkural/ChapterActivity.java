@@ -1,16 +1,7 @@
 package com.jpp.and.thirukkural;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +11,17 @@ import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
 import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
@@ -35,7 +37,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
     private static ArrayList<Chapter> allChapters;
 
-    private ViewPager mChapterPager;
+    private ViewPager2 mChapterPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,40 +46,39 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         setContentView(R.layout.activity_chapter);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-       //Load data
-
+        // Load data
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         allChapters = dlh.getAllChapters();
 
 
         // Create the adapter that will return a fragment for each of the chapters
-        ChapterPagerAdapter mChapterPagerAdapter = new ChapterPagerAdapter(getSupportFragmentManager());
+        ChapterPagerAdapter2 mChapterPagerAdapter = new ChapterPagerAdapter2(this);
 
         // Set up the ViewPager with the sections adapter.
-        mChapterPager = (ViewPager) findViewById(R.id.chapterPager);
+        mChapterPager = findViewById(R.id.chapterPager);
         mChapterPager.setAdapter(mChapterPagerAdapter);
-        mChapterPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mChapterPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 setChapterTitle(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                super.onPageScrollStateChanged(state);
             }
         });
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.chapterTabs);
-        tabLayout.setupWithViewPager(mChapterPager);
+        TabLayout tabLayout = findViewById(R.id.chapterTabs);
+        new TabLayoutMediator(tabLayout, mChapterPager, (tab, position)->tab.setText(allChapters.get(position).get_id()+"")).attach();
 
         //Set selected tab based on extras received in the intent
         Bundle extras = getIntent().getExtras();
@@ -94,7 +95,6 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         return true;
     }
 
@@ -215,7 +215,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
             //Load couplets in a chapter and display in a list
             DataLoadHelper dlh = DataLoadHelper.getInstance();
             ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
-            ListView coupletsListView = (ListView) chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
+            ListView coupletsListView = chapterPageFragmentView.findViewById(R.id.chapterCoupletsListView);
             Couplet[] values = couplets.toArray(new Couplet[0]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             coupletsListView.setAdapter(adapter);
@@ -224,7 +224,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
-                    final Intent intent = new Intent((Activity) view.getContext(), CoupletSwipeActivity.class);
+                    final Intent intent = new Intent(view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
                     intent.putExtras(extras);
@@ -260,29 +260,21 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         }
     }
 
-    /*Create Fragment Adapter for ChapterPager*/
-    public static class ChapterPagerAdapter extends FragmentPagerAdapter {
+    public static class ChapterPagerAdapter2 extends FragmentStateAdapter {
 
-        public ChapterPagerAdapter(FragmentManager fm){
-            super(fm);
+        public ChapterPagerAdapter2(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
         }
 
+        @NonNull
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+        public Fragment createFragment(int position) {
             return ChapterPageFragment.newInstance(position);
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return allChapters.size();
         }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return allChapters.get(position).get_id()+"";
-        }
-
     }
 }
