@@ -7,9 +7,9 @@
     android:layout_margin="@dimen/activity_horizontal_margin"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_constraintStart_toEndOf="parent"
     tools:context="com.jpp.and.thirukkural.ProfileActivity"
-    tools:showIn="@layout/activity_profile"
-    >
+    tools:showIn="@layout/activity_profile">
 
     <ImageView
         android:id="@+id/photo_imageview"
@@ -27,49 +27,30 @@
         app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 
     <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
+        android:id="@+id/name_txtview"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/email"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        style="@style/Title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photo_imageview" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
         android:id="@+id/email_txtview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:textAlignment="center"
+        style="@style/Caption1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/photo_imageview" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_txtview" />
 
-    <TextView
-        android:id="@+id/name_txtview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/email_txtview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
