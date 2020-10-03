@@ -20,9 +20,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
@@ -35,6 +38,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
@@ -70,19 +74,16 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Load Data
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(this);
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager mViewPager = findViewById(R.id.sectionsPager);
+        ViewPager2 mViewPager = findViewById(R.id.sectionsPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.sectionTabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        createCustomTabs(tabLayout);
+        new TabLayoutMediator(tabLayout, mViewPager, (tab, position) -> tab.setText(ContentHlpr.SECTIONS.get(position).getTitle())).attach();
 
         //Check for user login
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -91,18 +92,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         }else {
             //No user is signed in
             this.invokeLogin();
-        }
-    }
-
-    private void createCustomTabs(TabLayout tabLayout){
-        int n = tabLayout.getTabCount();
-        for(int i=0; i<n; i++){
-            @SuppressLint("InflateParams")
-            TextView tabTextView = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_bar_item_layout, null);
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            assert tab != null;
-            tabTextView.setText(tab.getText());
-            tab.setCustomView(tabTextView);
         }
     }
 
@@ -133,6 +122,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
     private void welcomeUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if(user==null){
             return;
         }
@@ -158,7 +148,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             Snackbar.make(findViewById(R.id.drawer_layout), msg, Snackbar.LENGTH_LONG).show();
         }
         //
-
+        // Set users profile picture, display name and email values.
         NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         ImageView userPhoto = header.findViewById(R.id.user_photo_imageview);
@@ -199,6 +189,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -374,31 +365,19 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+    public static class SectionsPagerAdapter extends FragmentStateAdapter {
+        public SectionsPagerAdapter(FragmentActivity fa) {
+            super(fa);
         }
 
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+        public Fragment createFragment(int position) {
+            return PlaceholderFragment.newInstance(position+1);
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return ContentHlpr.SECTIONS.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return ContentHlpr.SECTIONS.get(position).getTitle();
         }
     }
 }
