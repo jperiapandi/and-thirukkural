@@ -75,11 +75,11 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(this);
 
         // Set up the ViewPager with the sections adapter.
-        ViewPager2 mViewPager = findViewById(R.id.sectionsPager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        ViewPager2 mSectionsPager = findViewById(R.id.sectionsPager);
+        mSectionsPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.sectionTabs);
-        new TabLayoutMediator(tabLayout, mViewPager, (tab, position) -> tab.setText(ContentHlpr.SECTIONS.get(position).getTitle())).attach();
+        new TabLayoutMediator(tabLayout, mSectionsPager, (tab, position) -> tab.setText(ContentHlpr.SECTIONS.get(position).getTitle())).attach();
 
         //Check for user login
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

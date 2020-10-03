@@ -15,12 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
@@ -34,10 +35,7 @@ import java.util.Objects;
 
 public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mCoupletPager;
+    private ViewPager2 mCoupletPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,28 +48,28 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        CoupletsPagerAdapter mCoupletsPagerAdapter = new CoupletsPagerAdapter(getSupportFragmentManager());
+        CoupletsPagerAdapter mCoupletsPagerAdapter = new CoupletsPagerAdapter(this);
 
         // Set up the ViewPager with the sections adapter.
-        mCoupletPager = findViewById(R.id.coupletPager);
+        mCoupletPager = findViewById(R.id.coupletViewPager);
         mCoupletPager.setAdapter(mCoupletsPagerAdapter);
-        mCoupletPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mCoupletPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 setActivityTitle(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                super.onPageScrollStateChanged(state);
             }
         });
-
 
         //Set selected tab based on extras received in the intent
         Bundle extras = getIntent().getExtras();
@@ -367,32 +365,21 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity{
 
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public static class CoupletsPagerAdapter extends FragmentPagerAdapter {
+    public static class CoupletsPagerAdapter extends FragmentStateAdapter{
 
-        public CoupletsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public CoupletsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
         }
 
+        @NonNull
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+        public Fragment createFragment(int position) {
             return CoupletPageFragment.newInstance(position + 1);
         }
 
         @Override
-        public int getCount() {
-            // Show 1330 total pages.
+        public int getItemCount() {
             return ContentHlpr.COUPLETS.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return position+"";
         }
     }
 }

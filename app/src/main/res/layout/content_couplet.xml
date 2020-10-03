@@ -8,11 +8,11 @@
     tools:context="com.jpp.and.thirukkural.CoupletSwipeActivity"
     tools:showIn="@layout/app_bar_couplet">
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/coupletViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/coupletPager"
-        >
+        android:layout_height="match_parent">
 
-    </androidx.viewpager.widget.ViewPager>
+    </androidx.viewpager2.widget.ViewPager2>
+
 </RelativeLayout>
