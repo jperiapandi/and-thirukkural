@@ -1,5 +1,6 @@
 package com.jpp.and.thirukkural;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,11 @@ import android.widget.ListView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.OnCompleteListener;
+import com.google.android.play.core.tasks.Task;
 import com.jpp.and.thirukkural.adapters.AllChaptersListItemAdapter;
 import com.jpp.and.thirukkural.adapters.AllCoupletsListItemAdapter;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
@@ -58,5 +64,27 @@ public class AllCoupletsActivity extends ThirukkuralBaseActivity {
                 }
             }
         });
+
+        //In-App Review
+        ReviewManager manager = ReviewManagerFactory.create(this);
+        Task<ReviewInfo> reviewFlow = manager.requestReviewFlow();
+        Activity thisAct = this;
+        reviewFlow.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
+            @Override
+            public void onComplete(Task<ReviewInfo> task) {
+                if(reviewFlow.isSuccessful()){
+                    ReviewInfo reviewInfo = reviewFlow.getResult();
+                    //
+                    Task<Void> flow = manager.launchReviewFlow(thisAct, reviewInfo);
+                    flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(Task<Void> task) {
+                            //Do nothing
+                        }
+                    });
+                }
+            }
+        });
+
     }
 }
