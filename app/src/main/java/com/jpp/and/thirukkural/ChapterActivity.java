@@ -22,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
 import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
@@ -78,14 +79,32 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         });
 
         TabLayout tabLayout = findViewById(R.id.chapterTabs);
-        new TabLayoutMediator(tabLayout, mChapterPager, (tab, position)->tab.setText(allChapters.get(position).get_id()+"")).attach();
+        new TabLayoutMediator(tabLayout, mChapterPager, (tab, position) -> tab.setText(allChapters.get(position).get_id() + "")).attach();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Log in FirebaseAnalytics
+                Bundle fbb = new Bundle();
+                fbb.putString("chapter_id", ContentHlpr.CHAPTERS.get(tab.getPosition()).get_id() + "");
+                fbb.putString("chapter_title", ContentHlpr.CHAPTERS.get(tab.getPosition()).getTitle());
+                mFireBaseAnalytics.logEvent(Constants.VIEW_CHAPTER, fbb);
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         //Set selected tab based on extras received in the intent
         Bundle extras = getIntent().getExtras();
-        if(extras != null)
-        {
+        if (extras != null) {
             int chapterID = extras.getInt(Chapter.CHAPTER_ID, 1);
-            TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID-1);
+            TabLayout.Tab targetTab = tabLayout.getTabAt(chapterID - 1);
             assert targetTab != null;
             targetTab.select();
         }
@@ -107,16 +126,16 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         return super.onOptionsItemSelected(item);
     }
 
-    private void setChapterTitle(int tabPosition){
+    private void setChapterTitle(int tabPosition) {
         Chapter chapter = allChapters.get(tabPosition);
-        String title = chapter.get_id()+". "+chapter.getTitle();
+        String title = chapter.get_id() + ". " + chapter.getTitle();
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
 
     @Override
     public void onBackPressed() {
-        if(isFabOpen){
+        if (isFabOpen) {
             closeFAB(null);
             return;
         }
@@ -140,26 +159,26 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 Section section;
                 try {
                     chapter = ContentHlpr.CHAPTERS.get(chapterIndex);
-                }catch(IndexOutOfBoundsException indexExcp){
-                    String msg = "Failed to get Chapter by index "+chapterIndex+" ContentHlpr.CHAPTERS ArrayList";
+                } catch (IndexOutOfBoundsException indexExcp) {
+                    String msg = "Failed to get Chapter by index " + chapterIndex + " ContentHlpr.CHAPTERS ArrayList";
                     throw new Error(msg, new Throwable(msg));
                 }
                 try {
-                    partIndex=chapter.getPartId()-1;
+                    partIndex = chapter.getPartId() - 1;
                     part = ContentHlpr.PARTS.get(partIndex);
-                }catch(IndexOutOfBoundsException indexExcp){
-                    String msg = "Failed to get Part by index "+partIndex+" ContentHlpr.PARTS ArrayList";
+                } catch (IndexOutOfBoundsException indexExcp) {
+                    String msg = "Failed to get Part by index " + partIndex + " ContentHlpr.PARTS ArrayList";
                     throw new Error(msg, new Throwable(msg));
                 }
                 try {
-                    sectionIndex=chapter.getSectionId()-1;
+                    sectionIndex = chapter.getSectionId() - 1;
                     section = ContentHlpr.SECTIONS.get(sectionIndex);
-                }catch(IndexOutOfBoundsException indexExcp){
-                    String msg = "Failed to get Section by index "+sectionIndex+" ContentHlpr.SECTIONS ArrayList";
+                } catch (IndexOutOfBoundsException indexExcp) {
+                    String msg = "Failed to get Section by index " + sectionIndex + " ContentHlpr.SECTIONS ArrayList";
                     throw new Error(msg, new Throwable(msg));
                 }
                 //
-                String subject = getResources().getString(R.string.app_name)+" - "+chapter.get_id()+". "+chapter.getTitle();
+                String subject = getResources().getString(R.string.app_name) + " - " + chapter.get_id() + ". " + chapter.getTitle();
                 //
                 StringBuilder shareableText = new StringBuilder();
 
@@ -169,7 +188,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 shareableText.append("\n").append(getResources().getString(R.string.part)).append(": ").append(part.get_id()).append(". ").append(part.getTitle()).append("\n\n");
 
                 ArrayList<Couplet> couplets = dlh.getCoupletsByChapter(chapter.get_id(), false);
-                for(Couplet couplet:couplets){
+                for (Couplet couplet : couplets) {
                     shareableText.append("\n").append(couplet.get_id()).append("\n").append(couplet.getCouplet()).append("\n");
                 }
 
@@ -182,6 +201,13 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 startActivity(Intent.createChooser(shareIntent, getResources().getString(R.string.share_a_chapter)));
+
+                Bundle fbb = new Bundle();
+                fbb.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Chapter");
+                fbb.putString(FirebaseAnalytics.Param.ITEM_ID, chapter.get_id() + "");
+                fbb.putString(FirebaseAnalytics.Param.ITEM_NAME, chapter.getTitle());
+                fbb.putString(FirebaseAnalytics.Param.METHOD, "Android");
+                mFireBaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, fbb);
                 break;
             case R.id.fab_pdf:
                 break;
@@ -189,14 +215,13 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
     }
 
     /*Create Fragment for Chapter Pager*/
-    public static class ChapterPageFragment extends Fragment{
-        public static final String CHAPTER_ID ="chapterId";
+    public static class ChapterPageFragment extends Fragment {
+        public static final String CHAPTER_ID = "chapterId";
 
-        public ChapterPageFragment(){
-
+        public ChapterPageFragment() {
         }
 
-        public static ChapterPageFragment newInstance(int position){
+        public static ChapterPageFragment newInstance(int position) {
             ChapterPageFragment fragment = new ChapterPageFragment();
             Bundle args = new Bundle();
             args.putInt(CHAPTER_ID, position);
@@ -224,6 +249,17 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Couplet couplet = (Couplet) parent.getItemAtPosition(position);
+                    //Log event in Firebase
+                    //Log event in Firebase
+                    FragmentActivity activity = Objects.requireNonNull(getActivity());
+                    FirebaseAnalytics fba = FirebaseAnalytics.getInstance(activity);
+                    Bundle fbBundle = new Bundle();
+                    fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, couplet.get_id() + "");
+                    fbBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, couplet.getShortDesc());
+                    fbBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Couplet");
+                    fba.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, fbBundle);
+
+                    //Open Couplet swipe activity
                     final Intent intent = new Intent(view.getContext(), CoupletSwipeActivity.class);
                     Bundle extras = new Bundle();
                     extras.putInt(Couplet.COUPLET_ID, couplet.get_id());
@@ -231,8 +267,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
 
                     ThirukkuralBaseActivity myActivity = (ThirukkuralBaseActivity) view.getContext();
-                    if(myActivity!=null && myActivity.isFabOpen)
-                    {
+                    if (myActivity != null && myActivity.isFabOpen) {
                         myActivity.closeFAB(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
@@ -249,9 +284,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
 
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         startActivity(intent);
                     }
                 }

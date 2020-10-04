@@ -156,7 +156,6 @@ public class SearchActivity extends AppCompatActivity {
             noSearchesYet.setVisibility(View.GONE);
             searchFailView.setVisibility(View.GONE);
             searchSuccessView.setVisibility(View.GONE);
-//            searchRecents.setVisibility(View.GONE);
         }catch (Exception e){
             //ignore error
         }

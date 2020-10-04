@@ -35,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jpp.and.thirukkural.adapters.ListItemAdapter;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int RC_SIGN_IN = 2000;
@@ -81,17 +83,38 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         TabLayout tabLayout = findViewById(R.id.sectionTabs);
         new TabLayoutMediator(tabLayout, mSectionsPager, (tab, position) -> tab.setText(ContentHlpr.SECTIONS.get(position).getTitle())).attach();
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Log in FirebaseAnalytics
+                Bundle fbb = new Bundle();
+                fbb.putString("section_id", ContentHlpr.SECTIONS.get(tab.getPosition()).get_id() + "");
+                fbb.putString("section_title", ContentHlpr.SECTIONS.get(tab.getPosition()).getTitle());
+                mFireBaseAnalytics.logEvent(Constants.VIEW_SECTION, fbb);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
         //Check for user login
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null){
+        if (user != null) {
             this.welcomeUser();
-        }else {
+        } else {
             //No user is signed in
             this.invokeLogin();
         }
     }
 
-    private void invokeLogin(){
+    private void invokeLogin() {
         isWelcomeDone = false;
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -119,27 +142,27 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     private void welcomeUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user==null){
+        if (user == null) {
             return;
         }
         String msg;
         //User is signed in
-        int h =Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if(h>=4 && h<=11){
+        int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (h >= 4 && h <= 11) {
             //Morning
-            msg = getResources().getString(R.string.good_morning)+" "+user.getDisplayName();
-        }else if(h>=12 && h<=16){
+            msg = getResources().getString(R.string.good_morning) + " " + user.getDisplayName();
+        } else if (h >= 12 && h <= 16) {
             //Afternoon
-            msg = getResources().getString(R.string.good_afternoon)+" "+user.getDisplayName();
-        }else if(h>=17 && h<=19){
+            msg = getResources().getString(R.string.good_afternoon) + " " + user.getDisplayName();
+        } else if (h >= 17 && h <= 19) {
             //Evening
-            msg = getResources().getString(R.string.good_evening)+" "+user.getDisplayName();
-        }else{
+            msg = getResources().getString(R.string.good_evening) + " " + user.getDisplayName();
+        } else {
             //Night
-            msg = getResources().getString(R.string.good_night)+" "+user.getDisplayName();
+            msg = getResources().getString(R.string.good_night) + " " + user.getDisplayName();
         }
 
-        if(!isWelcomeDone){
+        if (!isWelcomeDone) {
             isWelcomeDone = true;
             Snackbar.make(findViewById(R.id.drawer_layout), msg, Snackbar.LENGTH_LONG).show();
         }
@@ -176,7 +199,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         menu.findItem(R.id.login_menuItem).setVisible(true);
     }
 
-    public void signOut(){
+    public void signOut() {
         AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -208,7 +231,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
     private void onLoginError(IdpResponse response) {
         this.clearUserDetail();
-        if(response==null){
+        if (response == null) {
             //User pressed back button in device.
             return;
         }
@@ -256,27 +279,27 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             // Handle the camera action
             Intent i = new Intent(this, AboutThirukkuralActivity.class);
             startActivity(i);
-        } else if(id == R.id.chapters_menuItem){
+        } else if (id == R.id.chapters_menuItem) {
             Intent intent = new Intent(this, ChaptersListActivity.class);
             startActivity(intent);
-        } else if(id == R.id.parts_menuItem){
+        } else if (id == R.id.parts_menuItem) {
             Intent intent = new Intent(this, PartListActivity.class);
             startActivity(intent);
-        }  else if(id == R.id.couplets_menuItem){
+        } else if (id == R.id.couplets_menuItem) {
             Intent intent = new Intent(this, AllCoupletsActivity.class);
             startActivity(intent);
-        } else if(id == R.id.my_profile_menuItem){
+        } else if (id == R.id.my_profile_menuItem) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.my_favs_menuItem) {
             Intent intent = new Intent(this, FavoritesActivity.class);
             startActivity(intent);
-        } else if(id == R.id.my_comments_menuItem){
+        } else if (id == R.id.my_comments_menuItem) {
             Intent intent = new Intent(this, CommentsActivity.class);
             startActivity(intent);
-        }  else if(id == R.id.logout_menuItem){
+        } else if (id == R.id.logout_menuItem) {
             this.signOut();
-        } else if(id == R.id.login_menuItem){
+        } else if (id == R.id.login_menuItem) {
             this.invokeLogin();
         } else if (id == R.id.settings_menuItem) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -316,7 +339,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
+            View sectionFragmentView = inflater.inflate(R.layout.fragment_sections, container, false);
             assert getArguments() != null;
             int sectionID = getArguments().getInt(ARG_SECTION_NUMBER);
 
@@ -334,7 +357,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             }
 
 
-            ListView partsAndChaptersList = rootView.findViewById(R.id.partsAndChaptersList);
+            ListView partsAndChaptersList = sectionFragmentView.findViewById(R.id.partsAndChaptersList);
             ListItem[] values = items.toArray(new ListItem[0]);
             ListItemAdapter adapter = new ListItemAdapter(getContext(), values);
             partsAndChaptersList.setAdapter(adapter);
@@ -343,10 +366,19 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ListItem clickedItem = (ListItem) parent.getItemAtPosition(position);
-                    if(clickedItem!=null && clickedItem.getListItemType() == ListItemType.CHAPTER)
-                    {
-                        //Open the clicked chapter in Main Activity
+                    if (clickedItem != null && clickedItem.getListItemType() == ListItemType.CHAPTER) {
+
                         Chapter chapter = (Chapter) clickedItem;
+                        //Log event in Firebase
+                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        FirebaseAnalytics fba = FirebaseAnalytics.getInstance(activity);
+                        Bundle fbBundle = new Bundle();
+                        fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, chapter.get_id() + "");
+                        fbBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, chapter.getTitle());
+                        fbBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Chapter");
+                        fba.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, fbBundle);
+
+                        //Open the clicked chapter in Main Activity
                         Intent intent = new Intent(view.getContext(), ChapterActivity.class);
                         Bundle extras = new Bundle();
                         extras.putInt(Chapter.CHAPTER_ID, chapter.get_id());
@@ -356,8 +388,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                     }
                 }
             });
-
-            return rootView;
+            return sectionFragmentView;
         }
     }
 
@@ -368,7 +399,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
         @Override
         public Fragment createFragment(int position) {
-            return SectionFragment.newInstance(position+1);
+            return SectionFragment.newInstance(position + 1);
         }
 
         @Override

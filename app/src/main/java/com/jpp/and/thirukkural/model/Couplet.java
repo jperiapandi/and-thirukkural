@@ -3,7 +3,7 @@ package com.jpp.and.thirukkural.model;
 /**
  * Created by jperiapandi on 05-07-2016.
  */
-public class Couplet implements ListItem{
+public class Couplet implements ListItem {
 
     public static final String COUPLET_ID = "coupletID";
     private int _id;
@@ -30,6 +30,10 @@ public class Couplet implements ListItem{
         return couplet;
     }
 
+    public String getShortDesc() {
+        return couplet.substring(0, 25) + "...";
+    }
+
     public void setCouplet(String couplet) {
         this.couplet = couplet;
     }
@@ -44,7 +48,7 @@ public class Couplet implements ListItem{
     }
 
     public int getChapterId() {
-        double chapterID = Math.floor((this._id-1)/10)+1;
+        double chapterID = Math.floor((this._id - 1) / 10) + 1;
         return (int) chapterID;
     }
 

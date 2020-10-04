@@ -24,17 +24,17 @@ import java.util.Random;
 public class ThirukkuralWidget extends AppWidgetProvider {
 
     static void setupWidget(Context context, AppWidgetManager appWidgetManager,
-                            int appWidgetId, int [] allWidgetIDs) {
+                            int appWidgetId, int[] allWidgetIDs) {
         Random random = new Random();
-        int coupletID = random.nextInt(1330)+1;
+        int coupletID = random.nextInt(1330) + 1;
         DataLoadHelper dlh = DataLoadHelper.getInstance();
         Couplet couplet = dlh.getCoupletById(coupletID, false);
         Chapter chapter = dlh.getChapterById(couplet.getChapterId());
         Part part = dlh.getPartById(chapter.getPartId());
         Section section = dlh.getSectionById(chapter.getSectionId());
 
-        String coupletNum = context.getString(R.string.couplet)+"\n"+couplet.get_id();
-        String detail = section.get_id()+"."+section.getTitle()+"  "+part.get_id()+"."+part.getTitle()+"  "+chapter.get_id()+"."+chapter.getTitle();
+        String coupletNum = context.getString(R.string.couplet) + "\n" + couplet.get_id();
+        String detail = section.get_id() + "." + section.getTitle() + "  " + part.get_id() + "." + part.getTitle() + "  " + chapter.get_id() + "." + chapter.getTitle();
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.thirukkural_widget);
@@ -44,9 +44,9 @@ public class ThirukkuralWidget extends AppWidgetProvider {
 
         //Launch CoupletSwipeActivity on click on the widget
         Intent intent = new Intent(context, CoupletSwipeActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Bundle extras = new Bundle();
         extras.putInt(Couplet.COUPLET_ID, coupletID);
+        extras.putBoolean(Constants.IS_FROM_WIDGET, true);
         intent.putExtras(extras);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.couplet_text, pendingIntent);
@@ -74,7 +74,7 @@ public class ThirukkuralWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -100);
-        if(Objects.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE) && appWidgetId != -100){
+        if (Objects.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE) && appWidgetId != -100) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             setupWidget(context, appWidgetManager, appWidgetId, appWidgetIds);
