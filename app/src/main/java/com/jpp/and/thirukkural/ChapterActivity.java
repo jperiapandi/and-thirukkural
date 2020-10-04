@@ -46,7 +46,7 @@ public class ChapterActivity extends ThirukkuralBaseActivity implements SearchVi
         setContentView(R.layout.activity_chapter);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Load data
         DataLoadHelper dlh = DataLoadHelper.getInstance();

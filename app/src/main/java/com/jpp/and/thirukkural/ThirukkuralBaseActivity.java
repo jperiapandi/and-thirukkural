@@ -161,8 +161,6 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         }
     }
 
-
-
     public void openFAB(Animation.AnimationListener animationListener){
         isFabOpen = true;
         fab_main.startAnimation(animationRotateForward);
