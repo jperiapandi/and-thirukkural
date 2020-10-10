@@ -21,7 +21,7 @@ public class ProfileActivity extends ThirukkuralBaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         //
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

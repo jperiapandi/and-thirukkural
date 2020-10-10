@@ -2,22 +2,25 @@ package com.jpp.and.thirukkural;
 
 import android.content.Context;
 import android.content.Intent;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-public class ThirukkuralBaseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnClickListener{
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+public class ThirukkuralBaseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnClickListener {
 
     protected FloatingActionButton fab_main, fab_pdf, fab_search, fab_share, fab_favorite, fab_search_in_section;
     protected Animation animationFabOpen, animationFabClose, animationRotateForward, animationRotateBackward;
     public boolean isFabOpen = false;
+    public FirebaseAnalytics mFireBaseAnalytics;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -28,7 +31,16 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
+        this.mFireBaseAnalytics = FirebaseAnalytics.getInstance(this);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, this.getLocalClassName());
+        this.mFireBaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+        super.onResume();
     }
 
     @Override
@@ -49,34 +61,33 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         animationRotateForward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
         animationRotateBackward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
 
-        if(fab_main != null)
-        {
+        if (fab_main != null) {
             fab_main.setOnClickListener(this);
         }
 
-        if(fab_search != null){
+        if (fab_search != null) {
             fab_search.setOnClickListener(this);
         }
-        if(fab_search_in_section != null){
+        if (fab_search_in_section != null) {
             fab_search_in_section.setOnClickListener(this);
         }
 
-        if(fab_share != null){
+        if (fab_share != null) {
             fab_share.setOnClickListener(this);
         }
 
-        if(fab_pdf!=null){
+        if (fab_pdf != null) {
             fab_pdf.setOnClickListener(this);
         }
 
-        if(fab_favorite!=null){
+        if (fab_favorite != null) {
             fab_favorite.setOnClickListener(this);
         }
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.i("Search submit" , query);
+        Log.i("Search submit", query);
         return false;
     }
 
@@ -88,7 +99,7 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.fab_main:
                 toggleFABState();
                 break;
@@ -115,16 +126,16 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         }
     }
 
-    private void toggleFABState(){
+    private void toggleFABState() {
 
-        if(isFabOpen){
+        if (isFabOpen) {
             closeFAB(null);
         } else {
             openFAB(null);
         }
     }
 
-    public void quickCloseFAB(){
+    public void quickCloseFAB() {
         isFabOpen = false;
         animationRotateBackward.setDuration(0);
         animationFabClose.setDuration(0);
@@ -136,13 +147,13 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         fab_share.setClickable(isFabOpen);
         fab_search.startAnimation(animationFabClose);
         fab_search.setClickable(isFabOpen);
-        if(fab_favorite != null){
+        if (fab_favorite != null) {
             fab_favorite.startAnimation(animationFabClose);
             fab_favorite.setClickable(isFabOpen);
         }
     }
 
-    public void closeFAB(Animation.AnimationListener animationListener){
+    public void closeFAB(Animation.AnimationListener animationListener) {
         isFabOpen = false;
         fab_main.startAnimation(animationRotateBackward);
         fab_pdf.startAnimation(animationFabClose);
@@ -151,19 +162,17 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         fab_share.setClickable(isFabOpen);
         fab_search.startAnimation(animationFabClose);
         fab_search.setClickable(isFabOpen);
-        if(fab_favorite != null){
+        if (fab_favorite != null) {
             fab_favorite.startAnimation(animationFabClose);
             fab_favorite.setClickable(isFabOpen);
         }
 
-        if(animationListener!=null){
+        if (animationListener != null) {
             animationRotateBackward.setAnimationListener(animationListener);
         }
     }
 
-
-
-    public void openFAB(Animation.AnimationListener animationListener){
+    public void openFAB(Animation.AnimationListener animationListener) {
         isFabOpen = true;
         fab_main.startAnimation(animationRotateForward);
         fab_pdf.startAnimation(animationFabOpen);
@@ -172,12 +181,12 @@ public class ThirukkuralBaseActivity extends AppCompatActivity implements Search
         fab_share.setClickable(isFabOpen);
         fab_search.startAnimation(animationFabOpen);
         fab_search.setClickable(isFabOpen);
-        if(fab_favorite != null){
+        if (fab_favorite != null) {
             fab_favorite.startAnimation(animationFabOpen);
             fab_favorite.setClickable(isFabOpen);
         }
 
-        if(animationListener!=null){
+        if (animationListener != null) {
             animationRotateForward.setAnimationListener(animationListener);
         }
     }
