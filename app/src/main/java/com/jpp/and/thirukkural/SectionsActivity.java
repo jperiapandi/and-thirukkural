@@ -118,14 +118,12 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         isWelcomeDone = false;
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build()
+                new AuthUI.IdpConfig.GoogleBuilder().build()
         );
         //Create a custom layout
         AuthMethodPickerLayout loginPickerLayout = new AuthMethodPickerLayout
                 .Builder(R.layout.auth_picker_layout)
                 .setGoogleButtonId(R.id.login_google_btn)
-                .setFacebookButtonId(R.id.login_fb_btn)
                 .build();
         // Create and launch sign-in intent
         startActivityForResult(
