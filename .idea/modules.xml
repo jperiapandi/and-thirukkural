@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/and-thirukkural.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/periapandi.jeyaram.and-thirukkural.iml" filepath="$PROJECT_DIR$/.idea/modules/periapandi.jeyaram.and-thirukkural.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/and-thirukkural.iml" filepath="$PROJECT_DIR$/.idea/modules/and-thirukkural.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/periapandi.jeyaram.and-thirukkural.app.unitTest.iml" />
     </modules>
   </component>
 </project>
