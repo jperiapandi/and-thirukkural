@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,8 +29,10 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.FirebaseUiException;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -55,6 +59,22 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     public static final int RC_SIGN_IN = 2000;
 
     private static boolean isWelcomeDone = false;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult o) {
+                    IdpResponse response = o.getIdpResponse();
+                    if (o.getResultCode() == RESULT_OK) {
+                        // Successfully signed in
+                        welcomeUser();
+                    } else {
+                        onLoginError(response);
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,16 +145,12 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                 .Builder(R.layout.auth_picker_layout)
                 .setGoogleButtonId(R.id.login_google_btn)
                 .build();
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false, false)
-                        .setLogo(R.drawable.valluvar_icon)
-                        .setAuthMethodPickerLayout(loginPickerLayout)
-                        .build(),
-                RC_SIGN_IN);
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
     }
 
     private void welcomeUser() {
@@ -202,30 +218,10 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 clearUserDetail();
-                invokeLogin();
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                this.welcomeUser();
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-
-                this.onLoginError(response);
-            }
-        }
-    }
 
     private void onLoginError(IdpResponse response) {
         this.clearUserDetail();
@@ -368,7 +364,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
                         Chapter chapter = (Chapter) clickedItem;
                         //Log event in Firebase
-                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        FragmentActivity activity = requireActivity();
                         FirebaseAnalytics fba = FirebaseAnalytics.getInstance(activity);
                         Bundle fbBundle = new Bundle();
                         fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, chapter.get_id() + "");
