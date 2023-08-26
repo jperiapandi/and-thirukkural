@@ -48,14 +48,14 @@ public class ThirukkuralWidget extends AppWidgetProvider {
         extras.putInt(Couplet.COUPLET_ID, coupletID);
         extras.putBoolean(Constants.IS_FROM_WIDGET, true);
         intent.putExtras(extras);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.couplet_text, pendingIntent);
 
         //Self refresh
         Intent selfSyncIntent = new Intent(context, ThirukkuralWidget.class);
         selfSyncIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         selfSyncIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        PendingIntent selfSyncPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, selfSyncIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent selfSyncPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, selfSyncIntent, PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.refresh_btn, selfSyncPendingIntent);
 
         // Instruct the widget manager to update the widget
