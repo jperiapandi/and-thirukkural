@@ -149,6 +149,8 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
+                .setLogo(R.drawable.valluvar_icon)
+                .setTheme(R.style.AppTheme)
                 .build();
         signInLauncher.launch(signInIntent);
     }
