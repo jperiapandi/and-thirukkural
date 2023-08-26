@@ -140,11 +140,6 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.GoogleBuilder().build()
         );
-        //Create a custom layout
-        AuthMethodPickerLayout loginPickerLayout = new AuthMethodPickerLayout
-                .Builder(R.layout.auth_picker_layout)
-                .setGoogleButtonId(R.id.login_google_btn)
-                .build();
 
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -219,6 +214,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                Snackbar.make(findViewById(R.id.drawer_layout), R.string.info_logged_out, Snackbar.LENGTH_LONG).show();
                 clearUserDetail();
             }
         });

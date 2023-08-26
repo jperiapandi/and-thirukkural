@@ -85,4 +85,5 @@
     <string name="notifications">அறிவிப்புகள்</string>
     <string name="morningCouplet">காலையில் ஓர் குறள்</string>
     <string name="eveningCouplet">மாலையில் ஓர் குறள்</string>
+    <string name="info_logged_out">நீங்கள் லாக் அவுட் செய்யப்பட்டுவிட்டீர்கள் !</string>
 </resources>
