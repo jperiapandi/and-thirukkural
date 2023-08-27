@@ -83,6 +83,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
         if (extras != null) {
             int coupletID = extras.getInt(Couplet.COUPLET_ID, 1);
             boolean isFromWidget = extras.getBoolean(Constants.IS_FROM_WIDGET);
+            boolean isFromNotification = extras.getBoolean(Constants.IS_FROM_NOTIFICATION);
             mCoupletPager.setCurrentItem(coupletID - 1);
 
             if (isFromWidget) {
@@ -90,6 +91,13 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
                 fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, coupletID + "");
                 fbBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ContentHlpr.COUPLETS.get(coupletID - 1).getShortDesc());
                 fbBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "CoupletFromWidget");
+                mFireBaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, fbBundle);
+            }
+            if (isFromNotification) {
+                Bundle fbBundle = new Bundle();
+                fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, coupletID + "");
+                fbBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, ContentHlpr.COUPLETS.get(coupletID - 1).getShortDesc());
+                fbBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "CoupletFromNotification");
                 mFireBaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, fbBundle);
             }
         }
@@ -376,7 +384,7 @@ public class CoupletSwipeActivity extends ThirukkuralBaseActivity {
             spanBuilder.append(nl);
             coupletTextView.setText(couplet.getCouplet());
             if (couplet.getFav() == 1) {
-                int color = ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.fav_couplete_color);
+                int color = ContextCompat.getColor(requireContext(), R.color.fav_couplete_color);
                 coupletTextView.setTextColor(color);
             }
 

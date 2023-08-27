@@ -87,4 +87,6 @@
     <string name="eveningCouplet">மாலையில் ஓர் குறள்</string>
     <string name="info_logged_out">நீங்கள் லாக் அவுட் செய்யப்பட்டுவிட்டீர்கள் !</string>
     <string name="randomize">வேறொரு குறளைக் காட்டு</string>
+    <string name="channel_name">குறள் அறிவிப்புகள்</string>
+    <string name="channel_description">குலுக்கல் முறையில் தேர்வு செய்யப்பட்ட திருக்குறட்பாக்கள் தினமும் காலையிலும் மாலையிலும் உங்களுக்கு அறிவிக்கப்படும்.</string>
 </resources>

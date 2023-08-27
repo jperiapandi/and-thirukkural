@@ -1,6 +1,8 @@
 package com.jpp.and.thirukkural;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,19 +16,25 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.work.BackoffPolicy;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -48,12 +56,14 @@ import com.jpp.and.thirukkural.model.Chapter;
 import com.jpp.and.thirukkural.model.ListItem;
 import com.jpp.and.thirukkural.model.ListItemType;
 import com.jpp.and.thirukkural.model.Part;
+import com.jpp.and.thirukkural.worker.PeriodicNotificationWorker;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int RC_SIGN_IN = 2000;
@@ -72,6 +82,16 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
                     } else {
                         onLoginError(response);
                     }
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    createNotificationWorkers();
+                } else {
+                    //User has denied permission to show notifications
                 }
             }
     );
@@ -131,6 +151,34 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         } else {
             //No user is signed in
             this.invokeLogin();
+        }
+
+        checkNotificationPermission();
+    }
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            //Sending Notifications are allowed
+            createNotificationWorkers();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
+    }
+
+    private void createNotificationWorkers() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            WorkManager workManager = WorkManager.getInstance(getApplicationContext());
+            PeriodicWorkRequest morningWork = new PeriodicWorkRequest.Builder(
+                    PeriodicNotificationWorker.class,
+                    1,
+                    TimeUnit.HOURS,
+                    30,
+                    TimeUnit.SECONDS)
+                    .setBackoffCriteria(BackoffPolicy.LINEAR, Duration.ofSeconds(30))
+                    .build();
+            workManager.enqueueUniquePeriodicWork(Constants.PERIODIC_WORKER, ExistingPeriodicWorkPolicy.KEEP, morningWork);
+//            workManager.cancelAllWork();
+//            workManager.enqueue(OneTimeWorkRequest.from(PeriodicNotificationWorker.class));
         }
     }
 
