@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.jpp.and.thirukkural.db.DataLoadHelper;
@@ -48,14 +49,15 @@ public class ThirukkuralWidget extends AppWidgetProvider {
         extras.putInt(Couplet.COUPLET_ID, coupletID);
         extras.putBoolean(Constants.IS_FROM_WIDGET, true);
         intent.putExtras(extras);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, PendingIntent.FLAG_MUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
+        Log.d("ThirukkuralWidget", "setupWidget: new couplet id "+coupletID);
         views.setOnClickPendingIntent(R.id.couplet_text, pendingIntent);
 
         //Self refresh
         Intent selfSyncIntent = new Intent(context, ThirukkuralWidget.class);
         selfSyncIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         selfSyncIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        PendingIntent selfSyncPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, selfSyncIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent selfSyncPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, selfSyncIntent, PendingIntent.FLAG_MUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.refresh_btn, selfSyncPendingIntent);
 
         // Instruct the widget manager to update the widget
@@ -74,11 +76,12 @@ public class ThirukkuralWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -100);
+        Log.d("ThirukkuralWidget", "onReceive: action " +intent.getAction());
+        Log.d("ThirukkuralWidget", "onReceive: appWidgetId " +appWidgetId);
         if (Objects.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE) && appWidgetId != -100) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             setupWidget(context, appWidgetManager, appWidgetId, appWidgetIds);
-//            this.onUpdate(context, appWidgetManager, appWidgetIds);
         }
     }
 

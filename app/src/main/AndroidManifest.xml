@@ -138,7 +138,7 @@
                 android:value="com.jpp.and.thirukkural.SectionsActivity" />
         </activity>
 
-        <receiver android:name=".ThirukkuralWidget" android:exported="true">
+        <receiver android:name=".ThirukkuralWidget" android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
