@@ -7,8 +7,8 @@ android {
         applicationId "com.jpp.and.thirukkural"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 14
-        versionName '2.0.5'
+        versionCode 15
+        versionName '2.0.6'
         multiDexEnabled true
     }
     buildTypes {

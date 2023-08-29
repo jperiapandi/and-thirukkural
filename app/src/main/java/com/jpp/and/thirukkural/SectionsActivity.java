@@ -28,11 +28,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import androidx.work.BackoffPolicy;
+import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.ExistingWorkPolicy;
+import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
@@ -168,17 +170,20 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
     private void createNotificationWorkers() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             WorkManager workManager = WorkManager.getInstance(getApplicationContext());
-            PeriodicWorkRequest morningWork = new PeriodicWorkRequest.Builder(
-                    PeriodicNotificationWorker.class,
-                    1,
-                    TimeUnit.HOURS,
-                    30,
-                    TimeUnit.SECONDS)
-                    .setBackoffCriteria(BackoffPolicy.LINEAR, Duration.ofSeconds(30))
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiresCharging(false)
+                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                    .setRequiresBatteryNotLow(false)
                     .build();
-            workManager.enqueueUniquePeriodicWork(Constants.PERIODIC_WORKER, ExistingPeriodicWorkPolicy.KEEP, morningWork);
-//            workManager.cancelAllWork();
-//            workManager.enqueue(OneTimeWorkRequest.from(PeriodicNotificationWorker.class));
+            PeriodicWorkRequest hourlyWorkRequest = new PeriodicWorkRequest.Builder(
+                    PeriodicNotificationWorker.class,
+                    60, TimeUnit.MINUTES,
+                    10, TimeUnit.MINUTES)
+                    .setBackoffCriteria(BackoffPolicy.LINEAR, Duration.ofMillis(WorkRequest.DEFAULT_BACKOFF_DELAY_MILLIS))
+                    .setConstraints(constraints)
+                    .build();
+            workManager.enqueueUniquePeriodicWork(Constants.HOURLY_WORKER, ExistingPeriodicWorkPolicy.KEEP, hourlyWorkRequest);
+//            workManager.enqueue(new OneTimeWorkRequest.Builder(PeriodicNotificationWorker.class).build());
         }
     }
 

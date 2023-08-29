@@ -10,6 +10,6 @@ public class Constants {
     public static final String VIEW_COUPLET = "view_couplet";
 
     public static final String CHANNEL_ID = "KuralNotificationChannel";
-    public static final String PERIODIC_WORKER = "periodicWorker";
+    public static final String HOURLY_WORKER = "hourlyWorker";
     public static final int COUPLET_NOTIFICATION_ID = 2000;
 }
