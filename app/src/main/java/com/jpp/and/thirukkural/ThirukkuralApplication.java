@@ -1,11 +1,12 @@
 package com.jpp.and.thirukkural;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 
 import com.jpp.and.thirukkural.content.ContentHlpr;
 import com.jpp.and.thirukkural.db.DataLoadHelper;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * When your application is launched this class is loaded before all of your activities.
@@ -17,16 +18,24 @@ public class ThirukkuralApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         DataLoadHelper.setContext(getApplicationContext());
-
         ContentHlpr.init();
+        createNotificationChannel();
+    }
 
-        CalligraphyConfig.initDefault(
-                new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/NotoSansTamil-Regular.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

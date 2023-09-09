@@ -13,10 +13,10 @@
         android:ellipsize="end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/refresh_btn"
+        android:layout_toEndOf="@+id/refresh_btn"
         android:paddingBottom="@dimen/widget_margin_4"
-        android:paddingLeft="@dimen/widget_margin_8"
-        android:paddingRight="@dimen/widget_margin_4"
+        android:paddingStart="@dimen/widget_margin_8"
+        android:paddingEnd="@dimen/widget_margin_4"
         android:paddingTop="@dimen/widget_margin_4"
         android:text="2.பொருள் 11.குடியியல் 103.குடி செயல்வகை" />
 
@@ -26,10 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/couplet_detail_text"
-        android:layout_marginLeft="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/refresh_btn"
+        android:layout_toEndOf="@+id/refresh_btn"
 
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="9sp"
@@ -43,7 +42,7 @@
 
         android:contentDescription="@string/couplet"
         android:lines="2"
-        android:paddingLeft="@dimen/widget_margin_4"
+        android:paddingStart="@dimen/widget_margin_4"
         android:paddingTop="@dimen/widget_margin_8"
         android:text="இடும்பைக்கே கொள்கலம் கொல்லோ குடும்பத்தைக்
 குற்ற மறைப்பான் உடம்பு."
@@ -52,6 +51,7 @@
     <ImageButton
         android:id="@+id/refresh_btn"
         style="?android:attr/borderlessButtonStyle"
+        android:contentDescription="@string/randomize"
         android:layout_width="@dimen/widget_strip"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

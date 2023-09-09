@@ -23,11 +23,35 @@
           }
         },
         {
+          "client_id": "454900536894-c8r5rmtj85n8grv49n7jhpurr85c41fl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jpp.and.thirukkural",
+            "certificate_hash": "73a01522939fc21da3c146725fdcf8734027a663"
+          }
+        },
+        {
           "client_id": "454900536894-e9pfa4aqp31083c2qp4f8tg5gj7kf76q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jpp.and.thirukkural",
             "certificate_hash": "60c291b50cf0e30fa8f506b4f3b79f24303fa723"
+          }
+        },
+        {
+          "client_id": "454900536894-fusj7i9i3veatorcpt6g6s6hdo5em25d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jpp.and.thirukkural",
+            "certificate_hash": "fb3cf4201ec9b969b067575212b58783ae4f8877"
+          }
+        },
+        {
+          "client_id": "454900536894-tr91j2c64lud4kuq5pplttaj9vukmjs1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jpp.and.thirukkural",
+            "certificate_hash": "4542b5f417001dcb3506f242fa364ff30171b18b"
           }
         },
         {
@@ -41,20 +65,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "454900536894-p85cch7s30fsdv7u6di9p0c726qadgip.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

@@ -1,6 +1,8 @@
 package com.jpp.and.thirukkural;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,23 +14,35 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.work.BackoffPolicy;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.FirebaseUiException;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -44,17 +58,45 @@ import com.jpp.and.thirukkural.model.Chapter;
 import com.jpp.and.thirukkural.model.ListItem;
 import com.jpp.and.thirukkural.model.ListItemType;
 import com.jpp.and.thirukkural.model.Part;
+import com.jpp.and.thirukkural.worker.PeriodicNotificationWorker;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class SectionsActivity extends ThirukkuralBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int RC_SIGN_IN = 2000;
 
     private static boolean isWelcomeDone = false;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult o) {
+                    IdpResponse response = o.getIdpResponse();
+                    if (o.getResultCode() == RESULT_OK) {
+                        // Successfully signed in
+                        welcomeUser();
+                    } else {
+                        onLoginError(response);
+                    }
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    createNotificationWorkers();
+                } else {
+                    //User has denied permission to show notifications
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,31 +154,53 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
             //No user is signed in
             this.invokeLogin();
         }
+
+        checkNotificationPermission();
+    }
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            //Sending Notifications are allowed
+            createNotificationWorkers();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
+    }
+
+    private void createNotificationWorkers() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            WorkManager workManager = WorkManager.getInstance(getApplicationContext());
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiresCharging(false)
+                    .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                    .setRequiresBatteryNotLow(false)
+                    .build();
+            PeriodicWorkRequest hourlyWorkRequest = new PeriodicWorkRequest.Builder(
+                    PeriodicNotificationWorker.class,
+                    60, TimeUnit.MINUTES,
+                    10, TimeUnit.MINUTES)
+                    .setBackoffCriteria(BackoffPolicy.LINEAR, Duration.ofMillis(WorkRequest.DEFAULT_BACKOFF_DELAY_MILLIS))
+                    .setConstraints(constraints)
+                    .build();
+            workManager.enqueueUniquePeriodicWork(Constants.HOURLY_WORKER, ExistingPeriodicWorkPolicy.KEEP, hourlyWorkRequest);
+//            workManager.enqueue(new OneTimeWorkRequest.Builder(PeriodicNotificationWorker.class).build());
+        }
     }
 
     private void invokeLogin() {
         isWelcomeDone = false;
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build()
+                new AuthUI.IdpConfig.GoogleBuilder().build()
         );
-        //Create a custom layout
-        AuthMethodPickerLayout loginPickerLayout = new AuthMethodPickerLayout
-                .Builder(R.layout.auth_picker_layout)
-                .setGoogleButtonId(R.id.login_google_btn)
-                .setFacebookButtonId(R.id.login_fb_btn)
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setLogo(R.drawable.valluvar_icon)
+                .setTheme(R.style.AppTheme)
                 .build();
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false, false)
-                        .setLogo(R.drawable.valluvar_icon)
-                        .setAuthMethodPickerLayout(loginPickerLayout)
-                        .build(),
-                RC_SIGN_IN);
+        signInLauncher.launch(signInIntent);
     }
 
     private void welcomeUser() {
@@ -203,31 +267,12 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
         AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                Snackbar.make(findViewById(R.id.drawer_layout), R.string.info_logged_out, Snackbar.LENGTH_LONG).show();
                 clearUserDetail();
-                invokeLogin();
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                this.welcomeUser();
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-
-                this.onLoginError(response);
-            }
-        }
-    }
 
     private void onLoginError(IdpResponse response) {
         this.clearUserDetail();
@@ -370,7 +415,7 @@ public class SectionsActivity extends ThirukkuralBaseActivity implements Navigat
 
                         Chapter chapter = (Chapter) clickedItem;
                         //Log event in Firebase
-                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        FragmentActivity activity = requireActivity();
                         FirebaseAnalytics fba = FirebaseAnalytics.getInstance(activity);
                         Bundle fbBundle = new Bundle();
                         fbBundle.putString(FirebaseAnalytics.Param.ITEM_ID, chapter.get_id() + "");
